@@ -17,20 +17,33 @@ app.get('/', (req, res) => {
   );
 });
 
+// temporary route for testing
 app.post('/api/submit', (req, res, next) => {
   try {
     const { code } = req.body;
+
+    // 'Bob' is a temp parameter for code
     const output = runCode(code, 'Bob');
-    console.log(output);
     res.send(output);
   } catch (err) {
-    next(err);
+    next({
+      status: 500,
+      message: "Something's wrong with your code..."
+    });
   }
 });
 
 app.use((err, req, res, next) => {
-  console.log(err);
-  res.status(err.status || 500).send(err);
+  let message = "Something's not right";
+  if (err.errors) {
+    message = err.errors[0].message;
+  } else if (err.message) {
+    message = err.message;
+  }
+
+  if (err) {
+    res.status(err.status || 500).send({ message });
+  }
 });
 
 module.exports = app;
