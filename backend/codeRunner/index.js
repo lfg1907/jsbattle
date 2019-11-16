@@ -17,15 +17,15 @@ const runCode = (code, ...args) => {
   const parsedArgs = parseArgs(args);
   const parsedCode = parseCodeStr(code);
 
-  const func = vm.run(
+  // run code with arguments
+  const funcResult = vm.run(
     `${code}
     ${parsedCode.name}(${parsedArgs})`
   );
-  console.log(func);
 
   return {
-    results: func,
-    consoles
+    result: funcResult,
+    consoles: consoles.map(c => c.join(' '))
   };
 };
 
