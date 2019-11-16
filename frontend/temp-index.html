@@ -42,7 +42,10 @@
       const resultDiv = document.getElementById("result")
       const errorsDiv = document.getElementById("errors")
 
+      const editorContent = 'const sayHello = (name, count = 2) => {\n  if (count > 0) {\n    console.log("recurse", count)\n    return sayHello("Tom", count - 1)\n  }\n\n  const add = sum(3, 2);\n  console.log("MATH", add);\n  console.log("sayHello() running")\n  return `Hello ${name}, 3 + 2 is ${add}!`\n}\n\nfunction sum(num1, num2) {\n  return num1 + num2\n}'
+
       const editor = CodeMirror.fromTextArea(textArea, {
+        value: editorContent,
         lineNumbers: true,
         mode: "javascript"
       })
