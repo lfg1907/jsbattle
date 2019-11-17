@@ -28,13 +28,14 @@ router
       const question = await Question.findByPk(
         req.params.id
       );
+      const { funcName } = question;
       const testCases = await TestCase.findAll({
         where: { questionId: question.id }
       });
 
       testCases.forEach(testCase => {
         const params = testCase.params.split(', ');
-        const { result } = runCode(code, params);
+        const { result } = runCode(code, funcName, params);
         if (result !== testCase.answer) {
           throw new Error(
             `Expected ${testCase.answer} but got ${result}`
