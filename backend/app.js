@@ -2,6 +2,7 @@ const express = require('express');
 const path = require('path');
 
 const runCode = require('./codeRunner');
+const questionsRouter = require('./routes/questions');
 
 const app = express();
 
@@ -33,6 +34,9 @@ app.post('/api/submit', (req, res, next) => {
   }
 });
 
+app.use('/api/questions', questionsRouter);
+
+// eslint-disable-next-line no-unused-vars
 app.use((err, req, res, next) => {
   let message = "Something's not right";
   if (err.errors) {
