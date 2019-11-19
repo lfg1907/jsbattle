@@ -12,13 +12,9 @@ module.exports = connection.define('question,'{
     type: TEXT
   },
   testCaseId:{
-    
+    type: STRING
   },
   functionName: {
-    type:STING 
-  },
-  parameters: {
-    type:
+    type:STRING 
   }
-
 })
