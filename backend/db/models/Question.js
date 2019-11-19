@@ -2,7 +2,7 @@ const connection = require('../connection')
 const { Sequelize } = connection;
 const {UUID, UUIDV4, TEXT, STRING} = Sequelize
 
-module.exports = connection.define('question,'{
+module.exports = connection.define('question',{
   id: {
     type: UUID,
     primaryKey: true,
@@ -10,9 +10,6 @@ module.exports = connection.define('question,'{
   },
   text: {
     type: TEXT
-  },
-  testCaseId:{
-    type: STRING
   },
   functionName: {
     type:STRING 
