@@ -14,22 +14,22 @@ App is served locally at `http://localhost:3000`
 Currently available endpoints:
 
 ### Questions
-`GET` all available questions.
+**`GET` all available questions.**
 ```
 GET /api/questions
 ```
 
-`GET` a random quesiton (doesn't work yet).
+**`GET` a random quesiton (doesn't work yet).**
 ```
 GET /api/questions/random
 ```
 
-`GET` a question by ID.
+**`GET` a question by ID.**
 ```
 GET /api/questions/:id
 ```
 
-`POST` the answer to a question by ID. Client needs to send `{ code }`.
+**`POST` the answer to a question by ID. Client needs to send `{ code }`.**
 ```
 POST /api/questions/:id
 ```
