@@ -3,12 +3,12 @@ import { connect } from 'react-redux';
 import { HashRouter, Route } from 'react-router-dom';
 
 // Components
-import Editor from './Editor';
+import EditorPage from './EditorPage';
 
 const App = () => {
   return (
     <HashRouter>
-      <Route path="/editor" component={Editor} />
+      <Route path="/editor" component={EditorPage} />
     </HashRouter>
   );
 };
