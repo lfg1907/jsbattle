@@ -1,5 +1,5 @@
-const connection = require('../connection')
-;
+const connection = require('../connection');
+
 const { Sequelize } = connection;
 const { UUID, UUIDV4, TEXT, STRING } = Sequelize;
 
@@ -10,9 +10,24 @@ module.exports = connection.define('question', {
     defaultValue: UUIDV4
   },
   text: {
-    type: TEXT
+    type: TEXT,
+    allowNull: false,
+    validate: {
+      notEmpty: true
+    }
   },
   functionName: {
-    type: STRING
+    type: STRING,
+    allowNull: false,
+    validate: {
+      notEmpty: true
+    }
+  },
+  params: {
+    type: STRING,
+    allowNull: false,
+    validate: {
+      notEmpty: true
+    }
   }
 });

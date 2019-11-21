@@ -1,7 +1,7 @@
-const connection = require('../connection')
-;
+const connection = require('../connection');
+
 const { Sequelize } = connection;
-const { UUID, UUIDV4, TEXT, STRING } = Sequelize;
+const { UUID, UUIDV4, STRING } = Sequelize;
 
 module.exports = connection.define('testcase', {
   id: {
@@ -10,9 +10,17 @@ module.exports = connection.define('testcase', {
     defaultValue: UUIDV4
   },
   arguments: {
-    type: STRING
+    type: STRING,
+    allowNull: false,
+    validate: {
+      notEmpty: true
+    }
   },
   answer: {
-    type: STRING
+    type: STRING,
+    allowNull: false,
+    validate: {
+      notEmpty: true
+    }
   }
 });
