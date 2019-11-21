@@ -1,7 +1,12 @@
 [
   {
-    "text": "given an unsorted array of numbers, find a maximum",
+    "text": "Given an unsorted array of numbers, find a maximum",
     "functionName": "findMax",
     "params":"arr"
+  },
+  {
+    "text": "Given an array of integers and a target value, find two integers in the array that sum up to the target value. For example, if the given array is [1, 5, 2, 9, 19, 36, 3] and the target is 10, your function should return [1, 9]. There may be 0 or more pairs in the array. If no pairs are found, return -1.",
+    "functionName": "findSumPair",
+    "params":"arr, target"
   }
 ]
