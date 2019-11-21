@@ -4,7 +4,7 @@ module.exports = {
   entry: './frontend/src/index.jsx',
   output: {
     filename: 'index.js',
-    path: path.join(__dirname, 'frontend/assets'),
+    path: path.join(__dirname, 'frontend/assets')
   },
   mode: 'development',
   module: {
@@ -12,11 +12,15 @@ module.exports = {
       {
         test: /\.(js|jsx)$/,
         exclude: /node_modules/,
-        use: ['babel-loader'],
+        use: ['babel-loader']
       },
-    ],
+      {
+        test: /\.css$/i,
+        use: ['style-loader', 'css-loader']
+      }
+    ]
   },
   resolve: {
-    extensions: ['*', '.js', '.jsx'],
-  },
+    extensions: ['*', '.js', '.jsx']
+  }
 };
