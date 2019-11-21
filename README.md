@@ -1,10 +1,8 @@
-THIS IS A TEST
-
 # Goose Teeth
 Multiplayer JS trivia.
 
 To get started:
-- Run `npm i` to install all dependencies
+- Run `npm ci` to install all dependencies
 - Create PSQL database `jsbattle_db`
 - Run `npm run start:dev` to start a dev server and bundle all frontend code
 
