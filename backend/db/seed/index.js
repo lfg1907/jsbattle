@@ -2,7 +2,7 @@ require('dotenv').config();
 const fs = require('fs');
 const path = require('path');
 
-const db = require('./../db')
+const db = require('../index');
 
 const { Question, TestCase } = db.models;
 
@@ -17,13 +17,13 @@ const createModelData = (list, Model) => {
 };
 
 const getSeedFileData = file => {
-  const jsonData = fs.readFileSync(path.join(SEED_FOLDER, file));
+  const jsonData = fs.readFileSync(
+    path.join(SEED_FOLDER, file)
+  );
   return JSON.parse(jsonData);
 };
 
 const seed = async () => {
-  await db.sync(true);
-
   SEED_FILES.forEach(async ({ model, file }) => {
     const seedData = getSeedFileData(file);
     console.log(`Loading data from ${file}...`);
@@ -31,4 +31,4 @@ const seed = async () => {
   });
 };
 
-seed();
+module.exports = seed;
