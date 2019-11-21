@@ -1,15 +1,21 @@
 const express = require('express');
 
-// Models don't exist yet
-const { Question } = require('../db/models/Question');
-const { TestCase } = require('../db/models/TestCase');
+const { Question, TestCase } = require('../db/models');
 const runCode = require('../codeRunner');
 
 const router = express.Router();
 router.use(express.json());
 
+// GET /api/questions
+router.get('/', (req, res, next) => {
+  Question.findAll()
+    .then(questions => res.send(questions))
+    .catch(next);
+});
+
 // GET /api/questions/random
 router.get('/random', (req, res, next) => {
+  // findRandom() is not implemented yet
   Question.findRandom()
     .then(question => res.send(question))
     .catch(next);
