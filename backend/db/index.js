@@ -1,8 +1,7 @@
 const connection = require('./connection');
 const seed = require('./seed');
 
-const Question = require('./models/Question');
-const TestCase = require('./models/TestCase');
+const { Question, TestCase } = require('./models');
 
 Question.hasMany(TestCase, { foreignKey: 'testCaseId' });
 TestCase.belongsTo(Question, { foreignKey: 'questionId' });
