@@ -5,14 +5,7 @@ const path = require('path');
 const { Question, TestCase } = require('../models');
 
 const SEED_FOLDER = path.resolve(__dirname, './data');
-const SEED_FILES = [
-  { model: Question, file: 'questions.json' },
-  { model: TestCase, file: 'testcases.json' }
-];
-
-const createModelData = (list, Model) => {
-  return Promise.all(list.map(el => Model.create(el)));
-};
+const QUESTION_FILE = 'questions.json';
 
 const getSeedFileData = file => {
   // should probably switch to readFile() at some point
@@ -23,10 +16,31 @@ const getSeedFileData = file => {
 };
 
 const seed = async () => {
-  SEED_FILES.forEach(async ({ model, file }) => {
-    const seedData = getSeedFileData(file);
-    console.log(`Loading data from ${file}...`);
-    await createModelData(seedData, model);
+  const seedData = getSeedFileData(QUESTION_FILE);
+
+  const [q1, q2] = await Promise.all(
+    seedData.map(el => {
+      return Question.create(el);
+    })
+  );
+
+  // Q1 testcases
+  await TestCase.create({
+    arguments: '4, 5, 3, 1, 2',
+    answer: '5',
+    questionId: q1.id
+  });
+  await TestCase.create({
+    arguments: '100, 99, 4, 2, 102',
+    answer: '102',
+    questionId: q1.id
+  });
+
+  // Q2 testcases
+  await TestCase.create({
+    arguments: '[1, 5, 2, 9, 19, 36, 3], 10',
+    answer: '[2, 5]',
+    questionId: q2.id
   });
 };
 
