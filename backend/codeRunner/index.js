@@ -1,6 +1,9 @@
 const { VM } = require('vm2');
 
-const runCode = (code, funcName, testArgs) => {
+const { parseCodeStr, parseArgs } = require('./parsers');
+
+// args should eventually be an array
+const runCode = (code, ...args) => {
   const consoles = [];
   const vm = new VM({
     sandbox: {
@@ -12,9 +15,15 @@ const runCode = (code, funcName, testArgs) => {
     }
   });
 
+  const parsedArgs = parseArgs(args);
+  const parsedCode = parseCodeStr(code);
+
+  // run code with arguments
+  // Eventually the function name should be passed
+  // in to runCode() so we don't have to parse it
   const funcResult = vm.run(
     `${code}
-    ${funcName}(${testArgs})`
+    ${parsedCode.name}(${parsedArgs})`
   );
 
   return {
