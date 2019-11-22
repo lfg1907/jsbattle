@@ -29,8 +29,38 @@ GET /api/questions/random
 GET /api/questions/:id
 ```
 
-**`POST` the answer to a question by ID. Client needs to send `{ code }`.**
+**`POST` the answer to a question by ID.**
 ```
 POST /api/questions/:id
 ```
+- Expected payload: `{ code: 'someFunctionDefinition'}`
+- Currently, response is an array of all test case results, both correct and incorrect.
+```json
+[
+  {
+    "result": 3,
+    "consoles": []
+  },
+  {
+    "wrong": "Expected 2, got 3",
+    "consoles": []
+  }
+]
+```
 
+Any `console.log()` sent from the client will be returned as an array. For example, if the code run looks like this:
+```javascript
+for (let i = 0; i < 3, i++) {
+  console.log("NUM", i)
+}
+```
+
+The response would look like:
+```json
+[
+  {
+    "result": "",
+    "consoles": ["NUM 0", "NUM 1", "NUM 2"]
+  }
+]
+```
