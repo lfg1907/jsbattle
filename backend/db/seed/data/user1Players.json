@@ -1,12 +1,10 @@
 [
   {
     "score": "20",
-    "isHost": true,
-    "inGame": true
+    "isHost": true
   },
   {
     "score": "200",
-    "isHost": true,
-    "inGame": false
+    "isHost": true
   }
 ]

@@ -19,11 +19,6 @@ const Player = connection.define('player', {
     defaultValue: false,
     allowNull: false
   },
-  inGame: {
-    type: BOOLEAN,
-    defaultValue: false,
-    allowNull: false
-  },
   gameId: {
     type: UUID,
     allowNull: true
