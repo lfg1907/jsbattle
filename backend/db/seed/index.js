@@ -53,7 +53,6 @@ const seed = async () => {
   let p2game1;
   let p2game2;
   let p3game1;
-  let p3game2;
 
   /* eslint-disable no-plusplus, no-await-in-loop */
   for (let i = 0; i < SEED_FILES.length; i++) {
@@ -99,13 +98,9 @@ const seed = async () => {
         );
         break;
       case 'user3Players':
-        [p3game1, p3game2] = await createModelData(
-          seedData,
-          model,
-          {
-            userId: user3.id
-          }
-        );
+        [p3game1] = await createModelData(seedData, model, {
+          userId: user3.id
+        });
         break;
       default:
         return;
@@ -117,8 +112,7 @@ const seed = async () => {
     p2game1.joinGame(game1),
     p3game1.joinGame(game1),
     p1game2.joinGame(game2),
-    p2game2.joinGame(game2),
-    p3game2.joinGame(game2)
+    p2game2.joinGame(game2)
   ]);
 
   await game2.update({ completed: true });
