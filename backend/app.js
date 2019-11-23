@@ -4,6 +4,7 @@ const path = require('path');
 const questionsRouter = require('./routes/questions');
 const usersRouter = require('./routes/users');
 const gamesRouter = require('./routes/games');
+const playersRouter = require('./routes/players');
 
 const app = express();
 
@@ -23,6 +24,7 @@ app.get('/', (req, res) => {
 app.use('/api/questions', questionsRouter);
 app.use('/api/users', usersRouter);
 app.use('/api/games', gamesRouter);
+app.use('/api/players', playersRouter);
 
 // eslint-disable-next-line no-unused-vars
 app.use((err, req, res, next) => {
