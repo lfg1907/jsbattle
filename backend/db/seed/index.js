@@ -15,6 +15,7 @@ const SEED_FILES = [
   { model: Question, file: 'questions.json' },
   { model: TestCase, file: 'q1TestCases.json' },
   { model: TestCase, file: 'q2TestCases.json' },
+  { model: Game, file: 'games.json' },
   { model: User, file: 'users.json' },
   { model: Player, file: 'user1Players.json' },
   { model: Player, file: 'user2Players.json' },
@@ -37,14 +38,10 @@ const getSeedFileData = file => {
 };
 
 const seed = async () => {
-  // Create empty games
-  const [game1, game2] = await Promise.all([
-    Game.create(),
-    Game.create()
-  ]);
-
   let q1;
   let q2;
+  let game1;
+  let game2;
   let user1;
   let user2;
   let user3;
@@ -72,6 +69,12 @@ const seed = async () => {
         await createModelData(seedData, model, {
           questionId: q2.id
         });
+        break;
+      case 'games':
+        [game1, game2] = await createModelData(
+          seedData,
+          model
+        );
         break;
       case 'users':
         [user1, user2, user3] = await createModelData(
