@@ -40,7 +40,7 @@ function getRandom(min, max) {
   return Math.floor(Math.random() * (max - min) + min);
 }
 
-Question.findRandom = async () => {
+Question.findRandom = async function() {
   const questions = await this.findAll();
   const randomIdx = getRandom(0, questions.length);
   return questions[randomIdx];
