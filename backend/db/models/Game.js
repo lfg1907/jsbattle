@@ -1,9 +1,10 @@
 const connection = require('../connection');
+const Player = require('./Player');
 
 const { Sequelize } = connection;
 const { BOOLEAN, INTEGER, UUID, UUIDV4 } = Sequelize;
 
-const Player = require('./Player');
+const MAX_PLAYERS = 3;
 
 const Game = connection.define('game', {
   id: {
@@ -14,7 +15,10 @@ const Game = connection.define('game', {
   numOfPlayers: {
     type: INTEGER,
     defaultValue: 0,
-    allowNull: false
+    allowNull: false,
+    validate: {
+      max: MAX_PLAYERS
+    }
   },
   completed: {
     type: BOOLEAN,
@@ -22,7 +26,7 @@ const Game = connection.define('game', {
   }
 });
 
-Game.prototype.findWinningPlayer = function findWinningPlayer() {
+Game.prototype.findWinningPlayer = function() {
   if (!this.completed) return {};
 
   return Player.findAll({
