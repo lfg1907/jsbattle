@@ -26,12 +26,25 @@ const Player = connection.define('player', {
   },
   gameId: {
     type: UUID,
-    allowNull: false
+    allowNull: true
   },
   userId: {
     type: UUID,
     allowNull: false
   }
 });
+
+Player.prototype.joinGame = async function(game) {
+  if (game.completed) throw new Error('Game is finished');
+
+  try {
+    await game.update({
+      numOfPlayers: game.numOfPlayers + 1
+    });
+    await this.update({ gameId: game.id });
+  } catch (ex) {
+    throw new Error('This game is full');
+  }
+};
 
 module.exports = Player;
