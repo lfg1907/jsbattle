@@ -1,6 +1,6 @@
 const express = require('express');
 
-const { Game } = require('../db/models');
+const { Game, Player } = require('../db/models');
 
 const router = express.Router();
 router.use(express.json());
@@ -49,6 +49,12 @@ router.get('/:id/winner', (req, res, next) => {
         .findWinningPlayer()
         .then(player => res.send(player));
     })
+    .catch(next);
+});
+
+router.get('/:id/players', (req, res, next) => {
+  Player.findAll({ where: { gameId: req.params.id } })
+    .then(players => res.send(players))
     .catch(next);
 });
 
