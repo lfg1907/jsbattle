@@ -41,4 +41,15 @@ router
       .catch(next);
   });
 
+// GET /api/games/:id/winner
+router.get('/:id/winner', (req, res, next) => {
+  Game.findByPk(req.params.id)
+    .then(game => {
+      game
+        .findWinningPlayer()
+        .then(player => res.send(player));
+    })
+    .catch(next);
+});
+
 module.exports = router;
