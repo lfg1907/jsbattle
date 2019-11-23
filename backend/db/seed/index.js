@@ -15,7 +15,6 @@ const SEED_FILES = [
   { model: Question, file: 'questions.json' },
   { model: TestCase, file: 'q1TestCases.json' },
   { model: TestCase, file: 'q2TestCases.json' },
-  { model: Game, file: 'games.json' },
   { model: User, file: 'users.json' },
   { model: Player, file: 'user1Players.json' },
   { model: Player, file: 'user2Players.json' },
@@ -38,10 +37,14 @@ const getSeedFileData = file => {
 };
 
 const seed = async () => {
+  // Create empty games
+  const [game1, game2] = await Promise.all([
+    Game.create(),
+    Game.create()
+  ]);
+
   let q1;
   let q2;
-  let game1;
-  let game2;
   let user1;
   let user2;
   let user3;
@@ -70,12 +73,6 @@ const seed = async () => {
         await createModelData(seedData, model, {
           questionId: q2.id
         });
-        break;
-      case 'games':
-        [game1, game2] = await createModelData(
-          seedData,
-          model
-        );
         break;
       case 'users':
         [user1, user2, user3] = await createModelData(
@@ -117,12 +114,14 @@ const seed = async () => {
 
   await Promise.all([
     p1game1.joinGame(game1),
-    p1game2.joinGame(game2),
     p2game1.joinGame(game1),
-    p2game2.joinGame(game2),
     p3game1.joinGame(game1),
+    p1game2.joinGame(game2),
+    p2game2.joinGame(game2),
     p3game2.joinGame(game2)
   ]);
+
+  await game2.update({ completed: true });
 };
 
 module.exports = seed;
