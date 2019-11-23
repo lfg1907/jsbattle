@@ -26,20 +26,25 @@ const seed = async () => {
 
   // Q1 testcases
   await TestCase.create({
-    arguments: '4, 5, 3, 1, 2',
+    arguments: '[4, 5, 3, 1, 2]',
     answer: '5',
     questionId: q1.id
   });
   await TestCase.create({
-    arguments: '100, 99, 4, 2, 102',
+    arguments: '[100, 99, 4, 2, 102]',
     answer: '102',
     questionId: q1.id
   });
 
   // Q2 testcases
   await TestCase.create({
-    arguments: '[1, 5, 2, 9, 19, 36, 3], 10',
-    answer: '[2, 5]',
+    arguments: '[1, 5, 2, 9, 19, 36, 3], 100',
+    answer: '-1',
+    questionId: q2.id
+  });
+  await TestCase.create({
+    arguments: '[1, 5, 2, 9, 19, 36, 3], 8',
+    answer: '[3, 5]',
     questionId: q2.id
   });
 };

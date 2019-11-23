@@ -2,6 +2,7 @@ const express = require('express');
 
 const { Question, TestCase } = require('../db/models');
 const runCode = require('../codeRunner');
+const { checkAnswer } = require('../codeRunner/utils');
 
 const router = express.Router();
 router.use(express.json());
@@ -35,20 +36,28 @@ router
       const question = await Question.findByPk(
         req.params.id
       );
-      const { funcName } = question;
+      const { functionName } = question;
       const testCases = await TestCase.findAll({
         where: { questionId: question.id }
       });
 
-      testCases.forEach(testCase => {
-        const params = testCase.params.split(', ');
-        const { result } = runCode(code, funcName, params);
-        if (result !== testCase.answer) {
-          throw new Error(
-            `Expected ${testCase.answer} but got ${result}`
-          );
+      const outputsToSend = testCases.map(testCase => {
+        const { result, consoles } = runCode(
+          code,
+          functionName,
+          testCase.arguments
+        );
+
+        if (!checkAnswer(result, testCase.answer)) {
+          return {
+            wrong: `Expected ${testCase.answer} but got ${result}`,
+            consoles
+          };
         }
+        return { result, consoles };
       });
+
+      res.send(outputsToSend);
     } catch (ex) {
       next(ex);
     }
