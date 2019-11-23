@@ -30,23 +30,6 @@ const createModelData = (data, Model, options = {}) => {
   );
 };
 
-const createPlayersData = (data, userId, ...gameIds) => {
-  if (data.length !== gameIds.length) {
-    throw new Error(
-      "Number of Players and Games don't match"
-    );
-  }
-  return Promise.all(
-    data.map((player, i) => {
-      return Player.create({
-        ...player,
-        userId,
-        gameId: gameIds[i]
-      });
-    })
-  );
-};
-
 const getSeedFileData = file => {
   const jsonData = fs.readFileSync(
     path.join(SEED_FOLDER, file)
@@ -62,6 +45,12 @@ const seed = async () => {
   let user1;
   let user2;
   let user3;
+  let p1game1;
+  let p1game2;
+  let p2game1;
+  let p2game2;
+  let p3game1;
+  let p3game2;
 
   /* eslint-disable no-plusplus, no-await-in-loop */
   for (let i = 0; i < SEED_FILES.length; i++) {
@@ -95,33 +84,45 @@ const seed = async () => {
         );
         break;
       case 'user1Players':
-        await createPlayersData(
+        [p1game1, p1game2] = await createModelData(
           seedData,
-          user1.id,
-          game1.id,
-          game2.id
+          model,
+          {
+            userId: user1.id
+          }
         );
         break;
       case 'user2Players':
-        await createPlayersData(
+        [p2game1, p2game2] = await createModelData(
           seedData,
-          user2.id,
-          game1.id,
-          game2.id
+          model,
+          {
+            userId: user2.id
+          }
         );
         break;
       case 'user3Players':
-        await createPlayersData(
+        [p3game1, p3game2] = await createModelData(
           seedData,
-          user3.id,
-          game1.id,
-          game2.id
+          model,
+          {
+            userId: user3.id
+          }
         );
         break;
       default:
         return;
     }
   }
+
+  await Promise.all([
+    p1game1.joinGame(game1),
+    p1game2.joinGame(game2),
+    p2game1.joinGame(game1),
+    p2game2.joinGame(game2),
+    p3game1.joinGame(game1),
+    p3game2.joinGame(game2)
+  ]);
 };
 
 module.exports = seed;
