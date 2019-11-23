@@ -27,7 +27,7 @@ const Game = connection.define('game', {
 });
 
 Game.prototype.findWinningPlayer = function() {
-  if (!this.completed) return {};
+  if (!this.completed) throw new Error("Game is still in progress");
 
   return Player.findAll({
     where: { gameId: this.id }
