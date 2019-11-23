@@ -3,6 +3,7 @@ const path = require('path');
 
 const runCode = require('./codeRunner');
 const questionsRouter = require('./routes/questions');
+const usersRouter = require('./routes/users');
 
 const app = express();
 
@@ -17,6 +18,10 @@ app.get('/', (req, res) => {
     path.join(__dirname, '../frontend/index.html')
   );
 });
+
+// ROUTES
+app.use('/api/questions', questionsRouter);
+app.use('/api/users', usersRouter);
 
 // temporary route for testing
 app.post('/api/submit', (req, res, next) => {
@@ -33,8 +38,6 @@ app.post('/api/submit', (req, res, next) => {
     });
   }
 });
-
-app.use('/api/questions', questionsRouter);
 
 // eslint-disable-next-line no-unused-vars
 app.use((err, req, res, next) => {
