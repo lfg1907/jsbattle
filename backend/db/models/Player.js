@@ -42,4 +42,9 @@ Player.prototype.joinGame = async function(game) {
   }
 };
 
+Player.prototype.hostGame = async function(game) {
+  this.update({ isHost: true });
+  this.joinGame(game);
+};
+
 module.exports = Player;
