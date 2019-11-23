@@ -16,12 +16,12 @@ router.get('/', (req, res, next) => {
 
 // GET /api/questions/random
 router.get('/random', (req, res, next) => {
-  // findRandom() is not implemented yet
   Question.findRandom()
     .then(question => res.send(question))
     .catch(next);
 });
 
+// GET, POST
 // /api/questions/:id
 router
   .route('/:id')
@@ -31,7 +31,12 @@ router
       .catch(next);
   })
   .post(async (req, res, next) => {
+    /* TODO
+     * Add score to player if all test cases ran OK
+     * playerId should be sent as part of req.body
+     */
     try {
+      // need to destructure `playerId` too
       const { code } = req.body;
       const question = await Question.findByPk(
         req.params.id
