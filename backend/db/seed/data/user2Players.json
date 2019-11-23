@@ -1,0 +1,12 @@
+[
+  {
+    "score": 10,
+    "isHost": false,
+    "inGame": true
+  },
+  {
+    "score": 100,
+    "isHost": false,
+    "inGame": false
+  }
+]

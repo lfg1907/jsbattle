@@ -1,0 +1,10 @@
+[
+  {
+    "numOfPlayers": 0,
+    "completed": false
+  },
+  {
+    "numOfPlayers": 3,
+    "completed": true
+  }
+]
