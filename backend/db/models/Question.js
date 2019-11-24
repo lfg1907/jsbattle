@@ -1,4 +1,5 @@
 const connection = require('../connection');
+const { getRandomNumber, getUniques } = require('../utils');
 
 const { Sequelize } = connection;
 const { UUID, UUIDV4, TEXT, STRING } = Sequelize;
@@ -36,14 +37,22 @@ const Question = connection.define('question', {
   }
 });
 
-function getRandom(min, max) {
-  return Math.floor(Math.random() * (max - min) + min);
-}
-
 Question.findRandom = async function() {
   const questions = await this.findAll();
-  const randomIdx = getRandom(0, questions.length);
+  const randomIdx = getRandomNumber(0, questions.length);
   return questions[randomIdx];
+};
+
+// Create a set of random questions
+Question.createSet = async function(numOfQuestions) {
+  const questions = await this.findAll();
+  const indices = getUniques(
+    0,
+    questions.length,
+    numOfQuestions
+  );
+
+  return indices.map(idx => questions[idx]);
 };
 
 module.exports = Question;
