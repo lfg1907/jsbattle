@@ -22,5 +22,9 @@ module.exports = connection.define('testcase', {
     validate: {
       notEmpty: true
     }
+  },
+  questionId: {
+    type: UUID,
+    allowNull: false
   }
 });
