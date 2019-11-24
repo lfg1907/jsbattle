@@ -20,11 +20,11 @@ router
   })
   .post(async (req, res, next) => {
     try {
-      const game = await Game.create();
+      const { name, hostId } = req.body;
+      const game = await Game.create({ name });
 
-      const { playerId } = req.body;
-      if (playerId) {
-        const player = await Player.findByPk(playerId);
+      if (hostId) {
+        const player = await Player.findByPk(hostId);
         await player.hostGame(game);
       }
 
