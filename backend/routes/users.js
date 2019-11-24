@@ -15,8 +15,7 @@ router
       .catch(next);
   })
   .post((req, res, next) => {
-    const { userData } = req.body;
-    User.create(userData)
+    User.create(req.body)
       .then(user => res.status(201).send(user))
       .catch(next);
   });

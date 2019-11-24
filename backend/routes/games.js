@@ -20,11 +20,11 @@ router
   })
   .post(async (req, res, next) => {
     try {
-      const { name, hostId } = req.body;
+      const { name, playerId } = req.body;
       const game = await Game.create({ name });
 
-      if (hostId) {
-        const player = await Player.findByPk(hostId);
+      if (playerId) {
+        const player = await Player.findByPk(playerId);
         await player.hostGame(game);
       }
 
@@ -60,7 +60,10 @@ router.get('/:id/questions', (req, res, next) => {
 // PUT /api/games/question/:id
 router.put('/question/:id', (req, res, next) => {
   GameQuestion.findByPk(req.params.id)
-    .then(question => question.update(req.body))
+    .then(question => {
+      const { completed } = req.body;
+      return question.update({ completed });
+    })
     .then(question => res.send(question))
     .catch(next);
 });

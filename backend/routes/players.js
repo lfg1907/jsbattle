@@ -15,8 +15,8 @@ router
       .catch(next);
   })
   .post((req, res, next) => {
-    const { isHost, userId } = req.body;
-    Player.create({ isHost, userId })
+    const { userId } = req.body;
+    Player.create({ userId })
       .then(player => res.status(201).send(player))
       .catch(next);
   });
