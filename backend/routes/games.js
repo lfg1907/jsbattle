@@ -1,6 +1,10 @@
 const express = require('express');
 
-const { Game, Player } = require('../db/models');
+const {
+  Game,
+  GameQuestion,
+  Player
+} = require('../db/models');
 
 const router = express.Router();
 router.use(express.json());
@@ -45,6 +49,21 @@ router
       .then(() => res.sendStatus(204))
       .catch(next);
   });
+
+// GET /api/games/:id/questions
+router.get('/:id/questions', (req, res, next) => {
+  GameQuestion.findAll({ where: { gameId: req.params.id } })
+    .then(questions => res.send(questions))
+    .catch(next);
+});
+
+// PUT /api/games/question/:id
+router.put('/question/:id', (req, res, next) => {
+  GameQuestion.findByPk(req.params.id)
+    .then(question => question.update(req.body))
+    .then(question => res.send(question))
+    .catch(next);
+});
 
 // PUT /api/games/:id/join
 router.put('/:id/join', async (req, res, next) => {
