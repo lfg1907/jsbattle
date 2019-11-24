@@ -3,6 +3,7 @@ const seed = require('./seed');
 
 const {
   Game,
+  GameQuestion,
   Question,
   TestCase,
   Player,
@@ -15,8 +16,11 @@ Player.belongsTo(User);
 Game.hasMany(Player);
 Player.belongsTo(Game);
 
-// Game.hasMany(Question);
-// Question.belongsTo(Game);
+Question.hasMany(GameQuestion);
+GameQuestion.belongsTo(Question);
+
+Game.hasMany(GameQuestion);
+GameQuestion.belongsTo(Game);
 
 Question.hasMany(TestCase, { foreignKey: 'testcaseId' });
 TestCase.belongsTo(Question, { foreignKey: 'questionId' });
@@ -29,7 +33,11 @@ const sync = async (force = false) => {
 module.exports = {
   sync,
   models: {
+    Game,
+    GameQuestion,
     Question,
-    TestCase
+    TestCase,
+    Player,
+    User
   }
 };
