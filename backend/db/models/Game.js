@@ -33,14 +33,14 @@ const Game = connection.define('game', {
       max: MAX_PLAYERS
     }
   },
-  completed: {
+  inProgress: {
     type: BOOLEAN,
-    defaultValue: false
+    defaultValue: true
   }
 });
 
 Game.prototype.findWinningPlayer = function() {
-  if (!this.completed)
+  if (this.inProgress)
     throw new Error('Game is still in progress');
 
   return Player.findAll({

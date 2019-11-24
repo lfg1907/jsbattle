@@ -118,7 +118,7 @@ const seed = async () => {
     p2game2.joinGame(game2)
   ]);
 
-  await game2.update({ completed: true });
+  await game2.update({ inProgress: false });
 };
 
 module.exports = seed;

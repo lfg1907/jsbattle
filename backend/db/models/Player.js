@@ -30,7 +30,7 @@ const Player = connection.define('player', {
 });
 
 Player.prototype.joinGame = async function(game) {
-  if (game.completed) throw new Error('Game is finished');
+  if (!game.inProgress) throw new Error('Game is finished');
 
   try {
     await game.update({
