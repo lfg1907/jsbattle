@@ -70,7 +70,7 @@ GET /api/games/:id/questions
 ```
 
 #### Response
-Status `200`. Each game has 5 game questions that are randomly selected from the `Question` table. There should be no duplicates.
+Status `200`. **When a game is created, it is popuplated with 5 game questions that are randomly selected from the `Question` table. There should be no duplicates.**
 ```json
 [
     {
@@ -113,7 +113,7 @@ POST /api/games
 ```
 
 #### Payloads
-This route takes 1 mandatory property (`name`) and 1 optional property (`playerId`) as a payload. If `playerId` is sent, that player will be made the new game's host.
+This route takes 1 mandatory property (`name`) and 1 optional property (`playerId`) as a payload. **If `playerId` is sent, that player will be made the new game's host.**
 ```json
 {
     "name": "Flex 1907 Trivia",
@@ -133,10 +133,34 @@ Status `201`. A new game object is sent back. If there is a host, `numOfPlayers`
 ```
 
 ### `PUT`
-### Join a game by `id`
-A game can have up to 3 players. If a player tries to join a full game, an error will be sent back.
+### Edit a game by `id`
+```
+PUT /api/games/:id
+```
 
-If a player tries to join a game that's no longer in process, an error will be sent back.
+#### Payload
+To edit a specific property, send it as a payload.
+```json
+{
+    "name": "Prof's Trivia"
+}
+```
+
+#### Response
+Status `200`. The updated game object is sent back.
+```json
+{
+    "id": "a70dbf49-61f2-4740-a8b7-5547f8bdd30a",
+    "numOfPlayers": 1,
+    "inProgress": true,
+    "name": "Prof's Trivia"
+}
+```
+
+### Join a game by `id`
+Only an in-progress game can be joined; each game can have up to 3 players.
+
+**If a player tries to join a full game or a game that's no longer in progress, an error will be sent back.**
 ```
 PUT /api/games/:id/join
 ```
@@ -160,13 +184,10 @@ Status `200`. The updated game is sent back. `numOfPlayers` is updated automatic
 }
 ```
 
-### Edit a game by `id`
-```
-PUT /api/games/:id
-```
-
 ### Edit a game question's property
-Used to mark question as `complete`. `id` is `gameQuestionId`. **This is here partly for convenience (same route as `api/games/`), but maybe should be moved.**
+Used to mark question as `complete`. `id` is `gameQuestionId`. **When all game questions in a game have been answered, the game will be marked as complete (`inProgress = false`).**
+
+*This is here partly for convenience (same route as `api/games/`), but maybe should be moved?*
 ```
 PUT /api/games/question/:id
 ```
@@ -187,26 +208,6 @@ The updated game question is sent back:
     "completed": true,
     "gameId": "f42364f3-bfe9-4bfd-a5c1-6a1637bf1367",
     "questionId": "30a41bb8-a780-4d29-8852-bcfee555bee8"
-}
-```
-
-
-#### Payload
-To edit a specific property, send it as a payload.
-```json
-{
-    "name": "Prof's Trivia"
-}
-```
-
-#### Response
-Status `200`. The updated game object is sent back.
-```json
-{
-    "id": "a70dbf49-61f2-4740-a8b7-5547f8bdd30a",
-    "numOfPlayers": 1,
-    "inProgress": true,
-    "name": "Prof's Trivia"
 }
 ```
 
@@ -272,7 +273,7 @@ POST /api/questions/:id
 ```
 
 #### Payload
-This route expects a payload.
+This route expects a payload:
 ```json
 {
     "code": "function findMax(arr){return Math.max(...arr)}"
@@ -349,7 +350,9 @@ GET /api/players
 ```
 
 ### Response
-Status `200`. Currently there's no way of telling whether a player is in an active game or not. Not sure if necessary yet.
+Status `200`.
+
+*Currently there's no way of telling whether a player is in an active game or not. Not sure if necessary yet.**
 ```json
 [
     {
