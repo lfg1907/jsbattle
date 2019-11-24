@@ -34,6 +34,9 @@ router
     /* TODO
      * Add score to player if all test cases ran OK
      * playerId should be sent as part of req.body
+     *
+     * There's a lot of logic here... consider moving
+     * it out of the route.
      */
     try {
       // need to destructure `playerId` too
