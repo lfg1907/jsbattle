@@ -1,7 +1,4 @@
 const connection = require('../connection');
-const Player = require('./Player');
-const Question = require('./Question');
-const GameQuestion = require('./GameQuestion');
 
 const { Sequelize } = connection;
 const {
@@ -56,6 +53,8 @@ Game.prototype.findWinningPlayer = function() {
   if (this.inProgress)
     throw new Error('Game is still in progress');
 
+  const Player = connection.models.player;
+
   return Player.findAll({
     where: { gameId: this.id }
   }).then(players => {
@@ -68,6 +67,9 @@ Game.prototype.findWinningPlayer = function() {
 };
 
 Game.prototype.addQuestions = async function(num) {
+  const Question = connection.models.question;
+  const GameQuestion = connection.models.gameQuestion;
+
   const questions = await Question.createSet(num);
   return Promise.all(
     questions.map(question =>
