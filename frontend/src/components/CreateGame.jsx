@@ -25,6 +25,7 @@ const CreateGame = ({ createGame }) => {
 
   return (
     <div id="create-game-container" className="rounded">
+      <h3>Create a game</h3>
       <input
         type="text"
         value={gameName}

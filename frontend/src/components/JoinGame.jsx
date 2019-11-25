@@ -30,6 +30,7 @@ const JoinGame = ({ games }) => {
 
   return (
     <div id="join-game-container" className="rounded">
+      <h3>Or join one</h3>
       <div id="games-list">
         {games.map(game => (
           <div
