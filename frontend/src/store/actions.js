@@ -1,14 +1,20 @@
 import axios from 'axios';
 
-import { FETCH_GAMES, CREATE_GAME } from './constants';
+import {
+  FETCH_USER,
+  FETCH_GAMES,
+  CREATE_GAME
+} from './constants';
 import history from '../history';
 
-// This is a temporary implementation--the first user is fetched
+// This is a temporary implementation
+// the first user is always fetched
 const getUser = () => {
-  return async () => {
+  return async dispatch => {
     const users = (await axios.get('/api/users')).data;
-    const userId = users[0].id;
-    localStorage.setItem('jsBattleUserId', userId);
+    const user = users[0];
+    localStorage.setItem('jsBattleUserId', user.id);
+    dispatch({ type: FETCH_USER, user });
   };
 };
 

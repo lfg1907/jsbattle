@@ -1,9 +1,22 @@
 import { combineReducers } from 'redux';
 
-import { FETCH_GAMES, CREATE_GAME } from './constants';
+import {
+  FETCH_USER,
+  FETCH_GAMES,
+  CREATE_GAME
+} from './constants';
 
 const questionReducer = (state = []) => {
   return state;
+};
+
+const userReducer = (state = {}, action) => {
+  switch (action.type) {
+    case FETCH_USER:
+      return action.user;
+    default:
+      return state;
+  }
 };
 
 const gamesReducer = (state = [], action) => {
@@ -19,6 +32,7 @@ const gamesReducer = (state = [], action) => {
 
 const reducer = combineReducers({
   questions: questionReducer,
+  user: userReducer,
   games: gamesReducer
 });
 
