@@ -1,3 +1,3 @@
-const constants = { SET_QUESTION: 'SET_QUESTION' };
+const constants = { GET_QUESTION: 'GET_QUESTION' };
 
 export default constants;
