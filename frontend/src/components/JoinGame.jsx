@@ -43,7 +43,9 @@ const JoinGame = ({ games }) => {
             aria-checked="false"
             onClick={ev => handleSelect(ev, game.id)}
           >
-            {game.name}
+            {!game.inProgress
+              ? `${game.name} (Not Available)`
+              : game.name}
           </div>
         ))}
       </div>
