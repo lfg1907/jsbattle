@@ -3,6 +3,7 @@ import axios from 'axios';
 import { FETCH_GAMES, CREATE_GAME } from './constants';
 import history from '../history';
 
+// This is a temporary implementation--the first user is fetched
 const getUser = () => {
   return async () => {
     const users = (await axios.get('/api/users')).data;
