@@ -1,5 +1,4 @@
 const connection = require('../connection');
-const Game = require('./Game');
 
 const { Sequelize } = connection;
 const { BOOLEAN, UUID, UUIDV4 } = Sequelize;
@@ -27,18 +26,22 @@ const GameQuestion = connection.define(
   },
   {
     hooks: {
-      afterUpdate(gameQuestion) {
-        GameQuestion.updateGame(gameQuestion.gameId);
+      async afterUpdate(gameQuestion) {
+        await gameQuestion.updateGame();
       }
     }
   }
 );
 
-GameQuestion.updateGame = async function(gameId) {
-  const incompleteGameQuestions = this.findAll({
-    where: { gameId, completed: false }
-  });
-  const game = await Game.findByPk(gameId);
+GameQuestion.prototype.updateGame = async function() {
+  const incompleteGameQuestions = await GameQuestion.findAll(
+    {
+      where: { gameId: this.gameId, completed: false }
+    }
+  );
+
+  const Game = connection.models.game;
+  const game = await Game.findByPk(this.gameId);
 
   if (!incompleteGameQuestions.length) {
     await game.update({ inProgress: false });
