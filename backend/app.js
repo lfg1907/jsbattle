@@ -1,8 +1,10 @@
 const express = require('express');
 const path = require('path');
 
-const runCode = require('./codeRunner');
 const questionsRouter = require('./routes/questions');
+const usersRouter = require('./routes/users');
+const gamesRouter = require('./routes/games');
+const playersRouter = require('./routes/players');
 
 const app = express();
 
@@ -18,23 +20,11 @@ app.get('/', (req, res) => {
   );
 });
 
-// temporary route for testing
-app.post('/api/submit', (req, res, next) => {
-  try {
-    const { code } = req.body;
-
-    // 'Bob' is a temp parameter for code
-    const output = runCode(code, 'Bob');
-    res.send(output);
-  } catch (err) {
-    next({
-      status: 500,
-      message: "Something's wrong with your code..."
-    });
-  }
-});
-
+// ROUTES
 app.use('/api/questions', questionsRouter);
+app.use('/api/users', usersRouter);
+app.use('/api/games', gamesRouter);
+app.use('/api/players', playersRouter);
 
 // eslint-disable-next-line no-unused-vars
 app.use((err, req, res, next) => {
