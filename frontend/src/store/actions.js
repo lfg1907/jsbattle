@@ -6,6 +6,7 @@ import {
   CREATE_GAME
 } from './constants';
 import history from '../history';
+import socket from '../socket';
 
 // This is a temporary implementation
 // the first user is always fetched
@@ -43,6 +44,7 @@ const createGame = name => {
         playerId: player.id
       })
     ).data;
+    socket.emit('create game');
     dispatch({ type: CREATE_GAME, game });
     history.push(`/waiting/${game.id}`);
   };
