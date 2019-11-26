@@ -9,6 +9,8 @@ import {
 import { actions } from '../store';
 
 // Components
+import Home from './Home';
+import WaitingRoom from './WaitingRoom';
 import EditorView from './EditorView';
 
 class App extends Component {
@@ -21,7 +23,9 @@ class App extends Component {
     return (
       <HashRouter>
         <Switch>
+          <Route path="/home" component={Home} />
           <Route path="/editor" component={EditorView} />
+          <Route path="/waiting/:id" component={WaitingRoom} />
           <Redirect to="/editor" />
         </Switch>
       </HashRouter>
