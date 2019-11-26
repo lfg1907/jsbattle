@@ -1,10 +1,10 @@
 import { combineReducers } from 'redux';
-import { GET_QUESTION } from './constants';
+import { GET_ALL_QUESTIONS } from './constants';
 
 const questionReducer = (state = [], action) => {
   switch (action.type) {
-    case GET_QUESTION:
-      return action.question;
+    case GET_ALL_QUESTIONS:
+      return action.questions;
     default:
       return state;
   }

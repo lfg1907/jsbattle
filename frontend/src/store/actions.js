@@ -1,15 +1,21 @@
+/* eslint-disable import/prefer-default-export */
+/* eslint-disable no-underscore-dangle */
 import axios from 'axios';
-import { GET_QUESTION } from './constants';
+import { GET_ALL_QUESTIONS } from './constants';
 
-const _getQuestion = question => {
+const _getAllQuestions = questions => {
   return {
-    question,
-    type: GET_QUESTION
+    questions,
+    type: GET_ALL_QUESTIONS
   };
 };
 
-const getQuestion = () => {
-  return async (dispatch) => {
-    const question = (await axios.get('/question/'))
-  }
-}
+const getAllQuestions = () => {
+  return async dispatch => {
+    const questions = (await axios.get('/api/questions'))
+      .data;
+    return dispatch(_getAllQuestions(questions));
+  };
+};
+
+export { getAllQuestions };

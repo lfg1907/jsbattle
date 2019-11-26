@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 
 import Editor from './Editor';
 
-const EditorPage = () => {
+const EditorPage = ({ questions }) => {
   const [editorValue, setEditorValue] = useState('');
   const handleEditorChange = ev => {
     setEditorValue(ev.target.value);
@@ -13,8 +13,12 @@ const EditorPage = () => {
     // do something here
   }, []);
 
+  if (!questions.length) {
+    return '...loading';
+  }
   return (
     <div>
+      <h3>{questions[0].prompt}</h3>
       <Editor
         value={editorValue}
         onChange={handleEditorChange}
@@ -25,4 +29,10 @@ const EditorPage = () => {
   );
 };
 
-export default connect(null)(EditorPage);
+const mapStateToProps = ({ questions }) => {
+  return {
+    questions
+  };
+};
+
+export default connect(mapStateToProps, null)(EditorPage);

@@ -1,3 +1,4 @@
-const constants = { GET_QUESTION: 'GET_QUESTION' };
+/* eslint-disable import/prefer-default-export */
+const GET_ALL_QUESTIONS = 'GET_ALL_QUESTIONS';
 
-export default constants;
+export { GET_ALL_QUESTIONS };
