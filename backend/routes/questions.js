@@ -71,4 +71,18 @@ router
     }
   });
 
+router.get('/:id/testcases', async (req, res, next) => {
+  try {
+    const question = await Question.findByPk(req.params.id);
+    const testCases = await TestCase.findAll({
+      where: {
+        questionId: question.id
+      }
+    });
+    res.send(testCases);
+  } catch (ex) {
+    next(ex);
+  }
+});
+
 module.exports = router;

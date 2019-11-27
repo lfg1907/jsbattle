@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { connect } from 'react-redux';
 import {
   HashRouter,
@@ -13,40 +13,33 @@ import Home from './Home';
 import WaitingRoom from './WaitingRoom';
 import EditorView from './EditorView';
 
-class App extends Component {
-  componentDidMount() {
-    const { getAllQuestions } = this.props;
-    getAllQuestions();
-  }
-
-  render() {
-    return (
-      <HashRouter>
-        <Switch>
-          <Route path="/home" component={Home} />
-          <Route path="/editor" component={EditorView} />
-          <Route path="/waiting/:id" component={WaitingRoom} />
-          <Redirect to="/editor" />
-        </Switch>
-      </HashRouter>
-    );
-  }
-}
-
-const mapStateToProps = ({ questions }) => {
-  return {
-    questions
-  };
+const App = () => {
+  return (
+    <HashRouter>
+      <Switch>
+        <Route path="/home" component={Home} />
+        <Route path="/editor" component={EditorView} />
+        <Route
+          path="/waiting/:id"
+          component={WaitingRoom}
+        />
+        <Redirect to="/editor" />
+      </Switch>
+    </HashRouter>
+  );
 };
 
-const mapDispatchToProps = dispatch => {
-  return {
-    getAllQuestions: () =>
-      dispatch(actions.getAllQuestions())
-  };
-};
+// const mapStateToProps = ({ questions }) => {
+//   return {
+//     questions
+//   };
+// };
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(App);
+// const mapDispatchToProps = dispatch => {
+//   return {
+//     getAllQuestions: () =>
+//       dispatch(actions.getAllQuestions())
+//   };
+// };
+
+export default connect(null, null)(App);

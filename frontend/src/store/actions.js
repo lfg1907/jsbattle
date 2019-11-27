@@ -3,6 +3,7 @@
 import axios from 'axios';
 import {
   GET_ALL_QUESTIONS,
+  FETCH_TEST_CASES,
   FETCH_USER,
   FETCH_GAMES,
   CREATE_GAME
@@ -21,6 +22,17 @@ const getAllQuestions = () => {
     const questions = (await axios.get('/api/questions'))
       .data;
     return dispatch(_getAllQuestions(questions));
+  };
+};
+
+const fetchTestCases = questionID => {
+  return async dispatch => {
+    const testCases = (
+      await axios.get(
+        `/api/questions/${questionID}/testcases`
+      )
+    ).data;
+    dispatch({ type: FETCH_TEST_CASES, testCases });
   };
 };
 
@@ -65,4 +77,10 @@ const createGame = name => {
   };
 };
 
-export { getAllQuestions, getUser, getGames, createGame };
+export {
+  getAllQuestions,
+  fetchTestCases,
+  getUser,
+  getGames,
+  createGame
+};
