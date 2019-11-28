@@ -1,8 +1,8 @@
 const express = require('express');
 
 const { Question, TestCase } = require('../db/models');
-const runCode = require('../codeRunner');
-const { checkAnswer } = require('../codeRunner/utils');
+const { runTestCases } = require('../codeRunner');
+// const { checkAnswer } = require('../codeRunner/utils');
 
 const router = express.Router();
 router.use(express.json());
@@ -49,21 +49,27 @@ router
         where: { questionId: question.id }
       });
 
-      const outputsToSend = testCases.map(testCase => {
-        const { result, consoles } = runCode(
-          code,
-          functionName,
-          testCase.arguments
-        );
+      // const outputsToSend = testCases.map(testCase => {
+      //   const { result, consoles } = runCode(
+      //     code,
+      //     functionName,
+      //     testCase.arguments
+      //   );
 
-        if (!checkAnswer(result, testCase.answer)) {
-          return {
-            wrong: `Expected ${testCase.answer} but got ${result}`,
-            consoles
-          };
-        }
-        return { result, consoles };
-      });
+      //   if (!checkAnswer(result, testCase.answer)) {
+      //     return {
+      //       wrong: `Expected ${testCase.answer} but got ${result}`,
+      //       consoles
+      //     };
+      //   }
+      //   return { result, consoles };
+      // });
+
+      const outputsToSend = runTestCases(
+        code,
+        functionName,
+        testCases
+      );
 
       res.send(outputsToSend);
     } catch (ex) {
@@ -80,6 +86,27 @@ router.get('/:id/testcases', async (req, res, next) => {
       }
     });
     res.send(testCases);
+  } catch (ex) {
+    next(ex);
+  }
+});
+
+router.get('/:id/runtests', async (req, res, next) => {
+  try {
+    const { code } = req.body;
+    const question = await Question.findByPk(req.params.id);
+    const { functionName } = question;
+    const testCases = await TestCase.findAll({
+      where: { questionId: question.id }
+    });
+
+    const outputsToSend = runTestCases(
+      code,
+      functionName,
+      testCases
+    );
+
+    res.send(outputsToSend);
   } catch (ex) {
     next(ex);
   }

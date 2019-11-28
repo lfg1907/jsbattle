@@ -25,6 +25,13 @@ const EditorPage = ({
 
   getTestCases(questions[0].id);
 
+  const testCode = () => {
+    document.querySelector('#test-results').innerHTML =
+      "This don't work";
+    document.querySelector('#test-results').style.color =
+      'red';
+  };
+
   // always shows first question for now
   // when all test cases are in, show random question
 
@@ -35,11 +42,11 @@ const EditorPage = ({
         value={editorValue}
         onChange={handleEditorChange}
       />
-      <div className="test-case-div">
+      <div id="test-case-div">
         <h4>Test Cases:</h4>
         <ul>
           {testCases.map(testCase => (
-            <li>
+            <li key={testCase.id}>
               {`${testCase.arguments} `}
               should yield
               {` ${testCase.answer}`}
@@ -47,8 +54,11 @@ const EditorPage = ({
           ))}
         </ul>
       </div>
+      <div id="test-results" />
 
-      <button type="button">Test</button>
+      <button type="button" onClick={testCode}>
+        Test
+      </button>
       <button type="button">Submit</button>
     </div>
   );
