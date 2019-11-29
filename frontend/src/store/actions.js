@@ -7,6 +7,7 @@ import {
 } from './constants';
 import history from '../history';
 import socket from '../socket';
+import { sortByCreated } from '../utils';
 
 // This is a temporary implementation
 // the first user is always fetched
@@ -22,7 +23,8 @@ const getUser = () => {
 const getGames = () => {
   return async dispatch => {
     const games = (await axios.get('/api/games')).data;
-    dispatch({ type: FETCH_GAMES, games });
+    const sortedGames = sortByCreated(games);
+    dispatch({ type: FETCH_GAMES, games: sortedGames });
   };
 };
 
@@ -44,10 +46,16 @@ const createGame = name => {
         playerId: player.id
       })
     ).data;
-    socket.emit('create game');
+    socket.emit('game created', { game });
     dispatch({ type: CREATE_GAME, game });
     history.push(`/waiting/${game.id}`);
   };
 };
 
-export { getUser, getGames, createGame };
+const addGame = game => {
+  return dispatch => {
+    dispatch({ type: CREATE_GAME, game });
+  };
+};
+
+export { getUser, getGames, createGame, addGame };
