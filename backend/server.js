@@ -8,7 +8,7 @@ const db = require('./db');
 const PORT = process.env.PORT || 8000;
 
 let io;
-let createGameSocket;
+const readyCount = {};
 db.sync(true)
   .then(() => {
     const server = app.listen(PORT, () =>
@@ -23,6 +23,28 @@ db.sync(true)
         console.log(`game created by ${socket.id}`);
         socket.broadcast.emit('game created', gameData);
       });
+
+      socket.on('join game', gameData => {
+        const { game } = gameData;
+        console.log(`${socket.id} joined ${game.id}`);
+        io.sockets.emit('game joined', { game });
+      });
+
+      socket.on('player ready', gameData => {
+        const { game } = gameData;
+
+        if (!readyCount[game.id]) {
+          readyCount[game.id] = 1;
+        } else {
+          readyCount[game.id] += 1;
+        }
+
+        if (readyCount[game.id] === game.numOfPlayers) {
+          io.sockets.emit('game ready', {
+            gameId: game.id
+          });
+        }
+      });
     });
   })
   .catch(e =>
@@ -30,5 +52,3 @@ db.sync(true)
       `Failed to load app on port ${PORT} with error: ${e}`
     )
   );
-
-module.exports = { createGameSocket };
