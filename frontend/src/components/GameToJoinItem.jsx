@@ -10,16 +10,16 @@ const GameToJoinItem = ({ game, handleSelect }) => {
     }
   });
 
-  const [status, setStatus] = useState('');
+  const [displayStatus, setDisplayStatus] = useState('');
   useEffect(() => {
     if (currentGame.status === 'IN_PROGRESS') {
-      setStatus('In Progress');
+      setDisplayStatus('In Progress');
     } else if (currentGame.status === 'COMPLETED') {
-      setStatus('Completed');
+      setDisplayStatus('Completed');
     } else if (currentGame.numOfPlayers >= 3) {
-      setStatus('Full');
+      setDisplayStatus('Full');
     } else {
-      setStatus(`${currentGame.numOfPlayers}/3`);
+      setDisplayStatus(`${currentGame.numOfPlayers}/3`);
     }
   }, [currentGame]);
 
@@ -27,18 +27,17 @@ const GameToJoinItem = ({ game, handleSelect }) => {
     // eslint-disable-next-line
     <div
       className={
-        status === 'In Progress' ||
-        status === 'Completed' ||
-        status === 'Full'
-          ? 'game inactive-game'
-          : 'game'
+        currentGame.status !== 'STARTING' &&
+        currentGame.numOfPlayers < 3
+          ? 'game'
+          : 'game inactive-game'
       }
       key={game.id}
       role="radio"
       aria-checked="false"
       onClick={ev => handleSelect(ev, game.id)}
     >
-      {`${game.name} ${status ? `(${status})` : ''}`}
+      {`${game.name} (${displayStatus})`}
     </div>
   );
 };
