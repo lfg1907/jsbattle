@@ -39,6 +39,7 @@ const JoinGame = ({ games, joinGame }) => {
       <div id="games-list">
         {games.map(game => (
           <GameToJoinItem
+            key={game.id}
             game={game}
             handleSelect={handleSelect}
           />
