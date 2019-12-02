@@ -1,24 +1,26 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
+import io from 'socket.io-client';
 
 import history from '../history';
-import socket from '../socket';
+import socket, { ADDRESS } from '../socket';
 import { actions } from '../store';
 
-const WaitingRoom = ({
-  game,
-  match: { params },
-  getQuestions
-}) => {
+const WaitingRoom = ({ game, getQuestions }) => {
+  const gameSocket = io.connect(`${ADDRESS}/game`);
   useEffect(() => {
+    socket.emit('join game', { game });
+
+    gameSocket.on('connect', () => {
+      gameSocket.emit('join room', { game });
+    });
+
     getQuestions(game.id);
   }, []);
 
   const [currentGame, setCurrentGame] = useState(game);
-  socket.on('game joined', gameData => {
-    if (gameData.game.id === params.id) {
-      setCurrentGame(gameData.game);
-    }
+  gameSocket.on('room joined', gameData => {
+    setCurrentGame(gameData.game);
   });
 
   const [readyToStart, setReadyToStart] = useState(false);
@@ -31,15 +33,12 @@ const WaitingRoom = ({
   const handleReady = ev => {
     // eslint-disable-next-line no-param-reassign
     ev.target.disabled = true;
-    socket.emit('player ready', { game: currentGame });
+    gameSocket.emit('player ready', { game: currentGame });
   };
 
-  socket.on('game ready', gameData => {
+  gameSocket.on('game ready', () => {
     // When all players are ready, game is ready
-    const { gameId } = gameData;
-    if (gameId === params.id) {
-      history.push(`/game/${gameId}`);
-    }
+    history.push(`/game/${currentGame.id}`);
   });
 
   return (

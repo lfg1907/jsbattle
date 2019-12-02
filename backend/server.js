@@ -7,16 +7,16 @@ const db = require('./db');
 
 const PORT = process.env.PORT || 8000;
 
-let io;
-const readyCount = {};
 db.sync(true)
   .then(() => {
     const server = app.listen(PORT, () =>
       console.log(`\nApplication running on port ${PORT}\n`)
     );
 
-    io = socketio(server);
-    io.sockets.on('connection', socket => {
+    const io = socketio(server);
+
+    // Default connection
+    io.on('connection', socket => {
       console.log(`connected: ${socket.id}`);
 
       socket.on('game created', gameData => {
@@ -27,7 +27,19 @@ db.sync(true)
       socket.on('join game', gameData => {
         const { game } = gameData;
         console.log(`${socket.id} joined ${game.id}`);
-        io.sockets.emit('game joined', { game });
+        socket.broadcast.emit('game joined', gameData);
+      });
+    });
+
+    // Game connection
+    const readyCount = {};
+    io.of('/game').on('connection', socket => {
+      socket.on('join room', ({ game }) => {
+        console.log(`connected to room ${game.id}`);
+        socket.join(game.id);
+        socket.broadcast
+          .in(game.id)
+          .emit('room joined', { game });
       });
 
       socket.on('player ready', gameData => {
@@ -40,9 +52,9 @@ db.sync(true)
         }
 
         if (readyCount[game.id] === game.numOfPlayers) {
-          io.sockets.emit('game ready', {
-            gameId: game.id
-          });
+          io.of('/game')
+            .in(game.id)
+            .emit('game ready');
         }
       });
     });

@@ -8,7 +8,7 @@ import { actions } from '../store';
 // Components
 import Home from './Home';
 import WaitingRoom from './WaitingRoom';
-import GameView from "./GameView"
+import GameView from './GameView';
 import EditorView from './EditorView';
 
 const App = ({ addGameByOthers }) => {
