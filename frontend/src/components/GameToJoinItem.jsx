@@ -1,34 +1,24 @@
 import React, { useState, useEffect } from 'react';
 
-import socket from '../socket';
-
 const GameToJoinItem = ({ game, handleSelect }) => {
-  const [currentGame, setCurrentGame] = useState(game);
-  socket.on('game joined', gameData => {
-    if (gameData.game.id === currentGame.id) {
-      setCurrentGame(gameData.game);
-    }
-  });
-
   const [displayStatus, setDisplayStatus] = useState('');
   useEffect(() => {
-    if (currentGame.status === 'IN_PROGRESS') {
+    if (game.status === 'IN_PROGRESS') {
       setDisplayStatus('In Progress');
-    } else if (currentGame.status === 'COMPLETED') {
+    } else if (game.status === 'COMPLETED') {
       setDisplayStatus('Completed');
-    } else if (currentGame.numOfPlayers >= 3) {
+    } else if (game.numOfPlayers >= 3) {
       setDisplayStatus('Full');
     } else {
-      setDisplayStatus(`${currentGame.numOfPlayers}/3`);
+      setDisplayStatus(`${game.numOfPlayers}/3`);
     }
-  }, [currentGame]);
+  }, [game]);
 
   return (
     // eslint-disable-next-line
     <div
       className={
-        currentGame.status === 'STARTING' &&
-        currentGame.numOfPlayers < 3
+        game.status === 'STARTING' && game.numOfPlayers < 3
           ? 'game'
           : 'game inactive-game'
       }

@@ -109,6 +109,12 @@ const joinGame = (gameId, playerId) => {
   };
 };
 
+const updateGame = updatedGame => {
+  return dispatch => {
+    dispatch({ type: UPDATE_GAME, game: updatedGame });
+  };
+};
+
 const addGame = game => {
   return dispatch => {
     dispatch({ type: CREATE_GAME, game });
@@ -133,5 +139,6 @@ export {
   createGame,
   addGame,
   joinGame,
+  updateGame,
   getGameQuestions
 };
