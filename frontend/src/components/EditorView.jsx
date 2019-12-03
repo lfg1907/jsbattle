@@ -7,12 +7,17 @@ import Editor from './Editor';
 const EditorPage = ({
   questions,
   testCases,
+  testResults,
   getAllQuestions,
-  getTestCases
+  getTestCases,
+  getTestResults
 }) => {
   const [editorValue, setEditorValue] = useState('');
+  const [testCasesLoaded, setTestCasesLoaded] = useState(
+    false
+  );
   const handleEditorChange = ev => {
-    setEditorValue(ev.target.value);
+    setEditorValue(ev.doc.getValue());
   };
 
   useEffect(() => {
@@ -23,13 +28,17 @@ const EditorPage = ({
     return '...loading';
   }
 
-  getTestCases(questions[0].id);
+  if (!testCasesLoaded) {
+    getTestCases(questions[0].id);
+    setTestCasesLoaded(true);
+  }
+
+  const countWrongResults = results => {
+    return results.filter(result => !!result.wrong).length;
+  };
 
   const testCode = () => {
-    document.querySelector('#test-results').innerHTML =
-      "This don't work";
-    document.querySelector('#test-results').style.color =
-      'red';
+    getTestResults(questions[0].id, editorValue);
   };
 
   // always shows first question for now
@@ -54,7 +63,40 @@ const EditorPage = ({
           ))}
         </ul>
       </div>
-      <div id="test-results" />
+      <div id="console-logs">
+        {testResults.length &&
+        testResults[0].consoles.length ? (
+          <div>
+            <h4>Log:</h4>
+            <ul>
+              {testResults[0].consoles.map(c => (
+                <li>{c}</li>
+              ))}
+            </ul>
+          </div>
+        ) : (
+          ''
+        )}
+      </div>
+      <div id="test-results">
+        {testResults
+          ? testResults.map(output => {
+              if (output.wrong)
+                return (
+                  <p className="wrong">{output.wrong}</p>
+                );
+              return (
+                <p className="right">{output.result}</p>
+              );
+            })
+          : ''}
+        {testResults.length &&
+        !countWrongResults(testResults) ? (
+          <h4>All tests pass!</h4>
+        ) : (
+          ''
+        )}
+      </div>
 
       <button type="button" onClick={testCode}>
         Test
@@ -64,10 +106,15 @@ const EditorPage = ({
   );
 };
 
-const mapStateToProps = ({ questions, testCases }) => {
+const mapStateToProps = ({
+  questions,
+  testCases,
+  testResults
+}) => {
   return {
     questions,
-    testCases
+    testCases,
+    testResults
   };
 };
 
@@ -75,6 +122,8 @@ const mapDispatchToProps = dispatch => {
   return {
     getTestCases: qID =>
       dispatch(actions.fetchTestCases(qID)),
+    getTestResults: (qID, code) =>
+      dispatch(actions.fetchTestResults(qID, code)),
     getAllQuestions: () =>
       dispatch(actions.getAllQuestions())
   };

@@ -2,6 +2,7 @@ import { combineReducers } from 'redux';
 import {
   GET_ALL_QUESTIONS,
   FETCH_TEST_CASES,
+  FETCH_TEST_RESULTS,
   FETCH_USER,
   FETCH_GAMES,
   CREATE_GAME
@@ -45,11 +46,21 @@ const testCaseReducer = (state = [], action) => {
   }
 };
 
+const testResultsReducer = (state = [], action) => {
+  switch (action.type) {
+    case FETCH_TEST_RESULTS:
+      return action.testResults;
+    default:
+      return state;
+  }
+};
+
 const reducer = combineReducers({
   questions: questionReducer,
   user: userReducer,
   games: gamesReducer,
-  testCases: testCaseReducer
+  testCases: testCaseReducer,
+  testResults: testResultsReducer
 });
 
 export default reducer;

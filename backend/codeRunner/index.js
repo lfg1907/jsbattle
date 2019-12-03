@@ -12,12 +12,10 @@ const runCode = (code, funcName, testArgs) => {
       }
     }
   });
-
   const funcResult = vm.run(
     `${code}
     ${funcName}(${testArgs})`
   );
-
   return {
     result: funcResult,
     consoles: consoles.map(c => c.join(' '))

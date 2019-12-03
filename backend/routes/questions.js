@@ -91,7 +91,7 @@ router.get('/:id/testcases', async (req, res, next) => {
   }
 });
 
-router.get('/:id/runtests', async (req, res, next) => {
+router.post('/:id/runtests', async (req, res, next) => {
   try {
     const { code } = req.body;
     const question = await Question.findByPk(req.params.id);
@@ -105,7 +105,6 @@ router.get('/:id/runtests', async (req, res, next) => {
       functionName,
       testCases
     );
-
     res.send(outputsToSend);
   } catch (ex) {
     next(ex);
