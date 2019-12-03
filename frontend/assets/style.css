@@ -105,3 +105,11 @@ html { font-family: 'Inter', sans-serif; }
   color: gray;
 }
 
+.right {
+  color: green
+}
+
+.wrong {
+  color: red
+}
+

@@ -120,7 +120,7 @@ const seed = async () => {
     p2game2.joinGame(game2)
   ]);
 
-  await game2.update({ status: IN_PROGRESS });
+  await game2.update({ status: 'IN_PROGRESS' });
 
   setupTestCases(TEST_CASES_FOLDER, async file => {
     const seedData = getSeedFileData(

@@ -1,6 +1,8 @@
 import { combineReducers } from 'redux';
-
 import {
+  GET_ALL_QUESTIONS,
+  FETCH_TEST_CASES,
+  FETCH_TEST_RESULTS,
   FETCH_USER,
   FETCH_GAMES,
   CREATE_GAME,
@@ -10,6 +12,8 @@ import {
 
 const questionReducer = (state = [], action) => {
   switch (action.type) {
+    case GET_ALL_QUESTIONS:
+      return action.questions;
     case FETCH_QUESTIONS:
       return action.questions;
     default:
@@ -44,10 +48,30 @@ const gamesReducer = (state = [], action) => {
   }
 };
 
+const testCaseReducer = (state = [], action) => {
+  switch (action.type) {
+    case FETCH_TEST_CASES:
+      return action.testCases;
+    default:
+      return state;
+  }
+};
+
+const testResultsReducer = (state = [], action) => {
+  switch (action.type) {
+    case FETCH_TEST_RESULTS:
+      return action.testResults;
+    default:
+      return state;
+  }
+};
+
 const reducer = combineReducers({
   questions: questionReducer,
   user: userReducer,
-  games: gamesReducer
+  games: gamesReducer,
+  testCases: testCaseReducer,
+  testResults: testResultsReducer
 });
 
 export default reducer;

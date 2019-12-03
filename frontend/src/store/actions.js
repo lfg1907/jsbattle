@@ -1,6 +1,10 @@
+/* eslint-disable import/prefer-default-export */
+/* eslint-disable no-underscore-dangle */
 import axios from 'axios';
-
 import {
+  GET_ALL_QUESTIONS,
+  FETCH_TEST_CASES,
+  FETCH_TEST_RESULTS,
   FETCH_USER,
   FETCH_GAMES,
   CREATE_GAME,
@@ -10,6 +14,44 @@ import {
 import history from '../history';
 import socket from '../socket';
 import { sortByCreated } from '../utils';
+
+const _getAllQuestions = questions => {
+  return {
+    questions,
+    type: GET_ALL_QUESTIONS
+  };
+};
+
+const getAllQuestions = () => {
+  return async dispatch => {
+    const questions = (await axios.get('/api/questions'))
+      .data;
+    return dispatch(_getAllQuestions(questions));
+  };
+};
+
+const fetchTestCases = questionID => {
+  return async dispatch => {
+    const testCases = (
+      await axios.get(
+        `/api/questions/${questionID}/testcases`
+      )
+    ).data;
+    dispatch({ type: FETCH_TEST_CASES, testCases });
+  };
+};
+
+const fetchTestResults = (questionID, code) => {
+  return async dispatch => {
+    const testResults = (
+      await axios.post(
+        `/api/questions/${questionID}/runtests`,
+        { code }
+      )
+    ).data;
+    dispatch({ type: FETCH_TEST_RESULTS, testResults });
+  };
+};
 
 // This is a temporary implementation
 // the first user is always fetched
@@ -83,6 +125,9 @@ const getGameQuestions = gameId => {
 };
 
 export {
+  getAllQuestions,
+  fetchTestCases,
+  fetchTestResults,
   getUser,
   getGames,
   createGame,

@@ -1,9 +1,9 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { HashRouter, Route } from 'react-router-dom';
+import { actions } from '../store';
 
 import socket from '../socket';
-import { actions } from '../store';
 
 // Components
 import Home from './Home';
