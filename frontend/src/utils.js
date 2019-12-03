@@ -5,4 +5,10 @@ const titleCase = phrase => {
     .join(' ');
 };
 
-export { titleCase };
+const sortByCreated = games => {
+  return [...games].sort(
+    (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
+  );
+};
+
+export { titleCase, sortByCreated };

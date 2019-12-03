@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 
-const JoinGame = ({ games }) => {
+import { actions } from '../store';
+
+const JoinGame = ({ games, joinGame }) => {
   const [selectedGameId, setSelectedGameId] = useState('');
 
   // useEffect(() => {
@@ -24,8 +26,10 @@ const JoinGame = ({ games }) => {
   };
 
   const handleSubmit = () => {
-    console.log(selectedGameId);
-    // dispatch
+    const playerId = localStorage.getItem(
+      'jsBattlePlayerId'
+    );
+    joinGame(selectedGameId, playerId);
   };
 
   return (
@@ -46,7 +50,7 @@ const JoinGame = ({ games }) => {
           >
             {!game.inProgress
               ? `${game.name} (Not Available)`
-              : game.name}
+              : `${game.name} (${game.numOfPlayers}/3)`}
           </div>
         ))}
       </div>
@@ -59,4 +63,13 @@ const JoinGame = ({ games }) => {
 
 const mapStateToprops = ({ games }) => ({ games });
 
-export default connect(mapStateToprops)(JoinGame);
+const mapDispatchToProps = dispatch => ({
+  joinGame(gameId, playerId) {
+    dispatch(actions.joinGame(gameId, playerId));
+  }
+});
+
+export default connect(
+  mapStateToprops,
+  mapDispatchToProps
+)(JoinGame);
