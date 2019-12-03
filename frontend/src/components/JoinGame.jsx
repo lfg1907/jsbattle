@@ -1,7 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { connect } from 'react-redux';
 
-const JoinGame = ({ games }) => {
+import { actions } from '../store';
+
+import GameToJoinItem from './GameToJoinItem';
+
+const JoinGame = ({ games, joinGame }) => {
   const [selectedGameId, setSelectedGameId] = useState('');
 
   // useEffect(() => {
@@ -14,40 +18,31 @@ const JoinGame = ({ games }) => {
     );
     siblings.forEach(elmt => {
       elmt.className = elmt.className.replace(
-        'game-to-join',
+        ' game-to-join',
         ''
       );
     });
-    console.log(ev.target.className);
     ev.target.className = `${`${ev.target.className} game-to-join`}`;
     setSelectedGameId(gameId);
   };
 
   const handleSubmit = () => {
-    console.log(selectedGameId);
-    // dispatch
+    const playerId = localStorage.getItem(
+      'jsBattlePlayerId'
+    );
+    joinGame(selectedGameId, playerId);
   };
 
   return (
-    <div id="join-game-container" className="rounded">
+    <div id="join-game-container">
       <h3>Or join one</h3>
       <div id="games-list">
         {games.map(game => (
-          <div
-            className={
-              !game.inProgress
-                ? 'game inactive-game'
-                : 'game'
-            }
+          <GameToJoinItem
             key={game.id}
-            role="radio"
-            aria-checked="false"
-            onClick={ev => handleSelect(ev, game.id)}
-          >
-            {!game.inProgress
-              ? `${game.name} (Not Available)`
-              : game.name}
-          </div>
+            game={game}
+            handleSelect={handleSelect}
+          />
         ))}
       </div>
       <button type="button" onClick={handleSubmit}>
@@ -59,4 +54,13 @@ const JoinGame = ({ games }) => {
 
 const mapStateToprops = ({ games }) => ({ games });
 
-export default connect(mapStateToprops)(JoinGame);
+const mapDispatchToProps = dispatch => ({
+  joinGame(gameId, playerId) {
+    dispatch(actions.joinGame(gameId, playerId));
+  }
+});
+
+export default connect(
+  mapStateToprops,
+  mapDispatchToProps
+)(JoinGame);
