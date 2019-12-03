@@ -1,45 +1,36 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import {
-  HashRouter,
-  Route,
-  Switch,
-  Redirect
-} from 'react-router-dom';
+import { HashRouter, Route } from 'react-router-dom';
 import { actions } from '../store';
+
+import socket from '../socket';
 
 // Components
 import Home from './Home';
 import WaitingRoom from './WaitingRoom';
+import GameView from './GameView';
 import EditorView from './EditorView';
 
-const App = () => {
+const App = ({ addGameByOthers }) => {
+  socket.on('game created', gameData => {
+    const { game } = gameData;
+    addGameByOthers(game);
+  });
+
   return (
     <HashRouter>
-      <Switch>
-        <Route path="/home" component={Home} />
-        <Route path="/editor" component={EditorView} />
-        <Route
-          path="/waiting/:id"
-          component={WaitingRoom}
-        />
-        <Redirect to="/editor" />
-      </Switch>
+      <Route path="/home" component={Home} />
+      <Route path="/editor" component={EditorView} />
+      <Route path="/waiting/:id" component={WaitingRoom} />
+      <Route path="/game/:id" component={GameView} />
     </HashRouter>
   );
 };
 
-// const mapStateToProps = ({ questions }) => {
-//   return {
-//     questions
-//   };
-// };
+const mapDispatchToProps = dispatch => ({
+  addGameByOthers(game) {
+    dispatch(actions.addGame(game));
+  }
+});
 
-// const mapDispatchToProps = dispatch => {
-//   return {
-//     getAllQuestions: () =>
-//       dispatch(actions.getAllQuestions())
-//   };
-// };
-
-export default connect(null, null)(App);
+export default connect(null, mapDispatchToProps)(App);

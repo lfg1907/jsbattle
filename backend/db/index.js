@@ -22,7 +22,7 @@ GameQuestion.belongsTo(Question);
 Game.hasMany(GameQuestion);
 GameQuestion.belongsTo(Game);
 
-Question.hasMany(TestCase, { foreignKey: 'testcaseId' });
+Question.hasMany(TestCase);
 TestCase.belongsTo(Question, { foreignKey: 'questionId' });
 
 const sync = async (force = false) => {

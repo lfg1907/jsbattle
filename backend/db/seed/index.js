@@ -13,14 +13,17 @@ const {
 const SEED_FOLDER = path.resolve(__dirname, './data');
 const SEED_FILES = [
   { model: Question, file: 'questions.json' },
-  { model: TestCase, file: 'q1TestCases.json' },
-  { model: TestCase, file: 'q2TestCases.json' },
   { model: Game, file: 'games.json' },
   { model: User, file: 'users.json' },
   { model: Player, file: 'user1Players.json' },
   { model: Player, file: 'user2Players.json' },
   { model: Player, file: 'user3Players.json' }
 ];
+
+const TEST_CASES_FOLDER = path.join(
+  SEED_FOLDER,
+  '/testCases'
+);
 
 const createModelData = (data, Model, options = {}) => {
   return Promise.all(
@@ -30,16 +33,25 @@ const createModelData = (data, Model, options = {}) => {
   );
 };
 
-const getSeedFileData = file => {
-  const jsonData = fs.readFileSync(
-    path.join(SEED_FOLDER, file)
-  );
+const getSeedFileData = (dir, file) => {
+  const jsonData = fs.readFileSync(path.join(dir, file));
   return JSON.parse(jsonData);
 };
 
+const setupTestCases = (dir, cb) => {
+  fs.readdir(dir, async (err, files) => {
+    if (err) throw err;
+
+    // eslint-disable-next-line no-plusplus
+    for (let i = 0; i < files.length; i++) {
+      // eslint-disable-next-line no-await-in-loop
+      await cb(files[i]);
+    }
+  });
+};
+
 const seed = async () => {
-  let q1;
-  let q2;
+  let questions;
   let game1;
   let game2;
   let user1;
@@ -54,21 +66,11 @@ const seed = async () => {
   /* eslint-disable no-plusplus, no-await-in-loop */
   for (let i = 0; i < SEED_FILES.length; i++) {
     const { model, file } = SEED_FILES[i];
-    const seedData = getSeedFileData(file);
+    const seedData = getSeedFileData(SEED_FOLDER, file);
 
     switch (file.split('.')[0]) {
       case 'questions':
-        [q1, q2] = await createModelData(seedData, model);
-        break;
-      case 'q1TestCases':
-        await createModelData(seedData, model, {
-          questionId: q1.id
-        });
-        break;
-      case 'q2TestCases':
-        await createModelData(seedData, model, {
-          questionId: q2.id
-        });
+        questions = await createModelData(seedData, model);
         break;
       case 'games':
         [game1, game2] = await createModelData(
@@ -118,7 +120,20 @@ const seed = async () => {
     p2game2.joinGame(game2)
   ]);
 
-  await game2.update({ inProgress: false });
+  await game2.update({ status: 'IN_PROGRESS' });
+
+  setupTestCases(TEST_CASES_FOLDER, async file => {
+    const seedData = getSeedFileData(
+      TEST_CASES_FOLDER,
+      file
+    );
+    const questionIdx =
+      parseInt(file.split('.')[0].replace('q', ''), 10) - 1;
+
+    await createModelData(seedData, TestCase, {
+      questionId: questions[questionIdx].id
+    });
+  });
 };
 
 module.exports = seed;

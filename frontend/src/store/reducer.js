@@ -5,12 +5,16 @@ import {
   FETCH_TEST_RESULTS,
   FETCH_USER,
   FETCH_GAMES,
-  CREATE_GAME
+  CREATE_GAME,
+  UPDATE_GAME,
+  FETCH_QUESTIONS
 } from './constants';
 
 const questionReducer = (state = [], action) => {
   switch (action.type) {
     case GET_ALL_QUESTIONS:
+      return action.questions;
+    case FETCH_QUESTIONS:
       return action.questions;
     default:
       return state;
@@ -32,6 +36,13 @@ const gamesReducer = (state = [], action) => {
       return action.games;
     case CREATE_GAME:
       return [action.game, ...state];
+    case UPDATE_GAME:
+      return state.map(game => {
+        if (game.id === action.game.id) {
+          return action.game;
+        }
+        return game;
+      });
     default:
       return state;
   }
