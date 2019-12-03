@@ -1,13 +1,7 @@
 const connection = require('../connection');
 
 const { Sequelize } = connection;
-const {
-  BOOLEAN,
-  INTEGER,
-  STRING,
-  UUID,
-  UUIDV4
-} = Sequelize;
+const { ENUM, INTEGER, STRING, UUID, UUIDV4 } = Sequelize;
 
 const MAX_PLAYERS = 3;
 const NUM_QUESTIONS = 5;
@@ -35,9 +29,10 @@ const Game = connection.define(
         max: MAX_PLAYERS
       }
     },
-    inProgress: {
-      type: BOOLEAN,
-      defaultValue: true
+    status: {
+      type: ENUM,
+      values: ['STARTING', 'IN_PROGRESS', 'COMPLETED'],
+      defaultValue: 'STARTING'
     }
   },
   {
@@ -50,7 +45,7 @@ const Game = connection.define(
 );
 
 Game.prototype.findWinningPlayer = function() {
-  if (this.inProgress)
+  if (this.status === 'IN_PROGRESS')
     throw new Error('Game is still in progress');
 
   const Player = connection.models.player;

@@ -37,13 +37,13 @@ Status `200`
         "id": "f8c18e16-2a74-4634-ac35-37c77721ae84",
         "name": "JS Trivia @ Kilarney & Rose",
         "numOfPlayers": 3,
-        "inProgress": true
+        "status": "STARTING"
     },
     {
         "id": "90e8c3af-4a49-4e5e-882d-0cdbe048c026",
         "name": "Best Game Ever",
         "numOfPlayers": 2,
-        "inProgress": false
+        "status": "IN_PROGRESS"
     }
 ]
 ```
@@ -59,7 +59,7 @@ GET /api/games/:id/players
 ```
 
 ### Return winner of a game
-Game has to be finished for there to be a winner (ie. `inProgress = false`).
+Game has to be finished for there to be a winner (ie. `"status": "COMPLETED"`).
 ```
 GET /api/games/:id/winner
 ```
@@ -122,12 +122,12 @@ This route takes 1 mandatory property (`name`) and 1 optional property (`playerI
 ```
 
 #### Response
-Status `201`. A new game object is sent back. If there is a host, `numOfPlayers` will reflect this. `inProgress` defaults to `true`.
+Status `201`. A new game object is sent back. If there is a host, `numOfPlayers` will reflect this. `status` defaults to `STARTING`.
 ```json
 {
     "id": "a70dbf49-61f2-4740-a8b7-5547f8bdd30a",
     "numOfPlayers": 1,
-    "inProgress": true,
+    "status": "STARTING",
     "name": "Flex 1907 Trivia"
 }
 ```
@@ -152,15 +152,15 @@ Status `200`. The updated game object is sent back.
 {
     "id": "a70dbf49-61f2-4740-a8b7-5547f8bdd30a",
     "numOfPlayers": 1,
-    "inProgress": true,
+    "status": "STARTING",
     "name": "Prof's Trivia"
 }
 ```
 
 ### Join a game by `id`
-Only an in-progress game can be joined; each game can have up to 3 players.
+Only an `STARTING` game can be joined; each game can have up to 3 players.
 
-**If a player tries to join a full game or a game that's no longer in progress, an error will be sent back.**
+**If a player tries to join a full game or a game that's already `IN_PROGRESS` or `COMPLETED`, an error will be sent back.**
 ```
 PUT /api/games/:id/join
 ```
@@ -180,12 +180,12 @@ Status `200`. The updated game is sent back. `numOfPlayers` is updated automatic
     "id": "a70dbf49-61f2-4740-a8b7-5547f8bdd30a",
     "name": "Prof's Trivia",
     "numOfPlayers": 2,
-    "inProgress": true
+    "status": "STARTING"
 }
 ```
 
 ### Edit a game question's property
-Used to mark question as `complete`. `id` is `gameQuestionId`. **When all game questions in a game have been answered, the game will be marked as complete (`inProgress = false`).**
+Used to mark question as `complete`. `id` is `gameQuestionId`. **When all game questions in a game have been answered, the game will be marked as complete (`"status": "COMPLETED"`).**
 
 *This is here partly for convenience (same route as `api/games/`), but maybe should be moved?*
 ```
