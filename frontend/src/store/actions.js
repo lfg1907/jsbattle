@@ -2,31 +2,31 @@
 /* eslint-disable no-underscore-dangle */
 import axios from 'axios';
 import {
-  GET_ALL_QUESTIONS,
+  GET_GAME_QUESTIONS,
   FETCH_TEST_CASES,
   FETCH_TEST_RESULTS,
   FETCH_USER,
   FETCH_GAMES,
   CREATE_GAME,
-  UPDATE_GAME,
-  FETCH_QUESTIONS
+  UPDATE_GAME
 } from './constants';
 import history from '../history';
 import socket from '../socket';
 import { sortByCreated } from '../utils';
 
-const _getAllQuestions = questions => {
+const _getGameQuestions = questions => {
   return {
     questions,
-    type: GET_ALL_QUESTIONS
+    type: GET_GAME_QUESTIONS
   };
 };
 
-const getAllQuestions = () => {
+const getGameQuestions = gameId => {
   return async dispatch => {
-    const questions = (await axios.get('/api/questions'))
-      .data;
-    return dispatch(_getAllQuestions(questions));
+    const questions = (
+      await axios.get(`/api/games/${gameId}/questions`)
+    ).data;
+    return dispatch(_getGameQuestions(questions));
   };
 };
 
@@ -115,23 +115,13 @@ const addGame = game => {
   };
 };
 
-const getGameQuestions = gameId => {
-  return async dispatch => {
-    const questions = (
-      await axios.get(`api/games/${gameId}/questions`)
-    ).data;
-    dispatch({ type: FETCH_QUESTIONS, questions });
-  };
-};
-
 export {
-  getAllQuestions,
+  getGameQuestions,
   fetchTestCases,
   fetchTestResults,
   getUser,
   getGames,
   createGame,
   addGame,
-  joinGame,
-  getGameQuestions
+  joinGame
 };
