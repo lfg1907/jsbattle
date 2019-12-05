@@ -25,9 +25,9 @@ const QuestionView = ({
         <ul>
           {testCases.map(testCase => (
             <li key={testCase.id}>
-              {`${testCase.arguments} `}
+              <span className="code">{`${testCase.arguments} `}</span>
               should yield
-              {` ${testCase.answer}`}
+              <span className="code">{` ${testCase.answer}`}</span>
             </li>
           ))}
         </ul>
