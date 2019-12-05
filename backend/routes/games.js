@@ -3,7 +3,8 @@ const express = require('express');
 const {
   Game,
   GameQuestion,
-  Player
+  Player,
+  Question
 } = require('../db/models');
 
 const router = express.Router();
@@ -52,7 +53,11 @@ router
 
 // GET /api/games/:id/questions
 router.get('/:id/questions', (req, res, next) => {
-  GameQuestion.findAll({ where: { gameId: req.params.id } })
+  GameQuestion.findAll({
+    where: { gameId: req.params.id },
+    include: [{ model: Question }]
+  })
+    // .then(questions => hydrateGameQuestions(questions))
     .then(questions => res.send(questions))
     .catch(next);
 });
