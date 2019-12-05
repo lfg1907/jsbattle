@@ -25,7 +25,7 @@
     "prompt": "Return the sum of all numbers in an array. Not all entries in an array will be a number. For example, this is a valid input: ['1', 2, 3.5, [3]]. In this case, the sum should be 5.5 (2 + 3.5).",
     "examples": "",
     "functionName": "sum",
-    "params": "a, b"
+    "params": "arr"
   },
   {
     "title": "Find Difference",
