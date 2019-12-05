@@ -10,6 +10,13 @@ const Question = connection.define('question', {
     primaryKey: true,
     defaultValue: UUIDV4
   },
+  title: {
+    type: STRING,
+    allowNull: false,
+    validate: {
+      notEmpty: true
+    }
+  },
   prompt: {
     type: TEXT,
     allowNull: false,
