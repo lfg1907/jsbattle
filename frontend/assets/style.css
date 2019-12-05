@@ -8,10 +8,22 @@ html { font-family: 'Inter', sans-serif; }
   box-sizing: border-box;
 }
 
+span.code {
+  font-family: monospace;
+}
+
 #home {
   font-weight: 500;
+}
+
+#home, #game-container, #editor-outputs {
   display: flex;
   flex-direction: row;
+}
+
+#editor-view, #question-view,
+#console-logs, #test-results {
+  flex: 1;
 }
 
 #user-stats-container,
