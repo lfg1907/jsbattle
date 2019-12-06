@@ -23,8 +23,12 @@ app.use(
 );
 
 app.get('/', (req, res) => {
-  res.sendFile(path.join(__dirname, '../frontend/index.html'), {
-      user: req.session.user});
+  res.sendFile(
+    path.join(__dirname, '../frontend/index.html'),
+    {
+      user: req.session.user
+    }
+  );
 });
 
 // ROUTES

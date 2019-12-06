@@ -18,7 +18,7 @@ router.get('/github/callback', (req, res, next) => {
     })
     .then(resp => resp.data)
     .then(data => {
-      const  {access_token}  = qs.parse(data);
+      const { access_token } = qs.parse(data);
       return axios
         .get('https://api.github.com/user', {
           headers: {
@@ -28,7 +28,6 @@ router.get('/github/callback', (req, res, next) => {
         .then(response => response.data)
         .then(githubUser => {
           req.session.user = githubUser;
-          // console.log(githubUser.login);
           res.redirect('/#/home');
         });
     })
