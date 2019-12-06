@@ -1,9 +1,5 @@
 import React from 'react';
-import { connect } from 'react-redux';
 import { HashRouter, Route } from 'react-router-dom';
-import { actions } from '../store';
-
-import socket from '../socket';
 
 // Components
 import Home from './Home';
@@ -11,12 +7,7 @@ import WaitingRoom from './WaitingRoom';
 import GameView from './GameView';
 import EditorView from './EditorView';
 
-const App = ({ addGameByOthers }) => {
-  socket.on('game created', gameData => {
-    const { game } = gameData;
-    addGameByOthers(game);
-  });
-
+const App = () => {
   return (
     <HashRouter>
       <Route path="/home" component={Home} />
@@ -27,10 +18,4 @@ const App = ({ addGameByOthers }) => {
   );
 };
 
-const mapDispatchToProps = dispatch => ({
-  addGameByOthers(game) {
-    dispatch(actions.addGame(game));
-  }
-});
-
-export default connect(null, mapDispatchToProps)(App);
+export default App;

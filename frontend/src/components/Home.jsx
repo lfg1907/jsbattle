@@ -1,16 +1,9 @@
-import React, { useEffect } from 'react';
-import { connect } from 'react-redux';
-
-import { actions } from '../store';
+import React from 'react';
 
 import GamesCPanel from './GamesCPanel';
 import UserStats from './UserStats';
 
-const Home = ({ loadGames }) => {
-  useEffect(() => {
-    loadGames();
-  }, []);
-
+const Home = () => {
   return (
     <div id="home">
       <UserStats />
@@ -19,11 +12,4 @@ const Home = ({ loadGames }) => {
   );
 };
 
-const mapDispatchToProps = dispatch => ({
-  loadGames() {
-    dispatch(actions.getUser());
-    dispatch(actions.getGames());
-  }
-});
-
-export default connect(null, mapDispatchToProps)(Home);
+export default Home;
