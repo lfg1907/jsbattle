@@ -1,7 +1,8 @@
-import React, { useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 
 import { actions } from '../store';
+import history from '../history';
 
 import EditorView from './EditorView';
 import QuestionView from './QuestionView';
@@ -9,19 +10,26 @@ import QuestionView from './QuestionView';
 const GameView = ({
   game,
   gameQuestions,
-  currentQ,
+  incompleteQ,
   getGameQuestions
 }) => {
+  if (!incompleteQ) {
+    console.log('game is done');
+    history.push(`/winner/${game.id}`);
+    return null;
+  }
+
   useEffect(() => {
     getGameQuestions(game.id);
   }, []);
 
+  const [currentQ, setCurrentQ] = useState(incompleteQ);
+  useEffect(() => {
+    setCurrentQ(incompleteQ);
+  }, [incompleteQ.id]);
+
   if (!gameQuestions.length) {
     return '...loading';
-  }
-
-  if (!currentQ) {
-    return 'game is done';
   }
 
   return (
@@ -42,7 +50,7 @@ const mapStateToProps = (
   game: games.find(_game => _game.id === params.id),
   gameQuestions,
   // return the first incomplete question
-  currentQ: gameQuestions.find(gameQ => !gameQ.completed)
+  incompleteQ: gameQuestions.find(gameQ => !gameQ.completed)
 });
 
 const mapDispatchToProps = dispatch => ({
