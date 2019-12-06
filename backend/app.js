@@ -7,6 +7,11 @@ const gamesRouter = require('./routes/games');
 const playersRouter = require('./routes/players');
 const authRouter = require('./routes/auth');
 const app = express();
+const session = require('express-session');
+
+app.use(session({
+  secret: process.env.SESSION
+}));
 
 app.use(express.json());
 app.use(
@@ -16,7 +21,7 @@ app.use(
 
 app.get('/', (req, res) => {
   res.sendFile(
-    path.join(__dirname, '../frontend/index.html')
+    path.join(__dirname, '../frontend/index.html', {user: req.session.user})
   );
 });
 
