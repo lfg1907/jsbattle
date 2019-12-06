@@ -8,6 +8,7 @@ import 'codemirror/theme/material.css';
 import 'codemirror/theme/neat.css';
 import './style.css';
 import 'codemirror/mode/javascript/javascript';
+import 'codemirror/addon/edit/closebrackets';
 
 const Editor = ({ value, onChange }) => {
   const [codeValue, setCodeValue] = useState(value);
@@ -23,7 +24,8 @@ const Editor = ({ value, onChange }) => {
       options={{
         mode: 'javascript',
         theme: 'material',
-        lineNumbers: true
+        lineNumbers: true,
+        autoCloseBrackets: true
       }}
     />
   );
