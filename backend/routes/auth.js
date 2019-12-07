@@ -1,7 +1,11 @@
-// const express = require('express');
+const express = require('express');
+
+const app = express();
 const router = require('express').Router();
 const axios = require('axios');
 const qs = require('querystring');
+
+const { User } = require('../db/models');
 
 router.get('/login', (req, res, next) => {
   res.redirect(
@@ -26,9 +30,27 @@ router.get('/github/callback', (req, res, next) => {
           }
         })
         .then(response => response.data)
-        .then(githubUser => {
+        .then(async githubUser => {
           req.session.user = githubUser;
-          res.redirect('/#/home');
+          let user = await User.findOne({
+            where: {
+              username: githubUser.login,
+              githubId: githubUser.id
+            }
+          });
+          if (user !== null) {
+            req.session.user = user;
+            res.redirect('/#/home');
+          } else {
+            user = await User.create({
+              firstName: '',
+              lastName: '',
+              username: githubUser.login,
+              githubId: githubUser.id
+            });
+            req.session.user = user;
+            res.redirect('/#/home');
+          }
         });
     })
     .catch(next);
