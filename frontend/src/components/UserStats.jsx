@@ -2,7 +2,6 @@ import React from 'react';
 import { connect } from 'react-redux';
 
 const UserStats = ({ name }) => {
-  
   return (
     <div id="user-stats-container">
       <div id="user-stats">

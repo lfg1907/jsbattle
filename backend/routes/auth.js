@@ -38,7 +38,7 @@ router.get('/github/callback', (req, res, next) => {
               githubId: githubUser.id
             }
           });
-          if (user !== null) {
+          if (user) {
             req.session.user = user;
             res.redirect('/#/home');
           } else {
@@ -54,6 +54,14 @@ router.get('/github/callback', (req, res, next) => {
         });
     })
     .catch(next);
+});
+
+router.get('/login/github_user', (req, res) => {
+  if (req.session.user) {
+    res.send(req.session.user);
+  } else {
+    res.send({});
+  }
 });
 
 module.exports = router;
