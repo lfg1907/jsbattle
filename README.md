@@ -35,12 +35,14 @@ Status `200`
 [
     {
         "id": "f8c18e16-2a74-4634-ac35-37c77721ae84",
+        "difficulty": "EASY",
         "name": "JS Trivia @ Kilarney & Rose",
         "numOfPlayers": 3,
         "status": "STARTING"
     },
     {
         "id": "90e8c3af-4a49-4e5e-882d-0cdbe048c026",
+        "difficulty": "MEDIUM",
         "name": "Best Game Ever",
         "numOfPlayers": 2,
         "status": "IN_PROGRESS"
@@ -80,6 +82,7 @@ Status `200`. **When a game is created, it is popuplated with 5 game questions t
         "questionId": "30a41bb8-a780-4d29-8852-bcfee555bee8",
         "question": {
             "id": "30a41bb8-a780-4d29-8852-bcfee555bee8",
+            "difficulty": "MEDIUM",
             "title": "Find Maximum",
             "prompt": "Given an unsorted array of numbers, find a maximum",
             "examples": "",
@@ -92,28 +95,28 @@ Status `200`. **When a game is created, it is popuplated with 5 game questions t
         "completed": false,
         "gameId": "f42364f3-bfe9-4bfd-a5c1-6a1637bf1367",
         "questionId": "15aaeef3-0779-4002-b2d2-754334360a24",
-        "question": { ... }
+        "question": { }
     },
     {
         "id": "37d00a7b-93c5-4a65-9f4d-008476d4b516",
         "completed": false,
         "gameId": "f42364f3-bfe9-4bfd-a5c1-6a1637bf1367",
         "questionId": "33279dc6-3474-4a68-8082-7bd8c273b84c",
-        "question": { ... }
+        "question": { }
     },
     {
         "id": "b9940687-3165-4628-8e14-ae2a5734dbd6",
         "completed": false,
         "gameId": "f42364f3-bfe9-4bfd-a5c1-6a1637bf1367",
         "questionId": "bb765293-a322-4dfc-8a6b-d2b14fa4cdd3",
-        "question": { ... }
+        "question": { }
     },
     {
         "id": "15acdacf-0933-4d65-a171-16b358645440",
         "completed": false,
         "gameId": "f42364f3-bfe9-4bfd-a5c1-6a1637bf1367",
         "questionId": "a325d4d5-33ca-43fd-b26e-34b251696ac8",
-        "question": { ... }
+        "question": { }
     }
 ]
 ```
@@ -251,6 +254,7 @@ Status `200`.
     {
         "id": "6f89602e-606d-49ef-b5f2-8e50ea60ac32",
         "title": "Find Maximum",
+        "difficulty": "EASY",
         "prompt": "Given an unsorted array of numbers, find a maximum",
         "examples": "",
         "functionName": "findMax",
@@ -259,6 +263,7 @@ Status `200`.
     {
         "id": "a325d4d5-33ca-43fd-b26e-34b251696ac8",
         "title": "Sort",
+        "difficulty": "EASY",
         "prompt": "Sort an array in ascending order. You can assume all every element in the given array is a number.",
         "examples": "",
         "functionName": "sort",
@@ -266,7 +271,8 @@ Status `200`.
     },
     {
         "id": "583b67c9-d207-4b5c-a36c-43169eb8a5fe",
-        "title": "Sum",
+        "title": "Calculate Sum",
+        "difficulty": "MEDIUM",
         "prompt": "Return the sum of all numbers in an array. Not all entries in an array will be a number. For example, this is a valid input: ['1', 2, 3.5, [3]]. In this case, the sum should be 5.5 (2 + 3.5).",
         "examples": "",
         "functionName": "sum",
