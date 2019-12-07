@@ -28,7 +28,6 @@ router
         const player = await Player.findByPk(playerId);
         await player.hostGame(game);
       }
-      console.log(game);
       res.status(201).send(game);
     } catch (err) {
       next(err);
@@ -76,13 +75,13 @@ router.put('/question/:id', (req, res, next) => {
 // PUT /api/games/:id/join
 router.put('/:id/join', async (req, res, next) => {
   try {
-    const { playerId } = req.body;
+    const { userId } = req.body;
     const game = await Game.findByPk(req.params.id);
-    console.log(game);
-    const player = await Player.findByPk(playerId);
-    console.log(player);
+
+    const player = await Player.create({ userId });
     await player.joinGame(game);
-    res.send(game);
+
+    res.send({ game, playerId: player.id });
   } catch (err) {
     next(err);
   }

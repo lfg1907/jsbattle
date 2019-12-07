@@ -27,10 +27,8 @@ const JoinGame = ({ games, joinGame }) => {
   };
 
   const handleSubmit = () => {
-    const playerId = localStorage.getItem(
-      'jsBattlePlayerId'
-    );
-    joinGame(selectedGameId, playerId);
+    const userId = localStorage.getItem('jsBattleUserId');
+    joinGame(selectedGameId, userId);
   };
 
   return (
@@ -55,8 +53,8 @@ const JoinGame = ({ games, joinGame }) => {
 const mapStateToprops = ({ games }) => ({ games });
 
 const mapDispatchToProps = dispatch => ({
-  joinGame(gameId, playerId) {
-    dispatch(actions.joinGame(gameId, playerId));
+  joinGame(gameId, userId) {
+    dispatch(actions.joinGame(gameId, userId));
   }
 });
 

@@ -110,16 +110,19 @@ const createGame = (name, capacity) => {
   };
 };
 
-const joinGame = (gameId, playerId) => {
+const joinGame = (gameId, userId) => {
   return async dispatch => {
-    const joinedGame = (
+    const { game, playerId } = (
       await axios.put(`/api/games/${gameId}/join`, {
-        playerId
+        userId
       })
     ).data;
-    socket.emit('join game', { game: joinedGame });
-    dispatch({ type: UPDATE_GAME, game: joinedGame });
-    history.push(`/waiting/${joinedGame.id}`);
+
+    localStorage.setItem('jsBattlePlayerId', playerId);
+
+    socket.emit('join game', { game });
+    dispatch({ type: UPDATE_GAME, game });
+    history.push(`/waiting/${game.id}`);
   };
 };
 
