@@ -21,12 +21,18 @@ router
       .catch(next);
   });
 
-// GET, DELETE
+// GET, DELETE, PUT
 // /api/players/:id
 router
   .route('/:id')
   .get((req, res, next) => {
     Player.findByPk(req.params.id)
+      .then(player => res.send(player))
+      .catch(next);
+  })
+  .put((req, res, next) => {
+    Player.findByPk(req.params.id)
+      .then(player => player.update(req.body))
       .then(player => res.send(player))
       .catch(next);
   })

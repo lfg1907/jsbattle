@@ -6,10 +6,12 @@ import {
   UPDATE_QUESTION,
   FETCH_TEST_CASES,
   FETCH_TEST_RESULTS,
+  FETCH_PLAYER,
   FETCH_USER,
   FETCH_GAMES,
   CREATE_GAME,
-  UPDATE_GAME
+  UPDATE_GAME,
+  UPDATE_SCORE
 } from './constants';
 import history from '../history';
 import socket from '../socket';
@@ -28,6 +30,17 @@ const getGameQuestions = gameId => {
       await axios.get(`/api/games/${gameId}/questions`)
     ).data;
     return dispatch(_getGameQuestions(questions));
+  };
+};
+
+const updateScore = (playerID, amt) => {
+  return async dispatch => {
+    const updated = (
+      await axios.put(`/api/players/${playerID}`, {
+        score: amt
+      })
+    ).data;
+    return dispatch({ type: UPDATE_SCORE, updated });
   };
 };
 
@@ -57,12 +70,20 @@ const fetchTestCases = questionID => {
 const fetchTestResults = (questionID, code) => {
   return async dispatch => {
     const testResults = (
-      await axios.post(
-        `/api/questions/${questionID}/runtests`,
-        { code }
-      )
+      await axios.post(`/api/questions/${questionID}`, {
+        code
+      })
     ).data;
     dispatch({ type: FETCH_TEST_RESULTS, testResults });
+  };
+};
+
+const getPlayer = playerID => {
+  return async dispatch => {
+    const player = (
+      await axios.get(`/api/players/${playerID}`)
+    ).data;
+    dispatch({ type: FETCH_PLAYER, player });
   };
 };
 
@@ -137,9 +158,11 @@ const addGame = game => {
 
 export {
   getGameQuestions,
+  updateScore,
   completeQuestion,
   fetchTestCases,
   fetchTestResults,
+  getPlayer,
   getUser,
   getGames,
   createGame,
