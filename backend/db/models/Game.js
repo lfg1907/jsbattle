@@ -3,7 +3,7 @@ const connection = require('../connection');
 const { Sequelize } = connection;
 const { ENUM, INTEGER, STRING, UUID, UUIDV4 } = Sequelize;
 
-const MAX_PLAYERS = 3;
+const DEFAULT_MAX = 3;
 const NUM_QUESTIONS = 5;
 
 const Game = connection.define(
@@ -21,12 +21,23 @@ const Game = connection.define(
         notEmpty: true
       }
     },
+    capacity: {
+      type: INTEGER,
+      defaultValue: DEFAULT_MAX,
+      allowNull: false
+    },
     numOfPlayers: {
       type: INTEGER,
       defaultValue: 0,
       allowNull: false,
       validate: {
-        max: MAX_PLAYERS
+        notAboveMax(value) {
+          if (value > this.capacity) {
+            throw new Error(
+              'Number of players cannot exceed capacity'
+            );
+          }
+        }
       }
     },
     status: {

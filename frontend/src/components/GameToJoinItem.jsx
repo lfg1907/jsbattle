@@ -7,10 +7,12 @@ const GameToJoinItem = ({ game, handleSelect }) => {
       setDisplayStatus('In Progress');
     } else if (game.status === 'COMPLETED') {
       setDisplayStatus('Completed');
-    } else if (game.numOfPlayers >= 3) {
+    } else if (game.numOfPlayers >= game.capacity) {
       setDisplayStatus('Full');
     } else {
-      setDisplayStatus(`${game.numOfPlayers}/3`);
+      setDisplayStatus(
+        `${game.numOfPlayers}/${game.capacity}`
+      );
     }
   }, [game]);
 

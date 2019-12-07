@@ -7,6 +7,7 @@ import { titleCase } from '../utils';
 
 const CreateGame = ({ createGame }) => {
   const [gameName, setGameName] = useState('');
+  const [gameCap, setGameCap] = useState(3);
 
   useEffect(() => {
     const tempName = titleCase(
@@ -19,8 +20,12 @@ const CreateGame = ({ createGame }) => {
     setGameName(ev.target.value);
   };
 
+  const handleCapChange = ev => {
+    setGameCap(parseInt(ev.target.value, 10));
+  };
+
   const handleSubmit = () => {
-    createGame(gameName);
+    createGame(gameName, gameCap);
   };
 
   return (
@@ -32,6 +37,15 @@ const CreateGame = ({ createGame }) => {
         onChange={handleChange}
       />
       <br />
+      <label htmlFor="cap">
+        Capacity:
+        <input
+          name="cap"
+          type="text"
+          value={gameCap}
+          onChange={handleCapChange}
+        />
+      </label>
       <button type="button" onClick={handleSubmit}>
         Create
       </button>
@@ -40,8 +54,8 @@ const CreateGame = ({ createGame }) => {
 };
 
 const mapDispatchToProps = dispatch => ({
-  createGame(name) {
-    dispatch(actions.createGame(name));
+  createGame(name, capacity) {
+    dispatch(actions.createGame(name, capacity));
   }
 });
 

@@ -25,7 +25,10 @@ const WaitingRoom = ({ game, getQuestions }) => {
 
   const [readyToStart, setReadyToStart] = useState(false);
   useEffect(() => {
-    if (currentGame.numOfPlayers > 1) {
+    if (
+      currentGame.numOfPlayers > 1 ||
+      currentGame.capacity === 1
+    ) {
       setReadyToStart(true);
     }
   }, [currentGame]);
@@ -49,7 +52,7 @@ const WaitingRoom = ({ game, getQuestions }) => {
           currentGame.numOfPlayers > 1
             ? 'players'
             : 'player'
-        } out of 3`}
+        } out of ${currentGame.capacity}`}
       </p>
       {readyToStart ? (
         <button type="button" onClick={handleReady}>

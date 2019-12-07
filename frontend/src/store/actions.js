@@ -85,7 +85,7 @@ const getGames = () => {
   };
 };
 
-const createGame = name => {
+const createGame = (name, capacity) => {
   const userId = localStorage.getItem('jsBattleUserId');
   return async dispatch => {
     const player = (
@@ -100,6 +100,7 @@ const createGame = name => {
     const game = (
       await axios.post('/api/games', {
         name,
+        capacity,
         playerId: player.id
       })
     ).data;
