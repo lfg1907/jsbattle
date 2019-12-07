@@ -33,6 +33,7 @@ const GameQuestion = connection.define(
   }
 );
 
+// eslint-disable-next-line func-names
 GameQuestion.prototype.updateGame = async function() {
   const incompleteGameQuestions = await GameQuestion.findAll(
     {

@@ -6,10 +6,11 @@ import Home from './Home';
 import WaitingRoom from './WaitingRoom';
 import GameView from './GameView';
 import EditorView from './EditorView';
-
+import Login from './Login';
 const App = () => {
   return (
     <HashRouter>
+      <Route exact path="/" component={Login} />
       <Route path="/home" component={Home} />
       <Route path="/editor" component={EditorView} />
       <Route path="/waiting/:id" component={WaitingRoom} />

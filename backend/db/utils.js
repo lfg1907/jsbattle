@@ -3,6 +3,9 @@ const getRandomNumber = (min, max) => {
 };
 
 const getUniques = (min, max, amount) => {
+  if (max < amount)
+    throw new Error('Amount is less than max');
+
   const container = new Set();
 
   while (container.size < amount) {

@@ -13,6 +13,8 @@ const JoinGame = ({ games, joinGame }) => {
   // }, []);
 
   const handleSelect = (ev, gameId) => {
+    if (ev.target.className.includes('icon-')) return;
+
     const siblings = Array.from(
       ev.target.parentNode.children
     );

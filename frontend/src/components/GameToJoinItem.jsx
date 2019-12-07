@@ -21,14 +21,15 @@ const GameToJoinItem = ({ game, handleSelect }) => {
     <div
       className={
         game.status === 'STARTING' && game.numOfPlayers < 3
-          ? 'game'
-          : 'game inactive-game'
+          ? 'no-select game'
+          : 'no-select game inactive-game'
       }
       key={game.id}
       role="radio"
       aria-checked="false"
       onClick={ev => handleSelect(ev, game.id)}
     >
+      <div className={`icon-${game.difficulty}`} />
       {`${game.name} (${displayStatus})`}
     </div>
   );

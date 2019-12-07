@@ -26,6 +26,12 @@ const Game = connection.define(
       defaultValue: DEFAULT_MAX,
       allowNull: false
     },
+    difficulty: {
+      type: ENUM,
+      values: ['EASY', 'MEDIUM', 'HARD'],
+      defaultValue: 'EASY',
+      allowNull: false
+    },
     numOfPlayers: {
       type: INTEGER,
       defaultValue: 0,
@@ -49,12 +55,16 @@ const Game = connection.define(
   {
     hooks: {
       async afterCreate(game) {
-        await game.addQuestions(NUM_QUESTIONS);
+        await game.addQuestions(
+          NUM_QUESTIONS,
+          game.difficulty
+        );
       }
     }
   }
 );
 
+// eslint-disable-next-line func-names
 Game.prototype.findWinningPlayer = function() {
   if (this.status === 'IN_PROGRESS')
     throw new Error('Game is still in progress');
@@ -72,11 +82,18 @@ Game.prototype.findWinningPlayer = function() {
   });
 };
 
-Game.prototype.addQuestions = async function(num) {
+// eslint-disable-next-line func-names
+Game.prototype.addQuestions = async function(
+  num,
+  difficulty
+) {
   const Question = connection.models.question;
   const GameQuestion = connection.models.gameQuestion;
 
-  const questions = await Question.createSet(num);
+  const questions = await Question.createSet(
+    num,
+    difficulty
+  );
   return Promise.all(
     questions.map(question =>
       GameQuestion.create({
