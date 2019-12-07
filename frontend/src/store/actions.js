@@ -1,6 +1,7 @@
 /* eslint-disable import/prefer-default-export */
 /* eslint-disable no-underscore-dangle */
 import axios from 'axios';
+
 import {
   GET_GAME_QUESTIONS,
   UPDATE_QUESTION,
@@ -11,6 +12,7 @@ import {
   CREATE_GAME,
   UPDATE_GAME
 } from './constants';
+
 import history from '../history';
 import socket from '../socket';
 import { sortByCreated } from '../utils';
@@ -66,12 +68,11 @@ const fetchTestResults = (questionID, code) => {
   };
 };
 
-// This is a temporary implementation
-// the first user is always fetched
 const getUser = () => {
   return async dispatch => {
-    const users = (await axios.get('/api/users')).data;
-    const user = users[0];
+    const user = (
+      await axios.get('/api/auth/login/github_user')
+    ).data;
     localStorage.setItem('jsBattleUserId', user.id);
     dispatch({ type: FETCH_USER, user });
   };
