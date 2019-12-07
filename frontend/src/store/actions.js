@@ -3,6 +3,7 @@
 import axios from 'axios';
 import {
   GET_GAME_QUESTIONS,
+  UPDATE_QUESTION,
   FETCH_TEST_CASES,
   FETCH_TEST_RESULTS,
   FETCH_USER,
@@ -27,6 +28,18 @@ const getGameQuestions = gameId => {
       await axios.get(`/api/games/${gameId}/questions`)
     ).data;
     return dispatch(_getGameQuestions(questions));
+  };
+};
+
+const completeQuestion = gameQuestionId => {
+  return async dispatch => {
+    const updated = (
+      await axios.put(
+        `/api/games/question/${gameQuestionId}`,
+        { completed: true }
+      )
+    ).data;
+    return dispatch({ type: UPDATE_QUESTION, updated });
   };
 };
 
@@ -124,6 +137,7 @@ const addGame = game => {
 
 export {
   getGameQuestions,
+  completeQuestion,
   fetchTestCases,
   fetchTestResults,
   getUser,

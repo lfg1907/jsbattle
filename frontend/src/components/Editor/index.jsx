@@ -1,6 +1,6 @@
 // Simple wrapper around the CodeMirror component
 // so we don't have to deal with boilerplate stuff all the time
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Controlled as CodeMirror } from 'react-codemirror2';
 
 import 'codemirror/lib/codemirror.css';
@@ -12,6 +12,9 @@ import 'codemirror/addon/edit/closebrackets';
 
 const Editor = ({ value, onChange }) => {
   const [codeValue, setCodeValue] = useState(value);
+  useEffect(() => {
+    setCodeValue(value);
+  }, [value]);
 
   return (
     <CodeMirror
