@@ -125,11 +125,15 @@ POST /api/games
 ```
 
 #### Payloads
-This route takes 1 mandatory property (`name`) and 1 optional property (`playerId`) as a payload. **If `playerId` is sent, that player will be made the new game's host.**
+This route takes 1 mandatory property (`name`) and 2 optional property (`playerId`, `difficulty`) as a payload. 
+
+**If `playerId` is sent, that player will be made the new game's host.** `difficulty` is an ENUM and can accept one of the following: `EASY`, `MEDIUM`, `HARD`.
+
 ```json
 {
     "name": "Flex 1907 Trivia",
-    "playerId": "a6934cb9-aeaa-43a0-bf8c-8f03119a5ccb"
+    "playerId": "a6934cb9-aeaa-43a0-bf8c-8f03119a5ccb",
+    "difficulty": "MEDIUM"
 }
 ```
 

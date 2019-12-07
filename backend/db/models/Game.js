@@ -26,6 +26,12 @@ const Game = connection.define(
       defaultValue: DEFAULT_MAX,
       allowNull: false
     },
+    difficulty: {
+      type: ENUM,
+      values: ['EASY', 'MEDIUM', 'HARD'],
+      defaultValue: 'EASY',
+      allowNull: false
+    },
     numOfPlayers: {
       type: INTEGER,
       defaultValue: 0,
@@ -55,6 +61,7 @@ const Game = connection.define(
   }
 );
 
+// eslint-disable-next-line func-names
 Game.prototype.findWinningPlayer = function() {
   if (this.status === 'IN_PROGRESS')
     throw new Error('Game is still in progress');
@@ -72,6 +79,7 @@ Game.prototype.findWinningPlayer = function() {
   });
 };
 
+// eslint-disable-next-line func-names
 Game.prototype.addQuestions = async function(num) {
   const Question = connection.models.question;
   const GameQuestion = connection.models.gameQuestion;
