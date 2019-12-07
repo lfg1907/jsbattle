@@ -1,15 +1,9 @@
 const connection = require('../connection');
 
 const { Sequelize } = connection;
-const {
-  BOOLEAN,
-  INTEGER,
-  STRING,
-  UUID,
-  UUIDV4
-} = Sequelize;
+const { ENUM, INTEGER, STRING, UUID, UUIDV4 } = Sequelize;
 
-const MAX_PLAYERS = 3;
+const DEFAULT_MAX = 3;
 const NUM_QUESTIONS = 5;
 
 const Game = connection.define(
@@ -27,17 +21,29 @@ const Game = connection.define(
         notEmpty: true
       }
     },
+    capacity: {
+      type: INTEGER,
+      defaultValue: DEFAULT_MAX,
+      allowNull: false
+    },
     numOfPlayers: {
       type: INTEGER,
       defaultValue: 0,
       allowNull: false,
       validate: {
-        max: MAX_PLAYERS
+        notAboveMax(value) {
+          if (value > this.capacity) {
+            throw new Error(
+              'Number of players cannot exceed capacity'
+            );
+          }
+        }
       }
     },
-    inProgress: {
-      type: BOOLEAN,
-      defaultValue: true
+    status: {
+      type: ENUM,
+      values: ['STARTING', 'IN_PROGRESS', 'COMPLETED'],
+      defaultValue: 'STARTING'
     }
   },
   {
@@ -50,7 +56,7 @@ const Game = connection.define(
 );
 
 Game.prototype.findWinningPlayer = function() {
-  if (this.inProgress)
+  if (this.status === 'IN_PROGRESS')
     throw new Error('Game is still in progress');
 
   const Player = connection.models.player;

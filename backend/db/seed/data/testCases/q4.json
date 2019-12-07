@@ -1,0 +1,22 @@
+[
+  { 
+    "arguments": "['1', 2, 3.5, [3]]",
+    "answer": "5.5"
+  },
+  { 
+    "arguments": "[1, 2, 3, 4, 5]",
+    "answer": "15"
+  },
+  {
+    "arguments": "[-1, 40, -2, 8]",
+    "answer": "45"
+  },
+  {
+    "arguments": "['a', 'b', 100]",
+    "answer": "100"
+  },
+  {
+    "arguments": "['a', 'b']",
+    "answer": "0"
+  }
+]

@@ -1,13 +1,28 @@
 import { combineReducers } from 'redux';
-
 import {
+  GET_GAME_QUESTIONS,
+  UPDATE_QUESTION,
+  FETCH_TEST_CASES,
+  FETCH_TEST_RESULTS,
   FETCH_USER,
   FETCH_GAMES,
-  CREATE_GAME
+  CREATE_GAME,
+  UPDATE_GAME
 } from './constants';
 
-const questionReducer = (state = []) => {
-  return state;
+const gameQuestionsReducer = (state = [], action) => {
+  switch (action.type) {
+    case GET_GAME_QUESTIONS:
+      return action.questions;
+    case UPDATE_QUESTION:
+      return state.map(question => {
+        return question.id === action.updated.id
+          ? action.updated
+          : question;
+      });
+    default:
+      return state;
+  }
 };
 
 const userReducer = (state = {}, action) => {
@@ -25,15 +40,42 @@ const gamesReducer = (state = [], action) => {
       return action.games;
     case CREATE_GAME:
       return [action.game, ...state];
+    case UPDATE_GAME:
+      return state.map(game => {
+        if (game.id === action.game.id) {
+          return action.game;
+        }
+        return game;
+      });
+    default:
+      return state;
+  }
+};
+
+const testCaseReducer = (state = [], action) => {
+  switch (action.type) {
+    case FETCH_TEST_CASES:
+      return action.testCases;
+    default:
+      return state;
+  }
+};
+
+const testResultsReducer = (state = [], action) => {
+  switch (action.type) {
+    case FETCH_TEST_RESULTS:
+      return action.testResults;
     default:
       return state;
   }
 };
 
 const reducer = combineReducers({
-  questions: questionReducer,
+  gameQuestions: gameQuestionsReducer,
   user: userReducer,
-  games: gamesReducer
+  games: gamesReducer,
+  testCases: testCaseReducer,
+  testResults: testResultsReducer
 });
 
 export default reducer;

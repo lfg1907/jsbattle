@@ -37,13 +37,13 @@ Status `200`
         "id": "f8c18e16-2a74-4634-ac35-37c77721ae84",
         "name": "JS Trivia @ Kilarney & Rose",
         "numOfPlayers": 3,
-        "inProgress": true
+        "status": "STARTING"
     },
     {
         "id": "90e8c3af-4a49-4e5e-882d-0cdbe048c026",
         "name": "Best Game Ever",
         "numOfPlayers": 2,
-        "inProgress": false
+        "status": "IN_PROGRESS"
     }
 ]
 ```
@@ -59,7 +59,7 @@ GET /api/games/:id/players
 ```
 
 ### Return winner of a game
-Game has to be finished for there to be a winner (ie. `inProgress = false`).
+Game has to be finished for there to be a winner (ie. `"status": "COMPLETED"`).
 ```
 GET /api/games/:id/winner
 ```
@@ -77,31 +77,43 @@ Status `200`. **When a game is created, it is popuplated with 5 game questions t
         "id": "2eadf1ef-6524-4d82-aa7f-517b46debc7b",
         "completed": true,
         "gameId": "f42364f3-bfe9-4bfd-a5c1-6a1637bf1367",
-        "questionId": "30a41bb8-a780-4d29-8852-bcfee555bee8"
+        "questionId": "30a41bb8-a780-4d29-8852-bcfee555bee8",
+        "question": {
+            "id": "30a41bb8-a780-4d29-8852-bcfee555bee8",
+            "title": "Find Maximum",
+            "prompt": "Given an unsorted array of numbers, find a maximum",
+            "examples": "",
+            "functionName": "findMax",
+            "params": "arr"
+        }
     },
     {
         "id": "6e288cb5-21d9-4231-8bd1-2cee3e3935d1",
         "completed": false,
         "gameId": "f42364f3-bfe9-4bfd-a5c1-6a1637bf1367",
-        "questionId": "15aaeef3-0779-4002-b2d2-754334360a24"
+        "questionId": "15aaeef3-0779-4002-b2d2-754334360a24",
+        "question": { ... }
     },
     {
         "id": "37d00a7b-93c5-4a65-9f4d-008476d4b516",
         "completed": false,
         "gameId": "f42364f3-bfe9-4bfd-a5c1-6a1637bf1367",
-        "questionId": "33279dc6-3474-4a68-8082-7bd8c273b84c"
+        "questionId": "33279dc6-3474-4a68-8082-7bd8c273b84c",
+        "question": { ... }
     },
     {
         "id": "b9940687-3165-4628-8e14-ae2a5734dbd6",
         "completed": false,
         "gameId": "f42364f3-bfe9-4bfd-a5c1-6a1637bf1367",
-        "questionId": "bb765293-a322-4dfc-8a6b-d2b14fa4cdd3"
+        "questionId": "bb765293-a322-4dfc-8a6b-d2b14fa4cdd3",
+        "question": { ... }
     },
     {
         "id": "15acdacf-0933-4d65-a171-16b358645440",
         "completed": false,
         "gameId": "f42364f3-bfe9-4bfd-a5c1-6a1637bf1367",
-        "questionId": "a325d4d5-33ca-43fd-b26e-34b251696ac8"
+        "questionId": "a325d4d5-33ca-43fd-b26e-34b251696ac8",
+        "question": { ... }
     }
 ]
 ```
@@ -122,12 +134,12 @@ This route takes 1 mandatory property (`name`) and 1 optional property (`playerI
 ```
 
 #### Response
-Status `201`. A new game object is sent back. If there is a host, `numOfPlayers` will reflect this. `inProgress` defaults to `true`.
+Status `201`. A new game object is sent back. If there is a host, `numOfPlayers` will reflect this. `status` defaults to `STARTING`.
 ```json
 {
     "id": "a70dbf49-61f2-4740-a8b7-5547f8bdd30a",
     "numOfPlayers": 1,
-    "inProgress": true,
+    "status": "STARTING",
     "name": "Flex 1907 Trivia"
 }
 ```
@@ -152,15 +164,15 @@ Status `200`. The updated game object is sent back.
 {
     "id": "a70dbf49-61f2-4740-a8b7-5547f8bdd30a",
     "numOfPlayers": 1,
-    "inProgress": true,
+    "status": "STARTING",
     "name": "Prof's Trivia"
 }
 ```
 
 ### Join a game by `id`
-Only an in-progress game can be joined; each game can have up to 3 players.
+Only an `STARTING` game can be joined; each game can have up to 3 players.
 
-**If a player tries to join a full game or a game that's no longer in progress, an error will be sent back.**
+**If a player tries to join a full game or a game that's already `IN_PROGRESS` or `COMPLETED`, an error will be sent back.**
 ```
 PUT /api/games/:id/join
 ```
@@ -180,12 +192,12 @@ Status `200`. The updated game is sent back. `numOfPlayers` is updated automatic
     "id": "a70dbf49-61f2-4740-a8b7-5547f8bdd30a",
     "name": "Prof's Trivia",
     "numOfPlayers": 2,
-    "inProgress": true
+    "status": "STARTING"
 }
 ```
 
 ### Edit a game question's property
-Used to mark question as `complete`. `id` is `gameQuestionId`. **When all game questions in a game have been answered, the game will be marked as complete (`inProgress = false`).**
+Used to mark question as `complete`. `id` is `gameQuestionId`. **When all game questions in a game have been answered, the game will be marked as complete (`"status": "COMPLETED"`).**
 
 *This is here partly for convenience (same route as `api/games/`), but maybe should be moved?*
 ```
@@ -234,6 +246,7 @@ Status `200`.
 [
     {
         "id": "6f89602e-606d-49ef-b5f2-8e50ea60ac32",
+        "title": "Find Maximum",
         "prompt": "Given an unsorted array of numbers, find a maximum",
         "examples": "",
         "functionName": "findMax",
@@ -241,6 +254,7 @@ Status `200`.
     },
     {
         "id": "a325d4d5-33ca-43fd-b26e-34b251696ac8",
+        "title": "Sort",
         "prompt": "Sort an array in ascending order. You can assume all every element in the given array is a number.",
         "examples": "",
         "functionName": "sort",
@@ -248,6 +262,7 @@ Status `200`.
     },
     {
         "id": "583b67c9-d207-4b5c-a36c-43169eb8a5fe",
+        "title": "Sum",
         "prompt": "Return the sum of all numbers in an array. Not all entries in an array will be a number. For example, this is a valid input: ['1', 2, 3.5, [3]]. In this case, the sum should be 5.5 (2 + 3.5).",
         "examples": "",
         "functionName": "sum",

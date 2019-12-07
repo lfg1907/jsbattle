@@ -30,7 +30,12 @@ const Player = connection.define('player', {
 });
 
 Player.prototype.joinGame = async function(game) {
-  if (!game.inProgress) throw new Error('Game is finished');
+  if (game.status === 'COMPLETED')
+    throw new Error('This game is finished');
+  if (game.status === 'IN_PROGRESS')
+    throw new Error('This game already in progress');
+  if (game.numOfPlayers >= game.capacity)
+    throw new Error('This game is full');
 
   try {
     await game.update({
@@ -38,7 +43,7 @@ Player.prototype.joinGame = async function(game) {
     });
     await this.update({ gameId: game.id });
   } catch (ex) {
-    throw new Error('This game is full');
+    console.log(ex);
   }
 };
 
