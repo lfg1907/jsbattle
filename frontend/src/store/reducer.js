@@ -1,6 +1,7 @@
 import { combineReducers } from 'redux';
 import {
   GET_GAME_QUESTIONS,
+  UPDATE_QUESTION,
   FETCH_TEST_CASES,
   FETCH_TEST_RESULTS,
   FETCH_USER,
@@ -13,6 +14,12 @@ const gameQuestionsReducer = (state = [], action) => {
   switch (action.type) {
     case GET_GAME_QUESTIONS:
       return action.questions;
+    case UPDATE_QUESTION:
+      return state.map(question => {
+        return question.id === action.updated.id
+          ? action.updated
+          : question;
+      });
     default:
       return state;
   }
