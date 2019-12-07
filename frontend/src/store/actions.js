@@ -1,6 +1,7 @@
 /* eslint-disable import/prefer-default-export */
 /* eslint-disable no-underscore-dangle */
 import axios from 'axios';
+
 import {
   GET_GAME_QUESTIONS,
   UPDATE_QUESTION,
@@ -13,6 +14,7 @@ import {
   UPDATE_GAME,
   UPDATE_SCORE
 } from './constants';
+
 import history from '../history';
 import socket from '../socket';
 import { sortByCreated } from '../utils';
@@ -91,8 +93,9 @@ const getPlayer = playerID => {
 // the first user is always fetched
 const getUser = () => {
   return async dispatch => {
-    const users = (await axios.get('/api/users')).data;
-    const user = users[0];
+    const user = (
+      await axios.get('/api/auth/login/github_user')
+    ).data;
     localStorage.setItem('jsBattleUserId', user.id);
     dispatch({ type: FETCH_USER, user });
   };
@@ -106,7 +109,7 @@ const getGames = () => {
   };
 };
 
-const createGame = (name, capacity) => {
+const createGame = (name, capacity, difficulty) => {
   const userId = localStorage.getItem('jsBattleUserId');
   return async dispatch => {
     const player = (
@@ -122,7 +125,8 @@ const createGame = (name, capacity) => {
       await axios.post('/api/games', {
         name,
         capacity,
-        playerId: player.id
+        playerId: player.id,
+        difficulty
       })
     ).data;
     socket.emit('game created', { game });

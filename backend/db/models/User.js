@@ -1,7 +1,7 @@
 const connection = require('../connection');
 
 const { Sequelize } = connection;
-const { UUID, UUIDV4, STRING } = Sequelize;
+const { UUID, UUIDV4, STRING, INTEGER } = Sequelize;
 
 const User = connection.define('user', {
   id: {
@@ -22,7 +22,7 @@ const User = connection.define('user', {
     allowNull: true
   },
   githubId: {
-    type: STRING,
+    type: INTEGER,
     allowNull: true
   }
 });

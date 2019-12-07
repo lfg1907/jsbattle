@@ -12,18 +12,63 @@ span.code {
   font-family: monospace;
 }
 
+.no-select {
+  -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Safari */
+     -khtml-user-select: none; /* Konqueror HTML */
+       -moz-user-select: none; /* Old versions of Firefox */
+        -ms-user-select: none; /* Internet Explorer/Edge */
+            user-select: none; /* Non-prefixed version, currently
+                                  supported by Chrome, Opera and Firefox */
+}
+
+.icon-EASY, .icon-MEDIUM, .icon-HARD {
+  display: inline-block;
+  margin-right: 1rem;
+}
+
+.icon-EASY {
+  width: 1rem;
+  height: 1rem;
+  background-color: #14d984;
+}
+
+.icon-MEDIUM {
+  width: 0;
+  height: 0;
+  margin-left: -0.1rem;
+  border-left: 0.6rem solid transparent;
+  border-right: 0.6rem solid transparent;
+  border-bottom: 1rem solid dodgerblue;
+}
+
+.icon-HARD {
+  width: 1.1rem;
+  height: 1.1rem;
+  margin-left: -0.1rem;
+  border-radius: 0.55rem;
+  background-color: #ed4832;
+}
+
 #home {
   font-weight: 500;
 }
 
-#home, #game-container, #editor-outputs {
+#home, #game-container, #editor-outputs, #difficulty-container {
   display: flex;
   flex-direction: row;
 }
 
 #editor-view, #question-view,
-#console-logs, #test-results {
+#console-logs, #test-results, .difficulty {
   flex: 1;
+}
+
+.difficulty {
+  height: 2.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 #user-stats-container,
@@ -109,7 +154,7 @@ span.code {
   background-color: #d9ecff;
 }
 
-.game-to-join {
+.game-to-join, .selected {
   background-color: #9ecfff !important;
 }
 

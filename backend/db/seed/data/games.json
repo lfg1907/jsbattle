@@ -1,8 +1,10 @@
 [
   {
-    "name": "JS Trivia @ Kilarney & Rose"
+    "name": "JS Trivia @ Kilarney & Rose",
+    "difficulty": "HARD"
   },
   {
-    "name": "Best Game Ever"
+    "name": "Bootcamp Prep",
+    "difficulty": "EASY"
   }
 ]

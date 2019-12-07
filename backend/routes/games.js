@@ -21,8 +21,17 @@ router
   })
   .post(async (req, res, next) => {
     try {
-      const { name, capacity, playerId } = req.body;
-      const game = await Game.create({ name, capacity });
+      const {
+        name,
+        capacity,
+        playerId,
+        difficulty
+      } = req.body;
+      const game = await Game.create({
+        name,
+        capacity,
+        difficulty
+      });
 
       if (playerId) {
         const player = await Player.findByPk(playerId);
@@ -56,7 +65,6 @@ router.get('/:id/questions', (req, res, next) => {
     where: { gameId: req.params.id },
     include: [{ model: Question }]
   })
-    // .then(questions => hydrateGameQuestions(questions))
     .then(questions => res.send(questions))
     .catch(next);
 });
