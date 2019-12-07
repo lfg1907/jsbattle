@@ -65,7 +65,6 @@ router.get('/:id/questions', (req, res, next) => {
     where: { gameId: req.params.id },
     include: [{ model: Question }]
   })
-    // .then(questions => hydrateGameQuestions(questions))
     .then(questions => res.send(questions))
     .catch(next);
 });
