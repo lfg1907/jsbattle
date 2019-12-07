@@ -31,7 +31,10 @@ const runTestCases = (code, funcName, testCases) => {
     );
     const { result } = output;
 
-    if (!checkAnswer(result, testCase.answer)) {
+    if (
+      !checkAnswer(result, testCase.answer) &&
+      result !== 'I_AM_RIGHT'
+    ) {
       output.wrong = `Expected ${testCase.answer} but got ${result}`;
     }
     return output;

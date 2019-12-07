@@ -70,7 +70,6 @@ router
         functionName,
         testCases
       );
-
       res.send(outputsToSend);
     } catch (ex) {
       next(ex);
@@ -105,6 +104,7 @@ router.post('/:id/runtests', async (req, res, next) => {
       functionName,
       testCases
     );
+    console.log(outputsToSend);
     res.send(outputsToSend);
   } catch (ex) {
     next(ex);

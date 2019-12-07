@@ -5,14 +5,23 @@ import { actions } from '../store';
 import Editor from './Editor';
 import EditorOutputs from './EditorOutputs';
 
+const countWrongResults = results => {
+  return results.filter(result => !!result.wrong).length;
+};
+
 const EditorPage = ({
   currentQ,
   testResults,
   getTestResults,
-  completeQuestion
+  completeQuestion,
+  updateScore,
+  player,
+  getPlayer
 }) => {
   const [editorValue, setEditorValue] = useState('');
+  const playerID = localStorage.getItem('jsBattlePlayerId');
   useEffect(() => {
+    getPlayer(playerID);
     const funcString = `function ${currentQ.question.functionName}(${currentQ.question.params}) {
   // Your code here...\n}`;
     setEditorValue(funcString);
@@ -27,11 +36,18 @@ const EditorPage = ({
   };
 
   const submitCode = () => {
+    getTestResults(currentQ.questionId, editorValue);
+    if (!countWrongResults(testResults))
+      updateScore(playerID, parseInt(player.score, 10) + 1);
     completeQuestion(currentQ.id);
   };
 
   return (
     <div id="editor-view">
+      <h3>
+        Your Score:
+        {` ${player.score}`}
+      </h3>
       <Editor
         value={editorValue}
         onChange={handleEditorChange}
@@ -47,9 +63,10 @@ const EditorPage = ({
   );
 };
 
-const mapStateToProps = ({ testResults }) => {
+const mapStateToProps = ({ testResults, player }) => {
   return {
-    testResults
+    testResults,
+    player
   };
 };
 
@@ -57,8 +74,12 @@ const mapDispatchToProps = dispatch => {
   return {
     getTestResults: (qID, code) =>
       dispatch(actions.fetchTestResults(qID, code)),
+    updateScore: (playerID, amt) =>
+      dispatch(actions.updateScore(playerID, amt)),
     completeQuestion: qID =>
-      dispatch(actions.completeQuestion(qID))
+      dispatch(actions.completeQuestion(qID)),
+    getPlayer: playerID =>
+      dispatch(actions.getPlayer(playerID))
   };
 };
 

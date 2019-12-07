@@ -4,10 +4,12 @@ import {
   UPDATE_QUESTION,
   FETCH_TEST_CASES,
   FETCH_TEST_RESULTS,
+  FETCH_PLAYER,
   FETCH_USER,
   FETCH_GAMES,
   CREATE_GAME,
-  UPDATE_GAME
+  UPDATE_GAME,
+  UPDATE_SCORE
 } from './constants';
 
 const gameQuestionsReducer = (state = [], action) => {
@@ -70,12 +72,24 @@ const testResultsReducer = (state = [], action) => {
   }
 };
 
+const playerReducer = (state = [], action) => {
+  switch (action.type) {
+    case FETCH_PLAYER:
+      return action.player;
+    case UPDATE_SCORE:
+      return action.updated;
+    default:
+      return state;
+  }
+};
+
 const reducer = combineReducers({
   gameQuestions: gameQuestionsReducer,
   user: userReducer,
   games: gamesReducer,
   testCases: testCaseReducer,
-  testResults: testResultsReducer
+  testResults: testResultsReducer,
+  player: playerReducer
 });
 
 export default reducer;

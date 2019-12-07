@@ -28,7 +28,7 @@ const GameView = ({
     setCurrentQ(incompleteQ);
   }, [incompleteQ.id]);
 
-  if (!gameQuestions.length) {
+  if (!gameQuestions.length || !game) {
     return '...loading';
   }
 
