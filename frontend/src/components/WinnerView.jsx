@@ -1,12 +1,21 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
-const WinnerView = () => {
+import { actions } from '../store';
+
+const WinnerView = ({ game, getWinner }) => {
+  const winner = getWinner(game.id);
   return (
     <div>
-      <h1>Congrats you've won this game</h1>
+      <h5>
+        The winner of this game is
+        <h1>{winner}</h1>
+      </h5>
     </div>
   );
 };
+const mapDispatchToProps = dispatch => ({
+  getWinner: () => dispatch(actions.getWinner())
+});
 
-export default connect()(WinnerView);
+export default connect(mapDispatchToProps)(WinnerView);

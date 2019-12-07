@@ -7,7 +7,7 @@ import WaitingRoom from './WaitingRoom';
 import GameView from './GameView';
 import EditorView from './EditorView';
 import Login from './Login';
-import WinnerView from './'
+import WinnerView from './WinnerView';
 
 const App = () => {
   return (
@@ -17,7 +17,10 @@ const App = () => {
       <Route path="/editor" component={EditorView} />
       <Route path="/waiting/:id" component={WaitingRoom} />
       <Route path="/game/:id" component={GameView} />
-      <Route path="/winner" component={WinnerView} />
+      <Route
+        path="/game/:id/winner"
+        component={WinnerView}
+      />
     </HashRouter>
   );
 };
