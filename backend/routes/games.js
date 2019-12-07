@@ -21,14 +21,22 @@ router
   })
   .post(async (req, res, next) => {
     try {
-      const { name, capacity, playerId } = req.body;
-      const game = await Game.create({ name, capacity });
+      const {
+        name,
+        capacity,
+        playerId,
+        difficulty
+      } = req.body;
+      const game = await Game.create({
+        name,
+        capacity,
+        difficulty
+      });
 
       if (playerId) {
         const player = await Player.findByPk(playerId);
         await player.hostGame(game);
       }
-      console.log(game);
       res.status(201).send(game);
     } catch (err) {
       next(err);
@@ -57,7 +65,6 @@ router.get('/:id/questions', (req, res, next) => {
     where: { gameId: req.params.id },
     include: [{ model: Question }]
   })
-    // .then(questions => hydrateGameQuestions(questions))
     .then(questions => res.send(questions))
     .catch(next);
 });
@@ -78,9 +85,7 @@ router.put('/:id/join', async (req, res, next) => {
   try {
     const { playerId } = req.body;
     const game = await Game.findByPk(req.params.id);
-    console.log(game);
     const player = await Player.findByPk(playerId);
-    console.log(player);
     await player.joinGame(game);
     res.send(game);
   } catch (err) {
