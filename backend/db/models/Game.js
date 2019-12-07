@@ -55,7 +55,10 @@ const Game = connection.define(
   {
     hooks: {
       async afterCreate(game) {
-        await game.addQuestions(NUM_QUESTIONS);
+        await game.addQuestions(
+          NUM_QUESTIONS,
+          game.difficulty
+        );
       }
     }
   }
@@ -80,11 +83,17 @@ Game.prototype.findWinningPlayer = function() {
 };
 
 // eslint-disable-next-line func-names
-Game.prototype.addQuestions = async function(num) {
+Game.prototype.addQuestions = async function(
+  num,
+  difficulty
+) {
   const Question = connection.models.question;
   const GameQuestion = connection.models.gameQuestion;
 
-  const questions = await Question.createSet(num);
+  const questions = await Question.createSet(
+    num,
+    difficulty
+  );
   return Promise.all(
     questions.map(question =>
       GameQuestion.create({
