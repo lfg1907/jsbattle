@@ -177,7 +177,7 @@ Status `200`. The updated game object is sent back.
 ```
 
 ### Join a game by `id`
-Only an `STARTING` game can be joined; each game can have up to 3 players.
+Only an `STARTING` game can be joined; each game has a max capacity specified by host.
 
 **If a player tries to join a full game or a game that's already `IN_PROGRESS` or `COMPLETED`, an error will be sent back.**
 ```
@@ -185,21 +185,24 @@ PUT /api/games/:id/join
 ```
 
 #### Payload
-Takes 1 mandatory property (`playerId`--ie. player to join game) as payload.
+Takes 1 mandatory property (`userId`) as payload. A player will be automatically created based on that `userId`; the player joins the specified game.
 ```json
 {
-    "playerId": "4e714832-f37f-4655-a92f-353dacc123af"
+    "userId": "4e714832-f37f-4655-a92f-353dacc123af"
 }
 ```
 
 #### Response
-Status `200`. The updated game is sent back. `numOfPlayers` is updated automatically.
+Status `200`. The updated game and player's ID are sent back. `numOfPlayers` is updated automatically.
 ```json
 {
-    "id": "a70dbf49-61f2-4740-a8b7-5547f8bdd30a",
-    "name": "Prof's Trivia",
-    "numOfPlayers": 2,
-    "status": "STARTING"
+    "game": {
+        "id": "a70dbf49-61f2-4740-a8b7-5547f8bdd30a",
+        "name": "Prof's Trivia",
+        "numOfPlayers": 2,
+        "status": "STARTING"
+    },
+    "playerId": "0f69f1b0-8748-476d-af60-c3017be0a1a7"
 }
 ```
 
