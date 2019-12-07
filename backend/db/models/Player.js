@@ -34,7 +34,7 @@ Player.prototype.joinGame = async function(game) {
     throw new Error('This game is finished');
   if (game.status === 'IN_PROGRESS')
     throw new Error('This game already in progress');
-  if (game.numOfPlayers >= 3)
+  if (game.numOfPlayers >= game.capacity)
     throw new Error('This game is full');
 
   try {
