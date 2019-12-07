@@ -6,8 +6,12 @@ import { actions } from '../store';
 import { titleCase } from '../utils';
 
 const CreateGame = ({ createGame }) => {
+  const diffLevels = ['Easy', 'Medium', 'Hard'];
   const [gameName, setGameName] = useState('');
   const [gameCap, setGameCap] = useState(3);
+  const [gameDiff, setGameDiff] = useState(
+    diffLevels[0].toUpperCase()
+  );
 
   useEffect(() => {
     const tempName = titleCase(
@@ -16,8 +20,13 @@ const CreateGame = ({ createGame }) => {
     setGameName(tempName);
   }, []);
 
-  const handleChange = ev => {
+  const handleNameChange = ev => {
     setGameName(ev.target.value);
+  };
+
+  const handleDiffChange = ev => {
+    if (ev.target.className.includes('icon-')) return;
+    setGameDiff(ev.target.id);
   };
 
   const handleCapChange = ev => {
@@ -25,7 +34,7 @@ const CreateGame = ({ createGame }) => {
   };
 
   const handleSubmit = () => {
-    createGame(gameName, gameCap);
+    createGame(gameName, gameCap, gameDiff);
   };
 
   return (
@@ -34,7 +43,7 @@ const CreateGame = ({ createGame }) => {
       <input
         type="text"
         value={gameName}
-        onChange={handleChange}
+        onChange={handleNameChange}
       />
       <br />
       <label htmlFor="cap">
@@ -46,6 +55,29 @@ const CreateGame = ({ createGame }) => {
           onChange={handleCapChange}
         />
       </label>
+      <div id="difficulty-container">
+        {' '}
+        {diffLevels.map(diffLevel => (
+          // eslint-disable-next-line
+          <div
+            key={diffLevel}
+            role="radio"
+            aria-checked="false"
+            className={
+              diffLevel.toUpperCase() === gameDiff
+                ? 'no-select difficulty selected'
+                : 'no-select difficulty'
+            }
+            id={diffLevel.toUpperCase()}
+            onClick={handleDiffChange}
+          >
+            <div
+              className={`icon-${diffLevel.toUpperCase()}`}
+            />
+            {diffLevel}
+          </div>
+        ))}
+      </div>
       <button type="button" onClick={handleSubmit}>
         Create
       </button>
@@ -54,8 +86,10 @@ const CreateGame = ({ createGame }) => {
 };
 
 const mapDispatchToProps = dispatch => ({
-  createGame(name, capacity) {
-    dispatch(actions.createGame(name, capacity));
+  createGame(name, capacity, difficulty) {
+    dispatch(
+      actions.createGame(name, capacity, difficulty)
+    );
   }
 });
 

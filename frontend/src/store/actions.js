@@ -85,7 +85,7 @@ const getGames = () => {
   };
 };
 
-const createGame = (name, capacity) => {
+const createGame = (name, capacity, difficulty) => {
   const userId = localStorage.getItem('jsBattleUserId');
   return async dispatch => {
     const player = (
@@ -101,7 +101,8 @@ const createGame = (name, capacity) => {
       await axios.post('/api/games', {
         name,
         capacity,
-        playerId: player.id
+        playerId: player.id,
+        difficulty
       })
     ).data;
     socket.emit('game created', { game });
