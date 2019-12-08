@@ -53,23 +53,34 @@ const WaitingRoom = ({
   });
 
   return (
-    <div>
-      <h2>{`Waiting Room for ${currentGame.name}`}</h2>
-      <p>
-        {`Currently ${currentGame.numOfPlayers} ${
-          currentGame.numOfPlayers > 1
-            ? 'players'
-            : 'player'
-        } out of a maximum of ${currentGame.capacity}`}
-      </p>
-      <p>{`Path to join game: ${window.location.origin}/#/join/${currentGame.id}`}</p>
-      {readyToStart ? (
-        <button type="button" onClick={handleReady}>
-          Ready
-        </button>
-      ) : (
-        <p>Waiting for other players to join</p>
-      )}
+    <div id="waiting-room-container">
+      <div id="waiting-room">
+        <h2>{currentGame.name}</h2>
+        <h2 className="light">
+          {`Currently ${currentGame.numOfPlayers} ${
+            currentGame.numOfPlayers > 1
+              ? 'players'
+              : 'player'
+          } out of a maximum of ${currentGame.capacity}`}
+        </h2>
+        <h4>Waiting for players...</h4>
+        <p>
+          Invite others to join:
+          <br />
+          <span className="join-link">{`${window.location.origin}/#/join/${currentGame.id}`}</span>
+        </p>
+        {readyToStart ? (
+          <button
+            id="ready-button"
+            type="button"
+            onClick={handleReady}
+          >
+            Ready
+          </button>
+        ) : (
+          ''
+        )}
+      </div>
     </div>
   );
 };

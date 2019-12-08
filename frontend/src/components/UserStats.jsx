@@ -5,7 +5,7 @@ const UserStats = ({ name }) => {
   return (
     <div id="user-stats-container">
       <div id="user-stats">
-        <h2>{`Hello ${name ? `${name}!` : ''}`}</h2>
+        <h1>{`Hello ${name ? `${name}!` : ''}`}</h1>
         <p>You&apos;ve won xx games out of xx.</p>
       </div>
     </div>

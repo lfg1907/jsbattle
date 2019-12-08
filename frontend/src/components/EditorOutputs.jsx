@@ -11,9 +11,11 @@ const EditorOutputs = ({ testResults }) => {
         <h4>Log</h4>
         {testResults.length &&
         testResults[0].consoles.length ? (
-          <ul>
+          <ul id="test-list">
             {testResults.map(testResult =>
-              testResult.consoles.map(c => <li>{c}</li>)
+              testResult.consoles.map(c => (
+                <li className="test-result">{c}</li>
+              ))
             )}
           </ul>
         ) : (
@@ -21,24 +23,34 @@ const EditorOutputs = ({ testResults }) => {
         )}
       </div>
       <div id="test-results">
-        <h4>Results</h4>
-        {testResults.length &&
-        !countWrongResults(testResults) ? (
-          <h5 className="right">All tests passed!</h5>
+        <h4>
+          {testResults.length &&
+          !countWrongResults(testResults) ? (
+            <span className="right">All tests passed!</span>
+          ) : (
+            'Results'
+          )}
+        </h4>
+        {}
+        {testResults ? (
+          <ul id="results-list">
+            {testResults.map(output => {
+              if (output.wrong)
+                return (
+                  <li className="result-result wrong">
+                    {output.wrong}
+                  </li>
+                );
+              return (
+                <li className="result-result right">
+                  {output.result}
+                </li>
+              );
+            })}
+          </ul>
         ) : (
           ''
         )}
-        {testResults
-          ? testResults.map(output => {
-              if (output.wrong)
-                return (
-                  <p className="wrong">{output.wrong}</p>
-                );
-              return (
-                <p className="right">{output.result}</p>
-              );
-            })
-          : ''}
       </div>
     </div>
   );

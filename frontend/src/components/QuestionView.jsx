@@ -16,21 +16,28 @@ const QuestionView = ({
 
   return (
     <div id="question-view">
-      <div id="question-prompt">
-        <h3>{currentQ.question.title}</h3>
-        <p>{currentQ.question.prompt}</p>
-      </div>
-      <div id="test-case-div">
-        <h4>Test Cases:</h4>
-        <ul>
-          {testCases.map(testCase => (
-            <li key={testCase.id}>
-              <span className="code">{`${testCase.arguments} `}</span>
-              should yield
-              <span className="code">{` ${testCase.answer}`}</span>
-            </li>
-          ))}
-        </ul>
+      <div id="question-container">
+        <div id="question-prompt">
+          <h3>{currentQ.question.title}</h3>
+          <p>{currentQ.question.prompt}</p>
+        </div>
+        <div id="test-case-div">
+          <h4>Test Cases:</h4>
+          <ul id="test-examples-list">
+            {testCases.map(testCase => (
+              <li
+                className="test-examples"
+                key={testCase.id}
+              >
+                <p>
+                  <span className="code">{`${testCase.arguments} `}</span>
+                  should yield
+                  <span className="code">{` ${testCase.answer}`}</span>
+                </p>
+              </li>
+            ))}
+          </ul>
+        </div>
       </div>
     </div>
   );
