@@ -21,7 +21,6 @@ const EditorPage = ({
 }) => {
   const [editorValue, setEditorValue] = useState('');
   const playerID = localStorage.getItem('jsBattlePlayerId');
-  console.log(gameSocket);
   useEffect(() => {
     getPlayer(playerID);
     const funcString = `function ${currentQ.question.functionName}(${currentQ.question.params}) {
@@ -37,7 +36,7 @@ const EditorPage = ({
     getTestResults(currentQ.questionId, editorValue);
   };
 
-  const submitCode = ev => {
+  const submitCode = async ev => {
     // eslint-disable-next-line no-param-reassign
     ev.target.disabled = true;
     document.querySelector('#test-btn').disabled = true;
