@@ -17,10 +17,7 @@ const App = () => {
       <Route path="/editor" component={EditorView} />
       <Route path="/waiting/:id" component={WaitingRoom} />
       <Route path="/game/:id" component={GameView} />
-      <Route
-        path="/game/:id/winner"
-        component={WinnerView}
-      />
+      <Route path="/winner/:id" component={WinnerView} />
     </HashRouter>
   );
 };

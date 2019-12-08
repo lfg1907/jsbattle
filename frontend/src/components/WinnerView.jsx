@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { actions } from '../store';
 
 const WinnerView = ({ game, getWinner }) => {
+  console.log(game)
   const winner = getWinner(game.id);
   return (
     <div>
@@ -14,8 +15,14 @@ const WinnerView = ({ game, getWinner }) => {
     </div>
   );
 };
-const mapDispatchToProps = dispatch => ({
-  getWinner: () => dispatch(actions.getWinner())
-});
+const mapDispatchToProps = dispatch => {
+  return {
+    getWinner: gameId => dispatch(actions.getWinner(gameId))
+  };
+};
+const mapStateToProps = ({ game }) => ({ game });
 
-export default connect(mapDispatchToProps)(WinnerView);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(WinnerView);
