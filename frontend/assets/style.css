@@ -16,6 +16,24 @@ span.light {
   font-weight: 200;
 }
 
+#waiting-room h2 {
+  margin-bottom: 0.25rem;
+}
+
+#waiting-room h2.light {
+  margin-top: 0;
+  margin-bottom: 3rem;
+  font-weight: 300;
+}
+
+#waiting-room h4 {
+  margin-bottom: 3rem;
+}
+
+span.join-link {
+  color: dodgerblue;
+}
+
 .no-select {
   -webkit-touch-callout: none; /* iOS Safari */
     -webkit-user-select: none; /* Safari */
@@ -64,12 +82,12 @@ span.light {
 #question-container {
   padding: 2rem;
   width: 40vw;
-  min-height: 60vh;
+  min-height: 40vh;
   background-color: white;
   box-shadow: -2px 0px 15px rgba(0, 0, 0, .25);
 }
 
-#login-container {
+#login-container, #waiting-room-container {
   display: flex;
   background-color: #FFC73A;
   height: 100vh;
@@ -77,7 +95,7 @@ span.light {
   align-items: center;
 }
 
-#login {
+#login, #waiting-room {
   background-color: white;
   width: 35vw;
   min-height: 40vh;
@@ -85,20 +103,22 @@ span.light {
   box-shadow: -2px 0px 15px rgba(0, 0, 0, .25);
 }
 
-#login h1 {
+#login h1, #waiting-room h2 {
   margin-top: 0;
 }
 
-#login-button {
+#login-button, #ready-button {
   margin: 3rem auto 0 auto;
   width: 50%;
   height: 3rem;
   background-color: dodgerblue;
+  border: none;
   display: flex;
   justify-content: center;
   align-items: center;
   color: white;
   font-weight: bold;
+  cursor: pointer;
 }
 
 #login a {
@@ -162,10 +182,6 @@ span.light {
   color: white;
   font-weight: bold;
   cursor: pointer;
-}
-
-#test-button:hover, #submit-button:hover {
-  background-color: #1d72c4;
 }
 
 #test-button {
@@ -297,7 +313,12 @@ span.light {
 }
 
 #create-game-container button:hover,
-#join-game-container button:hover {
+#join-game-container button:hover,
+#test-button:hover,
+#submit-button:hover,
+#login-button:hover,
+#ready-button:hover
+{
   background-color: #1d72c4;
 }
 
