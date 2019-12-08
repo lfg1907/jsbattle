@@ -21,6 +21,22 @@ const User = connection.define('user', {
     type: STRING,
     allowNull: true
   },
+  gamesWon: {
+    type: INTEGER,
+    allowNull: true,
+    defaultValue: 0,
+    validate: {
+      min: 0
+    }
+  },
+  gamesPlayed: {
+    type: INTEGER,
+    allowNull: true,
+    defaultValue: 0,
+    validate: {
+      min: 0
+    }
+  },
   githubId: {
     type: INTEGER,
     allowNull: true
