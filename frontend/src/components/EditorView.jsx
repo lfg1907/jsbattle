@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { actions } from '../store';
-
 import Editor from './Editor';
 import EditorOutputs from './EditorOutputs';
 
@@ -16,10 +15,13 @@ const EditorPage = ({
   completeQuestion,
   updateScore,
   player,
-  getPlayer
+  getPlayer,
+  game,
+  gameSocket
 }) => {
   const [editorValue, setEditorValue] = useState('');
   const playerID = localStorage.getItem('jsBattlePlayerId');
+  console.log(gameSocket);
   useEffect(() => {
     getPlayer(playerID);
     const funcString = `function ${currentQ.question.functionName}(${currentQ.question.params}) {
@@ -35,12 +37,24 @@ const EditorPage = ({
     getTestResults(currentQ.questionId, editorValue);
   };
 
-  const submitCode = () => {
+  const submitCode = ev => {
+    // eslint-disable-next-line no-param-reassign
+    ev.target.disabled = true;
+    document.querySelector('#test-btn').disabled = true;
     getTestResults(currentQ.questionId, editorValue);
     if (!countWrongResults(testResults))
       updateScore(playerID, parseInt(player.score, 10) + 1);
-    completeQuestion(currentQ.id);
+    gameSocket.emit('player submitted', {
+      gameQuestion: currentQ,
+      game
+    });
   };
+
+  gameSocket.on('all submitted', () => {
+    document.querySelector('#test-btn').disabled = false;
+    document.querySelector('#submit-btn').disabled = false;
+    completeQuestion(currentQ.id);
+  });
 
   return (
     <div id="editor-view">
@@ -52,10 +66,18 @@ const EditorPage = ({
         value={editorValue}
         onChange={handleEditorChange}
       />
-      <button type="button" onClick={testCode}>
+      <button
+        type="button"
+        id="test-btn"
+        onClick={testCode}
+      >
         Test
       </button>
-      <button type="button" onClick={submitCode}>
+      <button
+        type="button"
+        id="submit-btn"
+        onClick={submitCode}
+      >
         Submit
       </button>
       <EditorOutputs testResults={testResults} />
@@ -63,10 +85,15 @@ const EditorPage = ({
   );
 };
 
-const mapStateToProps = ({ testResults, player }) => {
+const mapStateToProps = ({
+  testResults,
+  player,
+  gameSocket
+}) => {
   return {
     testResults,
-    player
+    player,
+    gameSocket
   };
 };
 
