@@ -66,7 +66,7 @@ const Game = connection.define(
 
 // eslint-disable-next-line func-names
 Game.prototype.findWinningPlayer = function() {
-  if (this.status === 'IN_PROGRESS')
+  if (this.status !== 'COMPLETED')
     throw new Error('Game is still in progress');
 
   const Player = connection.models.player;
