@@ -1,5 +1,13 @@
 import React from 'react';
-import { HashRouter, Route } from 'react-router-dom';
+import {
+  HashRouter,
+  Route,
+  Redirect,
+  Switch
+} from 'react-router-dom';
+import { connect } from 'react-redux';
+
+import { actions } from '../store';
 
 // Components
 import Home from './Home';
@@ -7,16 +15,40 @@ import WaitingRoom from './WaitingRoom';
 import GameView from './GameView';
 import EditorView from './EditorView';
 import Login from './Login';
-const App = () => {
+import JoinFromLink from './JoinFromLink';
+
+const App = ({ loggedIn }) => {
   return (
     <HashRouter>
-      <Route exact path="/" component={Login} />
-      <Route path="/home" component={Home} />
-      <Route path="/editor" component={EditorView} />
-      <Route path="/waiting/:id" component={WaitingRoom} />
-      <Route path="/game/:id" component={GameView} />
+      <Switch>
+        <Route exact path="/">
+          {loggedIn ? <Redirect to="/home" /> : <Login />}
+        </Route>
+        <Route path="/home" component={Home} />
+        <Route path="/editor" component={EditorView} />
+        <Route
+          path="/waiting/:id"
+          component={WaitingRoom}
+        />
+        <Route path="/game/:id" component={GameView} />
+        <Route path="/join/:id" component={JoinFromLink} />
+      </Switch>
     </HashRouter>
   );
 };
 
-export default App;
+const mapStateToProps = ({ user }) => ({
+  loggedIn: !!user.id
+});
+
+const mapDispatchToProps = dispatch => ({
+  attemptGetUser() {
+    const userId = localStorage.getItem('jsBattleUserId');
+    dispatch(actions.attemptGetUser(userId));
+  }
+});
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(App);

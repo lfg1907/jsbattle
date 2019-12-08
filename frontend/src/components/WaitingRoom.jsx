@@ -3,14 +3,14 @@ import { connect } from 'react-redux';
 import io from 'socket.io-client';
 
 import history from '../history';
-import socket, { ADDRESS } from '../socket';
+import { ADDRESS } from '../socket';
 import { actions } from '../store';
 
 const WaitingRoom = ({ game, getQuestions }) => {
+  if (!game) return null;
+
   const gameSocket = io.connect(`${ADDRESS}/game`);
   useEffect(() => {
-    socket.emit('join game', { game });
-
     gameSocket.on('connect', () => {
       gameSocket.emit('join room', { game });
     });
@@ -20,8 +20,12 @@ const WaitingRoom = ({ game, getQuestions }) => {
 
   const [currentGame, setCurrentGame] = useState(game);
   gameSocket.on('room joined', gameData => {
-    setCurrentGame(gameData.game);
+    const newGame = gameData.game;
+    setCurrentGame(newGame);
   });
+  useEffect(() => {
+    setCurrentGame(game);
+  }, [game.numOfPlayers]);
 
   const [readyToStart, setReadyToStart] = useState(false);
   useEffect(() => {
@@ -52,8 +56,9 @@ const WaitingRoom = ({ game, getQuestions }) => {
           currentGame.numOfPlayers > 1
             ? 'players'
             : 'player'
-        } out of ${currentGame.capacity}`}
+        } out of a maximum of ${currentGame.capacity}`}
       </p>
+      <p>{`Path to join game: ${window.location.origin}/#/join/${currentGame.id}`}</p>
       {readyToStart ? (
         <button type="button" onClick={handleReady}>
           Ready

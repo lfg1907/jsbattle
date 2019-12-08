@@ -89,8 +89,13 @@ const getPlayer = playerID => {
   };
 };
 
-// This is a temporary implementation
-// the first user is always fetched
+const attemptGetUser = userId => {
+  return async dispatch => {
+    const user = await axios.get(`/api/users/${userId}`);
+    dispatch({ type: FETCH_USER, user });
+  };
+};
+
 const getUser = () => {
   return async dispatch => {
     const user = (
@@ -135,16 +140,19 @@ const createGame = (name, capacity, difficulty) => {
   };
 };
 
-const joinGame = (gameId, playerId) => {
+const joinGame = (gameId, userId) => {
   return async dispatch => {
-    const joinedGame = (
+    const { game, playerId } = (
       await axios.put(`/api/games/${gameId}/join`, {
-        playerId
+        userId
       })
     ).data;
-    socket.emit('join game', { game: joinedGame });
-    dispatch({ type: UPDATE_GAME, game: joinedGame });
-    history.push(`/waiting/${joinedGame.id}`);
+
+    localStorage.setItem('jsBattlePlayerId', playerId);
+
+    socket.emit('join game', { game });
+    dispatch({ type: UPDATE_GAME, game });
+    history.push(`/waiting/${game.id}`);
   };
 };
 
@@ -167,6 +175,7 @@ export {
   fetchTestCases,
   fetchTestResults,
   getPlayer,
+  attemptGetUser,
   getUser,
   getGames,
   createGame,
