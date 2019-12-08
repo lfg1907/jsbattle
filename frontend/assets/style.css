@@ -12,6 +12,28 @@ span.code {
   font-family: monospace;
 }
 
+span.light {
+  font-weight: 200;
+}
+
+#waiting-room h2 {
+  margin-bottom: 0.25rem;
+}
+
+#waiting-room h2.light {
+  margin-top: 0;
+  margin-bottom: 3rem;
+  font-weight: 300;
+}
+
+#waiting-room h4 {
+  margin-bottom: 3rem;
+}
+
+span.join-link {
+  color: dodgerblue;
+}
+
 .no-select {
   -webkit-touch-callout: none; /* iOS Safari */
     -webkit-user-select: none; /* Safari */
@@ -50,13 +72,85 @@ span.code {
   background-color: #ed4832;
 }
 
+#question-view {
+  background-color: #FFC73A;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#question-container {
+  padding: 2rem;
+  width: 40vw;
+  min-height: 40vh;
+  background-color: white;
+  box-shadow: -2px 0px 15px rgba(0, 0, 0, .25);
+}
+
+#login-container, #waiting-room-container {
+  display: flex;
+  background-color: #FFC73A;
+  height: 100vh;
+  justify-content: center;
+  align-items: center;
+}
+
+#login, #waiting-room {
+  background-color: white;
+  width: 35vw;
+  min-height: 40vh;
+  padding: 2rem;
+  box-shadow: -2px 0px 15px rgba(0, 0, 0, .25);
+}
+
+#login h1, #waiting-room h2 {
+  margin-top: 0;
+}
+
+#login-button, #ready-button {
+  margin: 3rem auto 0 auto;
+  width: 50%;
+  height: 3rem;
+  background-color: dodgerblue;
+  border: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+#login a {
+  text-decoration: none;
+}
+
 #home {
   font-weight: 500;
 }
 
-#home, #game-container, #editor-outputs, #difficulty-container {
+#home, #game-container, #editor-outputs, #levels-container {
   display: flex;
   flex-direction: row;
+}
+
+#game-name {
+  border-top: 1px solid lightgray;
+}
+
+#game-name, #capacity-container, #difficulty-container {
+  border-left: 1px solid lightgray;
+  padding-left: 1rem;
+}
+
+#game-name-input, #capacity-input, #difficulty-input {
+  border: none;
+  border-right: 1px solid lightgray;
+}
+
+#levels-container {
+  width: 100%;
+  height: 3rem;
 }
 
 #editor-view, #question-view,
@@ -64,8 +158,100 @@ span.code {
   flex: 1;
 }
 
-.difficulty {
+#editor-view, #question-view {
+  padding: 0 1rem;
+}
+
+#editor-view h2 {
+  margin-top: 0;
+  margin-bottom: 8rem;
+  padding-top: 1.5rem;
+  text-align: right;
+}
+
+#editor-view #button-container {
+  display: flex;
+  flex-direction: row;
+}
+
+#test-button, #submit-button {
+  width: 50%;
+  background-color: dodgerblue;
+  border: none;
+  height: 3rem;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+#test-button {
+  border-right: 1px solid white;
+}
+
+#question-prompt h3 {
+  margin-top: 0;
+}
+
+#console-logs, #test-results {
+  margin-top: 1rem;
+  height: 28vh;
+  overflow-y: scroll;
+}
+
+#console-logs h4, #test-results h4 {
+  margin-top: 0.125rem;
+  margin-bottom: 1rem;
+}
+
+#console-logs {
+  margin-right: 1rem;
+}
+
+#test-case-div h4 {
+  margin-top: 5rem;
+}
+
+#test-list, #results-list,
+#test-examples-list {
+  list-style-type: none;
+}
+
+#test-list, #results-list {
+  font-family: monospace;
+  padding-left: 0;
+  padding-right: 1rem;
+}
+
+#test-examples-list {
+  padding-left: 0;
+}
+
+.test-result, .result-result, .test-examples {
   height: 2.5rem;
+  display: flex;
+  align-items: center;
+  font-size: 1rem;
+}
+
+.test-result:not(:last-child),
+.result-result:not(:last-child),
+.test-examples:not(:last-child)
+{
+  border-bottom: 1px solid lightgray;
+}
+
+#create-game-container label, #difficulty-label {
+  display: inline-block;
+  width: 25%;
+}
+
+#difficulty-input {
+  width: 75%;
+  display: inline-block;
+  height: 3rem;
+}
+
+.difficulty {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -85,7 +271,8 @@ span.code {
   background-color: #FFC73A;
 }
 
-#games-control-panel-container {
+#games-control-panel-container,
+#editor-view {
   background-color: white;
   box-shadow: -2px 0px 15px rgba(0, 0, 0, .25);
 }
@@ -103,13 +290,14 @@ span.code {
   background-color: white;
 }
 
+#capacity-container {
+  border-top: 1px solid lightgray;
+  border-bottom: 1px solid lightgray;
+}
+
 #create-game-container input {
   font-weight: 500;
-  border-radius: 0.5rem 0.5rem 0 0;
-  border-left: 1px solid lightgray;
-  border-right: 1px solid lightgray;
-  border-top: 1px solid lightgray;
-  width: 100%;
+  width: 75%;
   padding: 1rem;
 }
 
@@ -118,7 +306,6 @@ span.code {
   width: 100%;
   height: 3rem;
   border: none;
-  border-radius: 0 0 0.5rem 0.5rem;
   background-color: dodgerblue;
   color: white;
   font-weight: bold;
@@ -126,7 +313,12 @@ span.code {
 }
 
 #create-game-container button:hover,
-#join-game-container button:hover {
+#join-game-container button:hover,
+#test-button:hover,
+#submit-button:hover,
+#login-button:hover,
+#ready-button:hover
+{
   background-color: #1d72c4;
 }
 
@@ -138,7 +330,6 @@ span.code {
 #games-list {
   height: 40vh;
   overflow-y:scroll;
-  border-radius: 0.5rem 0.5rem 0 0;
   border-top: 1px solid lightgray;
   border-left: 1px solid lightgray;
   border-right: 1px solid lightgray;
@@ -150,7 +341,7 @@ span.code {
   background-color: white;
 }
 
-.game:hover{
+.game:hover, .difficulty:hover {
   background-color: #d9ecff;
 }
 
@@ -162,11 +353,27 @@ span.code {
   color: gray;
 }
 
+#game-view {
+  height: 100vh;
+}
+
+#game-view > h2 {
+  margin: 0;
+  padding: 1.5rem 0;
+  position: absolute;
+  width: 50%;
+  text-align: center;
+}
+
+#game-container {
+  height: 100%;
+}
+
 .right {
-  color: green
+  color: #14d984;
 }
 
 .wrong {
-  color: red
+  color: #ed4832;
 }
 

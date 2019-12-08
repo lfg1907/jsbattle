@@ -39,7 +39,7 @@ const EditorPage = ({
   const submitCode = async ev => {
     // eslint-disable-next-line no-param-reassign
     ev.target.disabled = true;
-    document.querySelector('#test-btn').disabled = true;
+    document.querySelector('#test-button').disabled = true;
     getTestResults(currentQ.questionId, editorValue);
     if (!countWrongResults(testResults))
       updateScore(playerID, parseInt(player.score, 10) + 1);
@@ -50,35 +50,43 @@ const EditorPage = ({
   };
 
   gameSocket.on('all submitted', () => {
-    document.querySelector('#test-btn').disabled = false;
-    document.querySelector('#submit-btn').disabled = false;
+    document.querySelector('#test-button').disabled = false;
+    document.querySelector(
+      '#submit-button'
+    ).disabled = false;
     completeQuestion(currentQ.id);
   });
 
   return (
     <div id="editor-view">
-      <h3>
-        Your Score:
-        {` ${player.score}`}
-      </h3>
+      <h2>
+        <span className="light">Your score</span>
+        {` ${player.score} ${
+          player.score > 1 ? 'pts' : 'pt'
+        }`}
+      </h2>
       <Editor
         value={editorValue}
         onChange={handleEditorChange}
       />
-      <button
-        type="button"
-        id="test-btn"
-        onClick={testCode}
-      >
-        Test
-      </button>
-      <button
-        type="button"
-        id="submit-btn"
-        onClick={submitCode}
-      >
-        Submit
-      </button>
+
+      <div id="button-container">
+        <button
+          type="button"
+          id="test-button"
+          onClick={testCode}
+        >
+          Test
+        </button>
+        <button
+          type="button"
+          id="submit-button"
+          onClick={submitCode}
+        >
+          Submit
+        </button>
+      </div>
+
       <EditorOutputs testResults={testResults} />
     </div>
   );
