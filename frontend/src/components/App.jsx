@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import {
   HashRouter,
   Route,
@@ -17,7 +17,11 @@ import EditorView from './EditorView';
 import Login from './Login';
 import JoinFromLink from './JoinFromLink';
 
-const App = ({ loggedIn }) => {
+const App = ({ loggedIn, attemptGetUser }) => {
+  useEffect(() => {
+    attemptGetUser();
+  }, []);
+
   return (
     <HashRouter>
       <Switch>
