@@ -3,6 +3,7 @@
 import axios from 'axios';
 
 import {
+  SET_GAME_SOCKET,
   GET_GAME_QUESTIONS,
   UPDATE_QUESTION,
   FETCH_TEST_CASES,
@@ -23,6 +24,13 @@ const _getGameQuestions = questions => {
   return {
     questions,
     type: GET_GAME_QUESTIONS
+  };
+};
+
+const setGameSocket = gameSocket => {
+  return {
+    gameSocket,
+    type: SET_GAME_SOCKET
   };
 };
 
@@ -169,6 +177,7 @@ const addGame = game => {
 };
 
 export {
+  setGameSocket,
   getGameQuestions,
   updateScore,
   completeQuestion,

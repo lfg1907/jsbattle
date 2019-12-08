@@ -1,5 +1,6 @@
 import { combineReducers } from 'redux';
 import {
+  SET_GAME_SOCKET,
   GET_GAME_QUESTIONS,
   UPDATE_QUESTION,
   FETCH_TEST_CASES,
@@ -83,13 +84,23 @@ const playerReducer = (state = [], action) => {
   }
 };
 
+const gameSocketReducer = (state = {}, action) => {
+  switch (action.type) {
+    case SET_GAME_SOCKET:
+      return action.gameSocket;
+    default:
+      return state;
+  }
+};
+
 const reducer = combineReducers({
   gameQuestions: gameQuestionsReducer,
   user: userReducer,
   games: gamesReducer,
   testCases: testCaseReducer,
   testResults: testResultsReducer,
-  player: playerReducer
+  player: playerReducer,
+  gameSocket: gameSocketReducer
 });
 
 export default reducer;

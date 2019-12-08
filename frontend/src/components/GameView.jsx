@@ -37,7 +37,7 @@ const GameView = ({
       <h2>{`Game ${game.name}`}</h2>
       <div id="game-container">
         <QuestionView currentQ={currentQ} />
-        <EditorView currentQ={currentQ} />
+        <EditorView currentQ={currentQ} game={game} />
       </div>
     </div>
   );

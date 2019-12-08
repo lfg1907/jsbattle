@@ -1,20 +1,24 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import io from 'socket.io-client';
-
-import history from '../history';
 import { ADDRESS } from '../socket';
+import history from '../history';
 import { actions } from '../store';
 
-const WaitingRoom = ({ game, getQuestions }) => {
+const WaitingRoom = ({
+  game,
+  getQuestions,
+  setGameSocket
+}) => {
   if (!game) return null;
 
   const gameSocket = io.connect(`${ADDRESS}/game`);
+
   useEffect(() => {
     gameSocket.on('connect', () => {
       gameSocket.emit('join room', { game });
     });
-
+    setGameSocket(gameSocket);
     getQuestions(game.id);
   }, []);
 
@@ -80,6 +84,9 @@ const mapStateToProps = (
 const mapDispatchToProps = dispatch => ({
   getQuestions(gameId) {
     dispatch(actions.getGameQuestions(gameId));
+  },
+  setGameSocket: gameSocket => {
+    dispatch(actions.setGameSocket(gameSocket));
   }
 });
 
