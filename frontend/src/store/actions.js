@@ -99,7 +99,8 @@ const getPlayer = playerID => {
 
 const attemptGetUser = userId => {
   return async dispatch => {
-    const user = await axios.get(`/api/users/${userId}`);
+    const user = (await axios.get(`/api/users/${userId}`))
+      .data;
     dispatch({ type: FETCH_USER, user });
   };
 };
