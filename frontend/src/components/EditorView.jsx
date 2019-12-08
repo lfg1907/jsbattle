@@ -39,7 +39,7 @@ const EditorPage = ({
   const submitCode = ev => {
     // eslint-disable-next-line no-param-reassign
     ev.target.disabled = true;
-    document.querySelector('#test-btn').disabled = true;
+    document.querySelector('#test-button').disabled = true;
     getTestResults(currentQ.questionId, editorValue);
     if (!countWrongResults(testResults))
       updateScore(playerID, parseInt(player.score, 10) + 1);
@@ -50,8 +50,10 @@ const EditorPage = ({
   };
 
   gameSocket.on('all submitted', () => {
-    document.querySelector('#test-btn').disabled = false;
-    document.querySelector('#submit-btn').disabled = false;
+    document.querySelector('#test-button').disabled = false;
+    document.querySelector(
+      '#submit-button'
+    ).disabled = false;
     completeQuestion(currentQ.id);
   });
 
