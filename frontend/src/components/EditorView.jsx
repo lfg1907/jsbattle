@@ -21,7 +21,6 @@ const EditorPage = ({
 }) => {
   const [editorValue, setEditorValue] = useState('');
   const playerID = localStorage.getItem('jsBattlePlayerId');
-  console.log(gameSocket);
   useEffect(() => {
     getPlayer(playerID);
     const funcString = `function ${currentQ.question.functionName}(${currentQ.question.params}) {
@@ -58,28 +57,34 @@ const EditorPage = ({
 
   return (
     <div id="editor-view">
-      <h3>
-        Your Score:
-        {` ${player.score}`}
-      </h3>
+      <h2>
+        <span className="light">Your score</span>
+        {` ${player.score} ${
+          player.score > 1 ? 'pts' : 'pt'
+        }`}
+      </h2>
       <Editor
         value={editorValue}
         onChange={handleEditorChange}
       />
-      <button
-        type="button"
-        id="test-btn"
-        onClick={testCode}
-      >
-        Test
-      </button>
-      <button
-        type="button"
-        id="submit-btn"
-        onClick={submitCode}
-      >
-        Submit
-      </button>
+
+      <div id="button-container">
+        <button
+          type="button"
+          id="test-button"
+          onClick={testCode}
+        >
+          Test
+        </button>
+        <button
+          type="button"
+          id="submit-button"
+          onClick={submitCode}
+        >
+          Submit
+        </button>
+      </div>
+
       <EditorOutputs testResults={testResults} />
     </div>
   );
