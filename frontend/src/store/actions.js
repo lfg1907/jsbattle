@@ -89,8 +89,13 @@ const getPlayer = playerID => {
   };
 };
 
-// This is a temporary implementation
-// the first user is always fetched
+const attemptGetUser = userId => {
+  return async dispatch => {
+    const user = await axios.get(`/api/users/${userId}`);
+    dispatch({ type: FETCH_USER, user });
+  };
+};
+
 const getUser = () => {
   return async dispatch => {
     const user = (
@@ -170,6 +175,7 @@ export {
   fetchTestCases,
   fetchTestResults,
   getPlayer,
+  attemptGetUser,
   getUser,
   getGames,
   createGame,
