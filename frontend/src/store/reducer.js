@@ -7,7 +7,8 @@ import {
   FETCH_USER,
   FETCH_GAMES,
   CREATE_GAME,
-  UPDATE_GAME
+  UPDATE_GAME,
+  GET_WINNER
 } from './constants';
 
 const gameQuestionsReducer = (state = [], action) => {
@@ -70,12 +71,22 @@ const testResultsReducer = (state = [], action) => {
   }
 };
 
+const getWinnerReducer = (state = {}, action) => {
+  switch (action.type) {
+    case GET_WINNER:
+      return action.winner;
+    default:
+      return state;
+  }
+};
+
 const reducer = combineReducers({
   gameQuestions: gameQuestionsReducer,
   user: userReducer,
   games: gamesReducer,
   testCases: testCaseReducer,
-  testResults: testResultsReducer
+  testResults: testResultsReducer,
+  winner: getWinnerReducer
 });
 
 export default reducer;

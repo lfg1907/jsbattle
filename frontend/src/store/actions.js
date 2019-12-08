@@ -146,7 +146,7 @@ const getWinner = gameId => {
     const winner = (
       await axios.get(`/api/games/${gameId}/winner`)
     ).data;
-    dispatch({ type: GET_WINNER }, winner);
+    dispatch({ type: GET_WINNER, winner });
   };
 };
 

@@ -85,7 +85,6 @@ router.put('/:id/join', async (req, res, next) => {
   try {
     const { userId } = req.body;
     const game = await Game.findByPk(req.params.id);
-    
     const player = await Player.create({ userId });
     await player.joinGame(game);
 

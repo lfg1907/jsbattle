@@ -6,7 +6,7 @@ const UserStats = ({ name }) => {
     <div id="user-stats-container">
       <div id="user-stats">
         <h2>{`Hello ${name}!`}</h2>
-        <p>You&apos;ve won xx games out of xx.</p>
+        <p>You&apos;ve won 0 games out of 0.</p>
       </div>
     </div>
   );
