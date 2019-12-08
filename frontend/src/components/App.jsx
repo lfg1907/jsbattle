@@ -15,6 +15,7 @@ import WaitingRoom from './WaitingRoom';
 import GameView from './GameView';
 import EditorView from './EditorView';
 import Login from './Login';
+import JoinFromLink from './JoinFromLink';
 
 const App = ({ loggedIn }) => {
   return (
@@ -30,6 +31,7 @@ const App = ({ loggedIn }) => {
           component={WaitingRoom}
         />
         <Route path="/game/:id" component={GameView} />
+        <Route path="/join/:id" component={JoinFromLink} />
       </Switch>
     </HashRouter>
   );

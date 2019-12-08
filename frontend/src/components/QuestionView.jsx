@@ -10,7 +10,7 @@ const QuestionView = ({
 }) => {
   useEffect(() => {
     getTestCases(currentQ.questionId);
-  }, []);
+  }, [currentQ.id]);
 
   if (!testCases.length) return null;
 
