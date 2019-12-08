@@ -89,6 +89,13 @@ const getPlayer = playerID => {
   };
 };
 
+const attemptGetUser = userId => {
+  return async dispatch => {
+    const user = await axios.get(`/api/users/${userId}`);
+    dispatch({ type: FETCH_USER, user });
+  };
+};
+
 const getUser = () => {
   return async dispatch => {
     const user = (
@@ -168,6 +175,7 @@ export {
   fetchTestCases,
   fetchTestResults,
   getPlayer,
+  attemptGetUser,
   getUser,
   getGames,
   createGame,

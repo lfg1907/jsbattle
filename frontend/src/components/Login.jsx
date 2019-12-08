@@ -1,13 +1,14 @@
 import React from 'react';
-import { connect } from 'react-redux';
 
 const Login = () => {
-  return(
-  <>
-  <h1>Hi there! Welcome to Goose Teeth JS Trivia</h1>
-  <button><a href="/api/auth/login">Login with Github</a></button>
-  </>
-  )
+  return (
+    <div>
+      <h1>Hi there! Welcome to Goose Teeth JS Trivia</h1>
+      <a href="/api/auth/login">
+        <div id="login-button">Login with Github</div>
+      </a>
+    </div>
+  );
 };
 
-export default connect()(Login);
+export default Login;
