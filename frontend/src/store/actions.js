@@ -89,8 +89,6 @@ const getPlayer = playerID => {
   };
 };
 
-// This is a temporary implementation
-// the first user is always fetched
 const getUser = () => {
   return async dispatch => {
     const user = (
