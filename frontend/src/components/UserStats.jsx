@@ -1,7 +1,11 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 
 const UserStats = ({ name, gamesWon, gamesPlayed }) => {
+  useEffect(() => {}, [name]);
+
+  if (!name) return null;
+
   return (
     <div id="user-stats-container">
       <div id="user-stats">
