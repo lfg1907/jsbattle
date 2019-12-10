@@ -4,11 +4,16 @@ const Login = () => {
   return (
     <div id="login-container">
       <div id="login">
-        <h1>Hi there! Welcome to Goose Teeth JS Trivia</h1>
+        <h1>
+          Hi there!
+          <br />
+          <span className="light">Welcome to JSBattle</span>
+        </h1>
         <p>
-          Some description about the game here etc etc etc.
-          Some description about the game here etc etc etc.
-          Some description about the game here etc etc etc
+          JSBattle is a multiplayer JavaScript trivia game
+          where players answer coding challenges against
+          each other. To start playing, log in with Github
+          below!
         </p>
         <a href="/api/auth/login">
           <div id="login-button">
