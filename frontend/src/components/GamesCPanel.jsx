@@ -39,7 +39,6 @@ const mapDispatchToProps = dispatch => ({
     dispatch(actions.addGame(game));
   },
   loadGames() {
-    dispatch(actions.getUser());
     dispatch(actions.getGames());
   },
   updateGame(updatedGame) {
