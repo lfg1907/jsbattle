@@ -10,10 +10,10 @@ const Login = () => {
           <span className="light">Welcome to JSBattle</span>
         </h1>
         <p>
-          JSBattle is a multiplayer JavaScript trivia game
-          where players answer coding challenges against
-          each other. To start playing, log in with Github
-          below!
+          JSBattle is a multiplayer game where players
+          compete against each other to complete JavaScript
+          coding challenges. To start playing, log in with
+          Github below!
         </p>
         <a href="/api/auth/login">
           <div id="login-button">
