@@ -7,6 +7,7 @@ import {
   GET_GAME_QUESTIONS,
   UPDATE_QUESTION,
   FETCH_TEST_CASES,
+  SET_TEST_RESULTS,
   FETCH_TEST_RESULTS,
   FETCH_PLAYER,
   FETCH_USER,
@@ -74,6 +75,13 @@ const fetchTestCases = questionID => {
       )
     ).data;
     dispatch({ type: FETCH_TEST_CASES, testCases });
+  };
+};
+
+const setTestResults = testResults => {
+  return {
+    testResults,
+    type: SET_TEST_RESULTS
   };
 };
 
@@ -187,6 +195,7 @@ export {
   updateScore,
   completeQuestion,
   fetchTestCases,
+  setTestResults,
   fetchTestResults,
   getPlayer,
   attemptGetUser,

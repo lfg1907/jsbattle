@@ -11,6 +11,7 @@ const countWrongResults = results => {
 const EditorPage = ({
   currentQ,
   testResults,
+  setTestResults,
   getTestResults,
   completeQuestion,
   updateScore,
@@ -36,11 +37,19 @@ const EditorPage = ({
     getTestResults(currentQ.questionId, editorValue);
   };
 
+  const [submitted, setSubmitted] = useState(false);
+
   const submitCode = ev => {
     // eslint-disable-next-line no-param-reassign
     ev.target.disabled = true;
     document.querySelector('#test-button').disabled = true;
     getTestResults(currentQ.questionId, editorValue);
+    setSubmitted(true);
+  };
+
+  const handleNextQ = ev => {
+    // eslint-disable-next-line no-param-reassign
+    ev.target.disabled = true;
     if (!countWrongResults(testResults))
       updateScore(playerID, parseInt(player.score, 10) + 1);
     gameSocket.emit('player submitted', {
@@ -54,6 +63,8 @@ const EditorPage = ({
     document.querySelector(
       '#submit-button'
     ).disabled = false;
+    setSubmitted(false);
+    setTestResults([]);
     completeQuestion(currentQ.id);
   });
 
@@ -65,6 +76,18 @@ const EditorPage = ({
           player.score > 1 ? 'pts' : 'pt'
         }`}
       </h2>
+
+      {submitted ? (
+        <button
+          id="next-button"
+          type="button"
+          onClick={handleNextQ}
+        >
+          Next Question
+        </button>
+      ) : (
+        ''
+      )}
       <Editor
         value={editorValue}
         onChange={handleEditorChange}
@@ -106,6 +129,8 @@ const mapStateToProps = ({
 
 const mapDispatchToProps = dispatch => {
   return {
+    setTestResults: results =>
+      dispatch(actions.setTestResults(results)),
     getTestResults: (qID, code) =>
       dispatch(actions.fetchTestResults(qID, code)),
     updateScore: (playerID, amt) =>
