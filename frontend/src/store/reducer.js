@@ -4,6 +4,7 @@ import {
   GET_GAME_QUESTIONS,
   UPDATE_QUESTION,
   FETCH_TEST_CASES,
+  SET_TEST_RESULTS,
   FETCH_TEST_RESULTS,
   FETCH_PLAYER,
   FETCH_USER,
@@ -66,6 +67,8 @@ const testCaseReducer = (state = [], action) => {
 
 const testResultsReducer = (state = [], action) => {
   switch (action.type) {
+    case SET_TEST_RESULTS:
+      return action.testResults;
     case FETCH_TEST_RESULTS:
       return action.testResults;
     default:

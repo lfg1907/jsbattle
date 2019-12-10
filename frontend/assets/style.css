@@ -174,7 +174,7 @@ span.join-link {
   flex-direction: row;
 }
 
-#test-button, #submit-button {
+#test-button, #submit-button, #next-button {
   width: 50%;
   background-color: dodgerblue;
   border: none;
@@ -182,6 +182,10 @@ span.join-link {
   color: white;
   font-weight: bold;
   cursor: pointer;
+}
+
+#next-button {
+  margin-bottom: 0.5rem;
 }
 
 #test-button {
@@ -317,9 +321,15 @@ span.join-link {
 #test-button:hover,
 #submit-button:hover,
 #login-button:hover,
-#ready-button:hover
+#ready-button:hover,
+#next-button:hover
 {
   background-color: #1d72c4;
+}
+
+button:disabled {
+  background-color: lightblue !important;
+  cursor: auto !important;
 }
 
 #create-game-container h3,
