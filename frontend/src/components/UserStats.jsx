@@ -1,15 +1,10 @@
-import React, { useEffect } from 'react';
-import { connect } from 'react-redux';
+import React from 'react';
 
 const UserStats = ({ name, gamesWon, gamesPlayed }) => {
-  useEffect(() => {}, [name]);
-
-  if (!name) return null;
-
   return (
     <div id="user-stats-container">
       <div id="user-stats">
-        <h1>{`Hello ${name ? `${name}!` : ''}`}</h1>
+        <h1>{`Hello ${name}`}</h1>
         <p>
           {`You've won ${gamesWon} games out of ${gamesPlayed} games played.`}
         </p>
@@ -19,13 +14,4 @@ const UserStats = ({ name, gamesWon, gamesPlayed }) => {
   );
 };
 
-const mapStateToProps = ({ user }) => ({
-  name:
-    user.firstName && user.lastName
-      ? `${user.firstName} ${user.lastName}`
-      : user.username,
-  gamesWon: user.gamesWon,
-  gamesPlayed: user.gamesPlayed
-});
-
-export default connect(mapStateToProps)(UserStats);
+export default UserStats;
