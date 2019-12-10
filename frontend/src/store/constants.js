@@ -7,6 +7,7 @@ const FETCH_GAMES = 'FETCH_GAMES';
 const CREATE_GAME = 'CREATE_GAME';
 const UPDATE_GAME = 'UPDATE_GAME';
 const GET_WINNER = 'GET_WINNER';
+const GET_USERS = 'GET_USERS';
 
 module.exports = {
   GET_GAME_QUESTIONS,
@@ -17,5 +18,6 @@ module.exports = {
   FETCH_GAMES,
   CREATE_GAME,
   UPDATE_GAME,
-  GET_WINNER
+  GET_WINNER,
+  GET_USERS
 };

@@ -3,35 +3,47 @@ import { connect } from 'react-redux';
 
 import { actions } from '../store';
 
-const WinnerView = ({ gameId, winner, getWinner }) => {
-  // const winner = getWinner(
-  //   '64906ecc-15e2-4959-9a3a-453910389061'
-  // )
+const WinnerView = ({
+  gameId,
+  winner,
+  getWinner,
+  users,
+  getUsers
+}) => {
   useEffect(() => {
     getWinner(gameId);
+    getUsers();
   }, []);
+  const actualWinner = users.find(
+    user => user.id === winner.userId
+  );
 
+  if (!actualWinner) return null;
+  // console.log(ac);
   return (
     <div>
       <h5>The winner of this game is</h5>
-      <h1>{winnerName}</h1>
+      <h1>{actualWinner.username}</h1>
+      <button>Return to Homepage</button>
     </div>
   );
 };
 
 const mapDispatchToProps = dispatch => {
   return {
-    getWinner: gameId => dispatch(actions.getWinner(gameId))
+    getWinner: gameId =>
+      dispatch(actions.getWinner(gameId)),
+    getUsers: () => dispatch(actions.getUsers())
   };
 };
 
 const mapStateToProps = (
-  { winner, players },
+  { winner, users },
   { match: { params } }
 ) => ({
   winner,
-  gameId: params.id,
-  players
+  users,
+  gameId: params.id
 });
 
 export default connect(

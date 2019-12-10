@@ -8,7 +8,8 @@ import {
   FETCH_GAMES,
   CREATE_GAME,
   UPDATE_GAME,
-  GET_WINNER
+  GET_WINNER,
+  GET_USERS
 } from './constants';
 
 const gameQuestionsReducer = (state = [], action) => {
@@ -80,13 +81,23 @@ const getWinnerReducer = (state = {}, action) => {
   }
 };
 
+const getUsersReducer = (state = [], action) => {
+  switch (action.type) {
+    case GET_USERS:
+      return action.users;
+    default:
+      return state;
+  }
+};
+
 const reducer = combineReducers({
   gameQuestions: gameQuestionsReducer,
   user: userReducer,
   games: gamesReducer,
   testCases: testCaseReducer,
   testResults: testResultsReducer,
-  winner: getWinnerReducer
+  winner: getWinnerReducer,
+  users: getUsersReducer
 });
 
 export default reducer;

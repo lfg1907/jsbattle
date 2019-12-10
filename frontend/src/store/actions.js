@@ -11,7 +11,8 @@ import {
   FETCH_GAMES,
   CREATE_GAME,
   UPDATE_GAME,
-  GET_WINNER
+  GET_WINNER,
+  GET_USERS
 } from './constants';
 
 import history from '../history';
@@ -150,6 +151,13 @@ const getWinner = gameId => {
   };
 };
 
+const getUsers = () => {
+  return async dispatch => {
+    const users = (await axios.get('/api/users')).data;
+    dispatch({ type: GET_USERS, users})
+  };
+};
+
 export {
   getGameQuestions,
   completeQuestion,
@@ -161,5 +169,6 @@ export {
   addGame,
   joinGame,
   updateGame,
-  getWinner
+  getWinner,
+  getUsers
 };
