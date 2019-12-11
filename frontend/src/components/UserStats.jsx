@@ -1,6 +1,6 @@
 import React from 'react';
 
-const UserStats = ({ name, gamesWon, gamesPlayed }) => {
+const UserStats = ({ name }) => {
   return (
     <div id="user-stats-container">
       <div id="user-stats">
@@ -8,9 +8,6 @@ const UserStats = ({ name, gamesWon, gamesPlayed }) => {
           <span className="light">Hello </span>
           {name}
         </h1>
-        <p>
-          {`You've won ${gamesWon} games out of ${gamesPlayed} games played.`}
-        </p>
         <p>Play more to win more!</p>
       </div>
     </div>
