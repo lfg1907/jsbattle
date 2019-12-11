@@ -16,14 +16,6 @@
     "params":"arr, target"
   },
   {
-    "title": "Sort",
-    "difficulty": "EASY",
-    "prompt": "Sort an array in ascending order. You can assume all every element in the given array is a number.",
-    "examples": "",
-    "functionName": "sort",
-    "params": "arr"
-  },
-  {
     "title": "Calculate Sum",
     "difficulty": "MEDIUM",
     "prompt": "Return the sum of all numbers in an array. Not all entries in an array will be a number. For example, this is a valid input: ['1', 2, 3.5, [3]]. In this case, the sum should be 5.5 (2 + 3.5).",
@@ -46,21 +38,5 @@
     "examples": "",
     "functionName": "joinUniques",
     "params": "arr1, arr2"
-  },
-  {
-    "title": "Calculate Distance Between Points",
-    "difficulty": "MEDIUM",
-    "prompt": "Given an array of points, calculate the sum of the distances between points. Points are given in order from start to finish. Points will be given in the following format [[x1, y1], [x2, y2], [x3, y3]]",
-    "examples": "",
-    "functionName": "calcDistance",
-    "params": "points"
-  },
-  {
-    "title": "Flatten",
-    "difficulty": "HARD",
-    "prompt": "Flatten an array of arrays. For example, given [1, [2], [[3, 4]]], return [1, 2, 3, 4]. Nesting depth is not known.",
-    "examples": "",
-    "functionName": "flatten",
-    "params": "arr"
   }
 ]
