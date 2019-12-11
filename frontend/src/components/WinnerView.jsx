@@ -8,24 +8,32 @@ const WinnerView = ({
   winner,
   getWinner,
   users,
-  getUsers
+  getUsers,
+  players,
+  getPlayers
 }) => {
   useEffect(() => {
     getWinner(gameId);
     getUsers();
+    getPlayers();
   }, []);
+
   const actualWinner = users.find(
     user => user.id === winner.userId
   );
-
   if (!actualWinner) return null;
+  const winPlayer = players.find(
+    player => player.userId === winner.userId
+  );
+  if (!winPlayer) return null;
   return (
     <div>
-      <h5>The winner of this game is</h5>
-      <h1>{actualWinner.username}</h1>
-      <button id="home-button"> 
-{' '}
-<a href="/#/home">Return to Homepage</a>
+      <p>The winner of this game is</p>
+      <h3>{actualWinner.username}</h3>
+      <p>with score: {winPlayer.score}            </p>
+      <button id="home-button">
+        {' '}
+        <a href="/#/home">Return to Homepage</a>
       </button>
     </div>
   );
@@ -35,16 +43,18 @@ const mapDispatchToProps = dispatch => {
   return {
     getWinner: gameId =>
       dispatch(actions.getWinner(gameId)),
-    getUsers: () => dispatch(actions.getUsers())
+    getUsers: () => dispatch(actions.getUsers()),
+    getPlayers: () => dispatch(actions.getPlayers())
   };
 };
 
 const mapStateToProps = (
-  { winner, users },
+  { winner, users, players },
   { match: { params } }
 ) => ({
   winner,
   users,
+  players,
   gameId: params.id
 });
 

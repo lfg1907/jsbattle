@@ -16,7 +16,8 @@ import {
   UPDATE_GAME,
   GET_WINNER,
   GET_USERS,
-  UPDATE_SCORE
+  UPDATE_SCORE,
+  GET_PLAYERS
 } from './constants';
 
 import history from '../history';
@@ -207,6 +208,13 @@ const getUsers = () => {
   };
 };
 
+const getPlayers = () => {
+  return async dispatch => {
+    const players = (await axios.get('/api/players')).data;
+    dispatch({ type: GET_PLAYERS, players });
+  };
+};
+
 export {
   setGameSocket,
   getGameQuestions,
@@ -224,5 +232,6 @@ export {
   joinGame,
   updateGame,
   getWinner,
-  getUsers
+  getUsers,
+  getPlayers
 };

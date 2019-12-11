@@ -13,7 +13,8 @@ import {
   UPDATE_GAME,
   GET_WINNER,
   GET_USERS,
-  UPDATE_SCORE
+  UPDATE_SCORE,
+  GET_PLAYERS
 } from './constants';
 
 const gameQuestionsReducer = (state = [], action) => {
@@ -114,6 +115,15 @@ const gameSocketReducer = (state = {}, action) => {
   }
 };
 
+const getPlayersReducer = (state = [], action) => {
+  switch (action.type) {
+    case GET_PLAYERS:
+      return action.players;
+    default:
+      return state;
+  }
+};
+
 const reducer = combineReducers({
   gameQuestions: gameQuestionsReducer,
   user: userReducer,
@@ -123,7 +133,8 @@ const reducer = combineReducers({
   winner: getWinnerReducer,
   users: getUsersReducer,
   player: playerReducer,
-  gameSocket: gameSocketReducer
+  gameSocket: gameSocketReducer,
+  players: getPlayersReducer
 });
 
 export default reducer;

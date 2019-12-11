@@ -13,6 +13,7 @@ const GET_WINNER = 'GET_WINNER';
 const GET_USERS = 'GET_USERS';
 const GET_SCORE = 'GET_SCORE';
 const UPDATE_SCORE = 'UPDATE_SCORE';
+const GET_PLAYERS = 'GET_PLAYERS'
 
 module.exports = {
   SET_GAME_SOCKET,
@@ -29,5 +30,6 @@ module.exports = {
   GET_WINNER,
   GET_USERS,
   GET_SCORE,
-  UPDATE_SCORE
+  UPDATE_SCORE,
+  GET_PLAYERS
 };
