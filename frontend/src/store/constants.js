@@ -27,7 +27,7 @@ module.exports = {
   CREATE_GAME,
   UPDATE_GAME,
   GET_WINNER,
-  GET_USERS
+  GET_USERS,
   GET_SCORE,
   UPDATE_SCORE
 };

@@ -12,7 +12,7 @@ import {
   CREATE_GAME,
   UPDATE_GAME,
   GET_WINNER,
-  GET_USERS
+  GET_USERS,
   UPDATE_SCORE
 } from './constants';
 
@@ -82,6 +82,10 @@ const getWinnerReducer = (state = {}, action) => {
   switch (action.type) {
     case GET_WINNER:
       return action.winner;
+    default:
+      return state;
+  }
+};
 const playerReducer = (state = [], action) => {
   switch (action.type) {
     case FETCH_PLAYER:
@@ -97,6 +101,10 @@ const getUsersReducer = (state = [], action) => {
   switch (action.type) {
     case GET_USERS:
       return action.users;
+    default:
+      return state;
+  }
+};
 const gameSocketReducer = (state = {}, action) => {
   switch (action.type) {
     case SET_GAME_SOCKET:
@@ -113,7 +121,7 @@ const reducer = combineReducers({
   testCases: testCaseReducer,
   testResults: testResultsReducer,
   winner: getWinnerReducer,
-  users: getUsersReducer
+  users: getUsersReducer,
   player: playerReducer,
   gameSocket: gameSocketReducer
 });

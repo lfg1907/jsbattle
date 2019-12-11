@@ -15,19 +15,6 @@ import WaitingRoom from './WaitingRoom';
 import GameView from './GameView';
 import EditorView from './EditorView';
 import Login from './Login';
-<<<<<<< HEAD
-import WinnerView from './WinnerView';
-
-const App = () => {
-  return (
-    <HashRouter>
-      <Route exact path="/" component={Login} />
-      <Route path="/home" component={Home} />
-      <Route path="/editor" component={EditorView} />
-      <Route path="/waiting/:id" component={WaitingRoom} />
-      <Route path="/game/:id" component={GameView} />
-      <Route path="/winner/:id" component={WinnerView} />
-=======
 import JoinFromLink from './JoinFromLink';
 
 const App = ({ loggedIn, attemptGetUser }) => {
@@ -50,7 +37,6 @@ const App = ({ loggedIn, attemptGetUser }) => {
         <Route path="/game/:id" component={GameView} />
         <Route path="/join/:id" component={JoinFromLink} />
       </Switch>
->>>>>>> cba51f9fd7cef809b74b5963fa3088c2b22e037b
     </HashRouter>
   );
 };

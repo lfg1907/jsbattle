@@ -15,7 +15,7 @@ import {
   CREATE_GAME,
   UPDATE_GAME,
   GET_WINNER,
-  GET_USERS
+  GET_USERS,
   UPDATE_SCORE
 } from './constants';
 
@@ -203,7 +203,7 @@ const getWinner = gameId => {
 const getUsers = () => {
   return async dispatch => {
     const users = (await axios.get('/api/users')).data;
-    dispatch({ type: GET_USERS, users})
+    dispatch({ type: GET_USERS, users });
   };
 };
 
