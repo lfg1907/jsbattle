@@ -1,27 +1,35 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import io from 'socket.io-client';
-
+import { ADDRESS } from '../socket';
 import history from '../history';
-import socket, { ADDRESS } from '../socket';
 import { actions } from '../store';
 
-const WaitingRoom = ({ game, getQuestions }) => {
-  const gameSocket = io.connect(`${ADDRESS}/game`);
-  useEffect(() => {
-    socket.emit('join game', { game });
+const WaitingRoom = ({
+  game,
+  getQuestions,
+  setGameSocket
+}) => {
+  if (!game) return null;
 
+  const gameSocket = io.connect(`${ADDRESS}/game`);
+
+  useEffect(() => {
     gameSocket.on('connect', () => {
       gameSocket.emit('join room', { game });
     });
-
+    setGameSocket(gameSocket);
     getQuestions(game.id);
   }, []);
 
   const [currentGame, setCurrentGame] = useState(game);
   gameSocket.on('room joined', gameData => {
-    setCurrentGame(gameData.game);
+    const newGame = gameData.game;
+    setCurrentGame(newGame);
   });
+  useEffect(() => {
+    setCurrentGame(game);
+  }, [game.numOfPlayers]);
 
   const [readyToStart, setReadyToStart] = useState(false);
   useEffect(() => {
@@ -45,22 +53,34 @@ const WaitingRoom = ({ game, getQuestions }) => {
   });
 
   return (
-    <div>
-      <h2>{`Waiting Room for ${currentGame.name}`}</h2>
-      <p>
-        {`Currently ${currentGame.numOfPlayers} ${
-          currentGame.numOfPlayers > 1
-            ? 'players'
-            : 'player'
-        } out of ${currentGame.capacity}`}
-      </p>
-      {readyToStart ? (
-        <button type="button" onClick={handleReady}>
-          Ready
-        </button>
-      ) : (
-        <p>Waiting for other players to join</p>
-      )}
+    <div id="waiting-room-container">
+      <div id="waiting-room">
+        <h2>{currentGame.name}</h2>
+        <h2 className="light">
+          {`Currently ${currentGame.numOfPlayers} ${
+            currentGame.numOfPlayers > 1
+              ? 'players'
+              : 'player'
+          } out of a maximum of ${currentGame.capacity}`}
+        </h2>
+        <h4>Waiting for players...</h4>
+        <p>
+          Invite others to join:
+          <br />
+          <span className="join-link">{`${window.location.origin}/#/join/${currentGame.id}`}</span>
+        </p>
+        {readyToStart ? (
+          <button
+            id="ready-button"
+            type="button"
+            onClick={handleReady}
+          >
+            Ready
+          </button>
+        ) : (
+          ''
+        )}
+      </div>
     </div>
   );
 };
@@ -75,6 +95,9 @@ const mapStateToProps = (
 const mapDispatchToProps = dispatch => ({
   getQuestions(gameId) {
     dispatch(actions.getGameQuestions(gameId));
+  },
+  setGameSocket: gameSocket => {
+    dispatch(actions.setGameSocket(gameSocket));
   }
 });
 

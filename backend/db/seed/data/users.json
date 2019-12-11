@@ -2,16 +2,22 @@
   {
     "firstName": "John",
     "lastName": "Smith",
-    "username": "js"
+    "username": "js",
+    "gamesWon": 3,
+    "gamesPlayed": 5
   },
   {
     "firstName": "Jane",
     "lastName": "Doe",
-    "username": "jdoe"
+    "username": "jdoe",
+    "gamesWon": 10,
+    "gamesPlayed": 11
   },
   {
     "firstName": "Eric",
     "lastName": "Katz",
-    "username": "prof"
+    "username": "prof",
+    "gamesWon": 2,
+    "gamesPlayed": 15
   }
 ]

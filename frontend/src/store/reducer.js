@@ -1,15 +1,19 @@
 import { combineReducers } from 'redux';
 import {
+  SET_GAME_SOCKET,
   GET_GAME_QUESTIONS,
   UPDATE_QUESTION,
   FETCH_TEST_CASES,
+  SET_TEST_RESULTS,
   FETCH_TEST_RESULTS,
+  FETCH_PLAYER,
   FETCH_USER,
   FETCH_GAMES,
   CREATE_GAME,
   UPDATE_GAME,
   GET_WINNER,
   GET_USERS
+  UPDATE_SCORE
 } from './constants';
 
 const gameQuestionsReducer = (state = [], action) => {
@@ -65,6 +69,8 @@ const testCaseReducer = (state = [], action) => {
 
 const testResultsReducer = (state = [], action) => {
   switch (action.type) {
+    case SET_TEST_RESULTS:
+      return action.testResults;
     case FETCH_TEST_RESULTS:
       return action.testResults;
     default:
@@ -76,6 +82,12 @@ const getWinnerReducer = (state = {}, action) => {
   switch (action.type) {
     case GET_WINNER:
       return action.winner;
+const playerReducer = (state = [], action) => {
+  switch (action.type) {
+    case FETCH_PLAYER:
+      return action.player;
+    case UPDATE_SCORE:
+      return action.updated;
     default:
       return state;
   }
@@ -85,6 +97,10 @@ const getUsersReducer = (state = [], action) => {
   switch (action.type) {
     case GET_USERS:
       return action.users;
+const gameSocketReducer = (state = {}, action) => {
+  switch (action.type) {
+    case SET_GAME_SOCKET:
+      return action.gameSocket;
     default:
       return state;
   }
@@ -98,6 +114,8 @@ const reducer = combineReducers({
   testResults: testResultsReducer,
   winner: getWinnerReducer,
   users: getUsersReducer
+  player: playerReducer,
+  gameSocket: gameSocketReducer
 });
 
 export default reducer;

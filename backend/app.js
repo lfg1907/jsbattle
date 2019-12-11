@@ -1,5 +1,6 @@
 const express = require('express');
 const path = require('path');
+const session = require('express-session');
 
 const questionsRouter = require('./routes/questions');
 const usersRouter = require('./routes/users');
@@ -8,7 +9,6 @@ const playersRouter = require('./routes/players');
 const authRouter = require('./routes/auth');
 
 const app = express();
-const session = require('express-session');
 
 app.use(
   session({

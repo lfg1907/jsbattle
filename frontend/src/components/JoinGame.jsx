@@ -8,10 +8,6 @@ import GameToJoinItem from './GameToJoinItem';
 const JoinGame = ({ games, joinGame }) => {
   const [selectedGameId, setSelectedGameId] = useState('');
 
-  // useEffect(() => {
-  //   setSelectedGame();
-  // }, []);
-
   const handleSelect = (ev, gameId) => {
     if (ev.target.className.includes('icon-')) return;
 

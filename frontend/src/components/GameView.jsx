@@ -28,16 +28,16 @@ const GameView = ({
     setCurrentQ(incompleteQ);
   }, [incompleteQ.id]);
 
-  if (!gameQuestions.length) {
+  if (!gameQuestions.length || !game) {
     return '...loading';
   }
 
   return (
     <div id="game-view">
-      <h2>{`Game ${game.name}`}</h2>
+      <h2>{`${game.name}`}</h2>
       <div id="game-container">
         <QuestionView currentQ={currentQ} />
-        <EditorView currentQ={currentQ} />
+        <EditorView currentQ={currentQ} game={game} />
       </div>
     </div>
   );

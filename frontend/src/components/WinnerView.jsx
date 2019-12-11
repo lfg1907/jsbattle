@@ -24,7 +24,7 @@ const WinnerView = ({
     <div>
       <h5>The winner of this game is</h5>
       <h1>{actualWinner.username}</h1>
-      <button>
+      <button id='home-button'>
           <a href="/#/home">Return to Homepage</a>
       </button>
     </div>

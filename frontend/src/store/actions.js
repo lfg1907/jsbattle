@@ -3,16 +3,20 @@
 import axios from 'axios';
 
 import {
+  SET_GAME_SOCKET,
   GET_GAME_QUESTIONS,
   UPDATE_QUESTION,
   FETCH_TEST_CASES,
+  SET_TEST_RESULTS,
   FETCH_TEST_RESULTS,
+  FETCH_PLAYER,
   FETCH_USER,
   FETCH_GAMES,
   CREATE_GAME,
   UPDATE_GAME,
   GET_WINNER,
   GET_USERS
+  UPDATE_SCORE
 } from './constants';
 
 import history from '../history';
@@ -26,12 +30,30 @@ const _getGameQuestions = questions => {
   };
 };
 
+const setGameSocket = gameSocket => {
+  return {
+    gameSocket,
+    type: SET_GAME_SOCKET
+  };
+};
+
 const getGameQuestions = gameId => {
   return async dispatch => {
     const questions = (
       await axios.get(`/api/games/${gameId}/questions`)
     ).data;
     return dispatch(_getGameQuestions(questions));
+  };
+};
+
+const updateScore = (playerID, amt) => {
+  return async dispatch => {
+    const updated = (
+      await axios.put(`/api/players/${playerID}`, {
+        score: amt
+      })
+    ).data;
+    return dispatch({ type: UPDATE_SCORE, updated });
   };
 };
 
@@ -58,15 +80,42 @@ const fetchTestCases = questionID => {
   };
 };
 
+const setTestResults = testResults => {
+  return {
+    testResults,
+    type: SET_TEST_RESULTS
+  };
+};
+
 const fetchTestResults = (questionID, code) => {
   return async dispatch => {
     const testResults = (
-      await axios.post(
-        `/api/questions/${questionID}/runtests`,
-        { code }
-      )
+      await axios.post(`/api/questions/${questionID}`, {
+        code
+      })
     ).data;
     dispatch({ type: FETCH_TEST_RESULTS, testResults });
+  };
+};
+
+const getPlayer = playerID => {
+  return async dispatch => {
+    const player = (
+      await axios.get(`/api/players/${playerID}`)
+    ).data;
+    dispatch({ type: FETCH_PLAYER, player });
+  };
+};
+
+const attemptGetUser = userId => {
+  return async dispatch => {
+    try {
+      const user = (await axios.get(`/api/users/${userId}`))
+        .data;
+      dispatch({ type: FETCH_USER, user });
+    } catch (e) {
+      dispatch({ type: FETCH_USER, user: {} });
+    }
   };
 };
 
@@ -159,10 +208,15 @@ const getUsers = () => {
 };
 
 export {
+  setGameSocket,
   getGameQuestions,
+  updateScore,
   completeQuestion,
   fetchTestCases,
+  setTestResults,
   fetchTestResults,
+  getPlayer,
+  attemptGetUser,
   getUser,
   getGames,
   createGame,

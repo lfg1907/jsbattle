@@ -40,43 +40,62 @@ const CreateGame = ({ createGame }) => {
   return (
     <div id="create-game-container">
       <h3>Create a game</h3>
-      <input
-        type="text"
-        value={gameName}
-        onChange={handleNameChange}
-      />
-      <br />
-      <label htmlFor="cap">
-        Capacity:
+      <div id="game-name">
+        {/* eslint-disable-next-line */}
+        <label
+          id="game-name-label"
+          htmlFor="game-name-input"
+        >
+          Game name
+        </label>
         <input
-          name="cap"
+          id="game-name-input"
           type="text"
+          value={gameName}
+          onChange={handleNameChange}
+        />
+      </div>
+
+      <div id="capacity-container">
+        {/* eslint-disable-next-line */}
+        <label id="capacity-label" htmlFor="capacity-input">
+          Capacity
+        </label>
+        <input
+          id="capacity-input"
+          name="cap"
+          type="number"
           value={gameCap}
           onChange={handleCapChange}
         />
-      </label>
+      </div>
+
       <div id="difficulty-container">
-        {' '}
-        {diffLevels.map(diffLevel => (
-          // eslint-disable-next-line
-          <div
-            key={diffLevel}
-            role="radio"
-            aria-checked="false"
-            className={
-              diffLevel.toUpperCase() === gameDiff
-                ? 'no-select difficulty selected'
-                : 'no-select difficulty'
-            }
-            id={diffLevel.toUpperCase()}
-            onClick={handleDiffChange}
-          >
-            <div
-              className={`icon-${diffLevel.toUpperCase()}`}
-            />
-            {diffLevel}
+        <div id="difficulty-label">Difficulty</div>
+        <div id="difficulty-input">
+          <div id="levels-container">
+            {diffLevels.map(diffLevel => (
+              // eslint-disable-next-line
+              <div
+                key={diffLevel}
+                role="radio"
+                aria-checked="false"
+                className={
+                  diffLevel.toUpperCase() === gameDiff
+                    ? 'no-select difficulty selected'
+                    : 'no-select difficulty'
+                }
+                id={diffLevel.toUpperCase()}
+                onClick={handleDiffChange}
+              >
+                <div
+                  className={`icon-${diffLevel.toUpperCase()}`}
+                />
+                {diffLevel}
+              </div>
+            ))}
           </div>
-        ))}
+        </div>
       </div>
       <button type="button" onClick={handleSubmit}>
         Create

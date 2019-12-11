@@ -33,6 +33,7 @@ db.sync(true)
 
     // Game connection
     const readyCount = {};
+    const submittedCount = {};
     io.of('/game').on('connection', socket => {
       socket.on('join room', ({ game }) => {
         console.log(`connected to room ${game.id}`);
@@ -55,6 +56,25 @@ db.sync(true)
           io.of('/game')
             .in(game.id)
             .emit('game ready');
+        }
+      });
+
+      socket.on('player submitted', gameQData => {
+        const { gameQuestion, game } = gameQData;
+
+        if (!submittedCount[gameQuestion.id]) {
+          submittedCount[gameQuestion.id] = 1;
+        } else {
+          submittedCount[gameQuestion.id] += 1;
+        }
+
+        if (
+          submittedCount[gameQuestion.id] ===
+          game.numOfPlayers
+        ) {
+          io.of('/game')
+            .in(game.id)
+            .emit('all submitted');
         }
       });
     });
