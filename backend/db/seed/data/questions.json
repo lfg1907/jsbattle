@@ -8,14 +8,6 @@
     "params":"arr"
   },
   {
-    "title": "Sum Pair",
-    "difficulty": "HARD",
-    "prompt": "Given an array of integers and a target value, find two integers in the array that sum up to the target value. For example, if the given array is [1, 5, 2, 9, 19, 36, 3] and the target is 10, your function should return [1, 9]. There may be 0 or more pairs in the array. If no pairs are found, return -1.",
-    "examples": "",
-    "functionName": "findSumPair",
-    "params":"arr, target"
-  },
-  {
     "title": "Calculate Sum",
     "difficulty": "MEDIUM",
     "prompt": "Return the sum of all numbers in an array. Not all entries in an array will be a number. For example, this is a valid input: ['1', 2, 3.5, [3]]. In this case, the sum should be 5.5 (2 + 3.5).",
@@ -29,14 +21,6 @@
     "prompt": "Find the difference between two arrays.",
     "examples": "",
     "functionName": "findDifference",
-    "params": "arr1, arr2"
-  },
-  {
-    "title": "Unique Union",
-    "difficulty": "HARD",
-    "prompt": "Join two arrays without including duplicate elements",
-    "examples": "",
-    "functionName": "joinUniques",
     "params": "arr1, arr2"
   }
 ]
