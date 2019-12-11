@@ -87,7 +87,9 @@ span.join-link {
   box-shadow: -2px 0px 15px rgba(0, 0, 0, .25);
 }
 
-#login-container, #waiting-room-container {
+#login-container,
+#waiting-room-container,
+#winner-container {
   display: flex;
   background-color: #FFC73A;
   height: 100vh;
@@ -95,7 +97,7 @@ span.join-link {
   align-items: center;
 }
 
-#login, #waiting-room {
+#login, #waiting-room, #winner {
   background-color: white;
   width: 35vw;
   min-height: 40vh;
@@ -103,11 +105,15 @@ span.join-link {
   box-shadow: -2px 0px 15px rgba(0, 0, 0, .25);
 }
 
-#login h1, #waiting-room h2 {
+#winner {
+  text-align: center;
+}
+
+#login h1, #waiting-room h2, #winner h2 {
   margin-top: 0;
 }
 
-#login-button, #ready-button, #back-button {
+#login-button, #ready-button, #back-button, #home-button {
   margin: 3rem auto 0 auto;
   width: 50%;
   height: 3rem;
@@ -121,7 +127,7 @@ span.join-link {
   cursor: pointer;
 }
 
-#login a {
+#login a, #winner a {
   text-decoration: none;
 }
 

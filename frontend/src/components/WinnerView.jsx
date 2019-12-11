@@ -27,14 +27,18 @@ const WinnerView = ({
   );
   if (!winPlayer) return null;
   return (
-    <div>
-      <p>The winner of this game is</p>
-      <h3>{actualWinner.username}</h3>
-      <p>with score: {winPlayer.score}            </p>
-      <button id="home-button">
-        {' '}
-        <a href="/#/home">Return to Homepage</a>
-      </button>
+    <div id="winner-container">
+      <div id="winner">
+        <p>The winner of this game is</p>
+        <h2>{actualWinner.username}</h2>
+        <p>with score:</p>
+        <h3>{winPlayer.score}</h3>
+        <a href="/#/home">
+          <button type="button" id="home-button">
+            Return to Homepage
+          </button>
+        </a>
+      </div>
     </div>
   );
 };
