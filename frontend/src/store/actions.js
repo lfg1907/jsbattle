@@ -14,7 +14,10 @@ import {
   FETCH_GAMES,
   CREATE_GAME,
   UPDATE_GAME,
-  UPDATE_SCORE
+  GET_WINNER,
+  GET_USERS,
+  UPDATE_SCORE,
+  GET_PLAYERS
 } from './constants';
 
 import history from '../history';
@@ -189,6 +192,29 @@ const addGame = game => {
   };
 };
 
+const getWinner = gameId => {
+  return async dispatch => {
+    const winner = (
+      await axios.get(`/api/games/${gameId}/winner`)
+    ).data;
+    dispatch({ type: GET_WINNER, winner });
+  };
+};
+
+const getUsers = () => {
+  return async dispatch => {
+    const users = (await axios.get('/api/users')).data;
+    dispatch({ type: GET_USERS, users });
+  };
+};
+
+const getPlayers = () => {
+  return async dispatch => {
+    const players = (await axios.get('/api/players')).data;
+    dispatch({ type: GET_PLAYERS, players });
+  };
+};
+
 export {
   setGameSocket,
   getGameQuestions,
@@ -204,5 +230,8 @@ export {
   createGame,
   addGame,
   joinGame,
-  updateGame
+  updateGame,
+  getWinner,
+  getUsers,
+  getPlayers
 };

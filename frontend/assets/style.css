@@ -107,7 +107,7 @@ span.join-link {
   margin-top: 0;
 }
 
-#login-button, #ready-button {
+#login-button, #ready-button, #back-button {
   margin: 3rem auto 0 auto;
   width: 50%;
   height: 3rem;
@@ -386,4 +386,3 @@ button:disabled {
 .wrong {
   color: #ed4832;
 }
-
