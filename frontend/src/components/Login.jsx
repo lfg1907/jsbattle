@@ -11,9 +11,9 @@ const Login = () => {
         </h1>
         <p>
           JSBattle is a multiplayer game where players
-          compete against each other to complete JavaScript
-          coding challenges. To start playing, log in with
-          Github below!
+          compete against each other by completing
+          JavaScript coding challenges. To start playing,
+          log in with Github below!
         </p>
         <a href="/api/auth/login">
           <div id="login-button">
