@@ -77,17 +77,6 @@ const EditorPage = ({
         }`}
       </h2>
 
-      {submitted ? (
-        <button
-          id="next-button"
-          type="button"
-          onClick={handleNextQ}
-        >
-          Next Question
-        </button>
-      ) : (
-        ''
-      )}
       <Editor
         value={editorValue}
         onChange={handleEditorChange}
@@ -108,6 +97,18 @@ const EditorPage = ({
         >
           Submit
         </button>
+
+        {submitted ? (
+          <button
+            id="next-button"
+            type="button"
+            onClick={handleNextQ}
+          >
+            Next Question
+          </button>
+        ) : (
+          ''
+        )}
       </div>
 
       <EditorOutputs testResults={testResults} />
