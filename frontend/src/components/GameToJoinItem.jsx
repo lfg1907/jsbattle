@@ -20,7 +20,8 @@ const GameToJoinItem = ({ game, handleSelect }) => {
     // eslint-disable-next-line
     <div
       className={
-        game.status === 'STARTING' && game.numOfPlayers < 3
+        game.status === 'STARTING' &&
+        game.numOfPlayers < game.capacity
           ? 'no-select game'
           : 'no-select game inactive-game'
       }
