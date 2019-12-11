@@ -158,13 +158,18 @@ span.join-link {
   flex: 1;
 }
 
+
 #editor-view, #question-view {
   padding: 0 1rem;
 }
 
+#editor-view {
+  overflow-y: scroll;
+}
+
 #editor-view h2 {
   margin-top: 0;
-  margin-bottom: 8rem;
+  margin-bottom: 17vh;
   padding-top: 1.5rem;
   text-align: right;
 }
@@ -184,10 +189,6 @@ span.join-link {
   cursor: pointer;
 }
 
-#next-button {
-  margin-bottom: 0.5rem;
-}
-
 #test-button {
   border-right: 1px solid white;
 }
@@ -198,8 +199,7 @@ span.join-link {
 
 #console-logs, #test-results {
   margin-top: 1rem;
-  height: 28vh;
-  overflow-y: scroll;
+  height: auto;
 }
 
 #console-logs h4, #test-results h4 {
@@ -328,7 +328,7 @@ span.join-link {
 }
 
 button:disabled {
-  background-color: lightblue !important;
+  background-color: #D0E7FF !important;
   cursor: auto !important;
 }
 
