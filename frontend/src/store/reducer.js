@@ -20,7 +20,12 @@ import {
 const gameQuestionsReducer = (state = [], action) => {
   switch (action.type) {
     case GET_GAME_QUESTIONS:
-      return action.questions;
+      const sorted = action.questions.sort(
+        (a, b) =>
+          a.question.difficulty - b.question.difficulty
+      );
+      console.log(sorted);
+      return sorted;
     case UPDATE_QUESTION:
       return state.map(question => {
         return question.id === action.updated.id
