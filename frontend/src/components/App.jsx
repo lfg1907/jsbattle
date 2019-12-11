@@ -16,6 +16,7 @@ import GameView from './GameView';
 import EditorView from './EditorView';
 import Login from './Login';
 import JoinFromLink from './JoinFromLink';
+import WinnerView from './WinnerView';
 
 const App = ({ loggedIn, attemptGetUser }) => {
   useEffect(() => {
@@ -36,6 +37,7 @@ const App = ({ loggedIn, attemptGetUser }) => {
         />
         <Route path="/game/:id" component={GameView} />
         <Route path="/join/:id" component={JoinFromLink} />
+        <Route path="/winner/:id" component={WinnerView} />
       </Switch>
     </HashRouter>
   );
