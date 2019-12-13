@@ -3,8 +3,6 @@ JSBattle is a multiplayer game where players compete against each other by compl
 
 A screencast of two players creating, joining, and playing a short three-question game can be seen [here](https://vimeo.com/379060460).
 
-![Login page screenshot](/docs/screenshot-login.png)
-
 ![Home page screenshot](/docs/screenshot-home.png)
 
 ## Tech Stack
